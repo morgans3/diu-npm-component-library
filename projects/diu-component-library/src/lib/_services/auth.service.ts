@@ -18,7 +18,7 @@ export class MFAAuthService extends BaseService {
     super(http);
     const origin = window.location.href;
     //this.baseUrl = this.combineURL(origin, "auth");
-    this.baseUrl =  'http://localhost:8079/';
+    this.baseUrl = "http://localhost:8079/";
   }
 
   login(credentials: iCredentials) {
@@ -88,8 +88,8 @@ export class MFAAuthService extends BaseService {
    * @returns HTTP GET Promise
    */
   public getCapabilityById(id) {
-    return this.http.get(this.baseUrl + "capabilities/getByID", { 
-      params: { id: id }
+    return this.http.get(this.baseUrl + "capabilities/getByID", {
+      params: { id: id },
     });
   }
 
@@ -114,13 +114,13 @@ export class MFAAuthService extends BaseService {
    * @returns HTTP POST Promise
    */
   public deleteCapability(id) {
-    return this.http.delete(this.baseUrl + "capabilities/removeByID", { body: { id: id }});
+    return this.http.delete(this.baseUrl + "capabilities/removeByID", { body: { id: id } });
   }
 
   /**
- * GET: Method to get all roles
- * @returns HTTP GET Promise
- */
+   * GET: Method to get all roles
+   * @returns HTTP GET Promise
+   */
   public getRoles() {
     return this.http.get(this.baseUrl + "roles");
   }
@@ -134,9 +134,9 @@ export class MFAAuthService extends BaseService {
   }
 
   /**
-  * POST: Method to create role
-  * @returns HTTP POST Promise
-  */
+   * POST: Method to create role
+   * @returns HTTP POST Promise
+   */
   public createRole(payload) {
     return this.http.post(this.baseUrl + "roles/create", payload);
   }
@@ -162,7 +162,7 @@ export class MFAAuthService extends BaseService {
    * @returns HTTP POST Promise
    */
   public getCapabilitiesByTypeId(linkType, linkId) {
-    return this.http.get(`${this.baseUrl}${linkType}/${linkId}/capabilities`);
+    return this.http.get(`${this.baseUrl}${linkType}/${encodeURIComponent(linkId)}/capabilities`);
   }
 
   /**
@@ -171,7 +171,9 @@ export class MFAAuthService extends BaseService {
    */
   public syncCapabilityLinks(ids, linkType, linkId) {
     return this.http.post(this.baseUrl + "capabilities/links/sync", {
-      capabilities: ids, link_type: linkType, link_id: linkId
+      capabilities: ids,
+      link_type: linkType,
+      link_id: linkId,
     });
   }
 
@@ -180,7 +182,7 @@ export class MFAAuthService extends BaseService {
    * @returns HTTP GET Promise
    */
   public getRolesByTypeId(linkType, linkId) {
-    return this.http.get(`${this.baseUrl}${linkType}/${linkId}/roles`);
+    return this.http.get(`${this.baseUrl}${linkType}/${encodeURIComponent(linkId)}/roles`);
   }
 
   /**
@@ -189,7 +191,9 @@ export class MFAAuthService extends BaseService {
    */
   public syncRoleLinks(ids, linkType, linkId) {
     return this.http.post(this.baseUrl + "roles/links/sync", {
-      roles: ids, link_type: linkType, link_id: linkId
+      roles: ids,
+      link_type: linkType,
+      link_id: linkId,
     });
   }
 

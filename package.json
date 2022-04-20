@@ -1,6 +1,17 @@
 {
   "name": "diu-component-library",
-  "version": "0.1.44",
+  "version": "0.1.49",
+  "description": "NPM Repository for Digital Intelligence Unit @ NHS Blackpool CCG's Angular Component Library",
+  "homepage": "https://github.com/morgans3/diu-npm-component-library",
+  "bugs": {
+    "url": "https://github.com/morgans3/diu-npm-component-library/issues"
+  },
+  "author": "stewartmorganv2",
+  "license": "OGL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/morgans3/diu-npm-component-library.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

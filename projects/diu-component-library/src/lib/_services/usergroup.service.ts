@@ -356,4 +356,30 @@ export class UserGroupService extends BaseService {
   public removeUserProfiles(payload: iFullUser) {
     return this.http.put(this.baseUrl + "userprofiles/archive?profile_id=" + payload._id, payload);
   }
+
+  /**
+   * GET: Method to return all users
+   */
+  public getUsers(filters = {}) {
+    return this.http.get(this.baseUrl + "users", { params: filters });
+  }
+
+  /**
+   * GET: Method to retreieve a user by their id
+   */
+  public getUser(id) {
+    return this.http.get(this.baseUrl + `users/${encodeURIComponent(id)}`);
+  }
+
+  /**
+   * DELETE: Method to delete a user by their id
+   */
+  public deleteUser(username, organisation) {
+    return this.http.delete(this.baseUrl + `users/delete`, {
+      body: {
+        username: username,
+        organisation: organisation,
+      },
+    });
+  }
 }
