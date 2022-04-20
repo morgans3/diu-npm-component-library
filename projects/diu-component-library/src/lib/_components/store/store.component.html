@@ -1,0 +1,61 @@
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" *ngIf="RequestedApps.length > 0">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title> Requested </mat-card-title>
+
+        <div fxLayout="row wrap">
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of RequestedApps">
+            <app-application-tile [thisApp]="fave.app" (appStatusChange)="reloadApps($event)" [thisInstallation]="fave.install"></app-application-tile>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" *ngIf="InstalledApps.length > 0">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title> Installed </mat-card-title>
+
+        <div fxLayout="row wrap">
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of InstalledApps">
+            <app-application-tile [thisApp]="fave.app" (appStatusChange)="reloadApps($event)" [thisInstallation]="fave.install"></app-application-tile>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" *ngIf="TeamApps.length > 0">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title> Access Granted for my Team </mat-card-title>
+
+        <div fxLayout="row wrap">
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of TeamApps">
+            <app-application-tile [thisApp]="fave.app" (appStatusChange)="reloadApps($event)" [teamInstall]="true"></app-application-tile>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title> Store </mat-card-title>
+
+        <div fxLayout="row wrap">
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of AppStore">
+            <app-application-tile [thisApp]="fave.app" (appStatusChange)="reloadApps($event)"></app-application-tile>
+          </div>
+        </div>
+
+        <p *ngIf="AppStore.length === 0">No further Apps to install or request at this time.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

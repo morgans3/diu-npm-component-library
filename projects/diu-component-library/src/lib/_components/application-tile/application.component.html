@@ -1,0 +1,26 @@
+<mat-card class="border-app" *ngIf="thisApp">
+  <mat-card-content>
+    <div fxLayout="row-wrap" fxLayoutGap="15px">
+      <div fxFlex.gt-md="calc(30% - 15px)" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="space-around center">
+        <img class="appImage" [src]="image()" (click)="appAction()" />
+      </div>
+      <div fxFlex.gt-md="calc(70% - 15px)" fxFlex.gt-xs="100" fxFlex="100">
+        <h4 class="name">
+          {{ thisApp.name.split("_").join(" ") }}
+        </h4>
+        <button mat-icon-button (click)="appAction()" color="primary" [matTooltip]="'Launch'">
+          <i class="far fa-play-circle font-2x"></i>
+        </button>
+        <button mat-icon-button *ngIf="thisApp.description" [matTooltip]="thisApp.description" color="accent" style="cursor: help">
+          <i class="fas fa-info-circle font-2x"></i>
+        </button>
+        <button mat-icon-button (click)="showUserGuide()" color="accent" [matTooltip]="'User Guide'" [disabled]="!thisApp.userguideURL">
+          <i class="fas fa-book font-2x"></i>
+        </button>
+        <button mat-icon-button (click)="uninstallApplication()" color="warn" [matTooltip]="'Uninstall'" [disabled]="status !== 'Installed' || teamInstall">
+          <i class="far fa-trash-alt font-2x"></i>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

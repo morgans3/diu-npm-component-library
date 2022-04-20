@@ -1,0 +1,5 @@
+<div fxLayout="row wrap" style="margin-top: 10px; margin-bottom: 10px" *ngIf="orgChecking()">
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let newsie of newstandItems">
+    <app-news-stand [selectedCCG]="selectedCCG" [thisNewsStand]="newsie"></app-news-stand>
+  </div>
+</div>
