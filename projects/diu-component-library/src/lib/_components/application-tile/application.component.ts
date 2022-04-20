@@ -73,11 +73,11 @@ export class ApplicationTileComponent implements OnInit {
 
   uninstallApplication() {
     if (!this.teamInstall) {
-      this.applicationService.archiveInstallation(this.thisInstallation).subscribe((res: any) => {
-        if (!res.err) {
-          this.appStatusChange.emit(true);
-        }
-      });
+      // this.applicationService.archiveInstallation(this.thisInstallation).subscribe((res: any) => {
+      //   if (!res.err) {
+      //     this.appStatusChange.emit(true);
+      //   }
+      // });
     }
   }
 }
