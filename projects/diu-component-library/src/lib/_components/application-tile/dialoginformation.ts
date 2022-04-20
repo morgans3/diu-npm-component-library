@@ -44,10 +44,10 @@ export class ApplicationInfoDialogComponent implements OnInit {
       approveddate: new Date(),
       username: this.tokenDecoded.username,
     };
-    this.applicationService.addInstallation(newInstall).subscribe((res: any) => {
-      if (!res.err) {
-        this.dialogRef.close({ choice: "install" });
-      }
-    });
+    // this.applicationService.addInstallation(newInstall).subscribe((res: any) => {
+    //   if (!res.err) {
+    //     this.dialogRef.close({ choice: "install" });
+    //   }
+    // });
   }
 }

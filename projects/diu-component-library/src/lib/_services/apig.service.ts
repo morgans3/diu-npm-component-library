@@ -9,15 +9,15 @@ import { iOrganisation } from "../_models/organisation.interface";
 declare var window: any;
 
 /**
- * Dynamic API Service Class
+ * Api Gateway Service Class
  */
 @Injectable({ providedIn: "root" })
-export class DynamicApiService extends BaseService {
+export class ApiGService extends BaseService {
   systemalertUrl;
   newsfeedUrl: string;
 
   /**
-   * Dynamic API Service Constructor
+   * Api Gateway Service Constructor
    */
   constructor(
     /**
@@ -34,49 +34,10 @@ export class DynamicApiService extends BaseService {
   }
 
   /**
-   * Method to get Payloads by ID
-   */
-  public getPayloadById(payloadID) {
-    return this.http.get(this.baseUrl + "payloads/getByid?id=" + payloadID);
-  }
-
-  /**
-   * Generic Method to make any GET request
-   */
-  public genericGetAPICall(url: string) {
-    return this.http.get(url);
-  }
-
-  /**
-   * Generic Method to make any GET request with paramaters
-   */
-  public genericGetAPICallByParam(url: string, param: string) {
-    return this.http.get(url + param);
-  }
-
-  /**
-   * POST: Generic Method to make any POST request
-   */
-  public genericPostAPICall(url: string, payload) {
-    return this.http.post(url, payload);
-  }
-
-  /**
    * GET: Method to retrieve news feeds
    */
   public getNewsFeeds() {
     return this.http.get(this.baseUrl + "newsfeeds/getAll/");
-  }
-
-  /**
-   * GET: Method to retrieve ward details
-   */
-  public getWardDetails() {
-    return this.http.get(this.baseUrl + "warddetails/getAll");
-  }
-
-  public archiveTask(payload: any) {
-    return this.http.put(this.baseUrl + "tasks/delete", payload);
   }
 
   // System Alerts
@@ -129,17 +90,5 @@ export class DynamicApiService extends BaseService {
 
   public updateOrganisation(payload: iOrganisation) {
     return this.http.post(this.baseUrl + "organisations/update", payload);
-  }
-
-  public getPointsOfInterest() {
-    return this.http.get(this.baseUrl + "pointsofinterest/getAll");
-  }
-
-  public getMosiacs() {
-    return this.http.get(this.baseUrl + "mosaic/getAll");
-  }
-
-  public getCodefromPostCode(code) {
-    return this.http.get(this.baseUrl + "mosaic/getCodefromPostCode?postcode=" + code);
   }
 }
