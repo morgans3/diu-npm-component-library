@@ -361,25 +361,25 @@ export class UserGroupService extends BaseService {
    * GET: Method to return all users
    */
   public getUsers(filters = {}) {
-    return this.http.get(this.baseUrl + "users", { params: filters });
+    return this.http.get(this.baseUrl + "users", { params: filters }); 
   }
 
   /**
    * GET: Method to retreieve a user by their id
    */
   public getUser(id) {
-    return this.http.get(this.baseUrl + `users/${encodeURIComponent(id)}`);
+    return this.http.get(this.baseUrl + `users/${encodeURIComponent(id)}`); 
   }
 
   /**
    * DELETE: Method to delete a user by their id
    */
-  public deleteUser(username, organisation) {
-    return this.http.delete(this.baseUrl + `users/delete`, {
+   public deleteUser(username, organisation) {
+    return this.http.delete(this.baseUrl + `users/delete`, { 
       body: {
         username: username,
-        organisation: organisation,
-      },
-    });
+        organisation: organisation
+      }
+    }); 
   }
 }

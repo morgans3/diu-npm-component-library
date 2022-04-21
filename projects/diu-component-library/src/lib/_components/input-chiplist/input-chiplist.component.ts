@@ -2,7 +2,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
-import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self, Output, EventEmitter } from '@angular/core';
 import { MAT_FORM_FIELD, MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { Subject } from 'rxjs';
 
@@ -82,6 +82,8 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
         return this.formControl.invalid && this.touched;
     }
 
+    @Output('selected') selected = new EventEmitter();
+
     constructor(
         private _focusMonitor: FocusMonitor,
         private _elementRef: ElementRef<HTMLElement>,
@@ -130,6 +132,7 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
         if (item) {
             items.push(item);
             this.formControl.setValue(items);
+            this.selected.emit(items);
         }
 
         //Clear the input value
@@ -145,6 +148,7 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
         if (index >= 0) {
             items.splice(index, 1);
             this.formControl.setValue(items);
+            this.selected.emit(items);
         }
     }
 
