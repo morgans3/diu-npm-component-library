@@ -18,8 +18,8 @@ export class APIService extends BaseService {
   /**
    * Authentication API Service Constructor
    */
-  constructor(protected http: HttpClient, @Inject("env") env) {
-    super(http, env);
+  constructor(protected http: HttpClient, @Inject("environment") environment) {
+    super(http, environment);
     const origin = window.location.href;
     this.baseUrl = this.combineURL(origin, "api");
   }

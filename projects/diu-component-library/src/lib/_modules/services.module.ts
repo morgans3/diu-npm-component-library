@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { APIService } from "../_services/api.service";
 import { ApiGService } from "../_services/apig.service";
 import { PopulationService } from "../_services/population.service";
@@ -7,16 +7,4 @@ import { PopulationManagementService } from "../_services/populationmanagement.s
 @NgModule({
   providers: [PopulationService, PopulationManagementService, APIService, ApiGService],
 })
-export class DIUServicesModule {
-  public static forRoot(environment: any): ModuleWithProviders<any> {
-    return {
-      ngModule: DIUServicesModule,
-      providers: [
-        {
-          provide: "env",
-          useValue: environment,
-        },
-      ],
-    };
-  }
-}
+export class DIUServicesModule {}
