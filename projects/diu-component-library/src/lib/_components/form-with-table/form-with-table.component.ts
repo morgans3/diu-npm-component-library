@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { cComponentHandler, cFormWithTableHander } from "../../_models/componentHandler";
-import { cFormTableDataHandler } from "../../_models/table.handler";
-import { DynamicApiService } from "../../_services/dynapi.service";
+import { Component, Input, OnInit } from "@angular/core";
+import { cFormWithTableHander } from "../../_models/componentHandler";
+import { APIService } from "../../_services/api.service";
 import { FormTableDataHandler } from "../api-table-data-handler/api-table-data.handler";
 
 @Component({
@@ -56,7 +55,7 @@ export class FormWithTableComponent implements OnInit {
   /**
    * tableData is the configeration that can be passed through to display table to ensure the right columns and actions are in place
    */
-  tableData:any;
+  tableData: any;
 
   /**
    * tableUrl is updated to contain the API endpoint to get tableData from
@@ -75,9 +74,9 @@ export class FormWithTableComponent implements OnInit {
 
   /**
    * Function constructor funciton
-   * @param selectionService - This service is used to communicate with the API
+   * @param apiService - This service is used to communicate with the API
    */
-  constructor(private selectionService: DynamicApiService) {}
+  constructor(private apiService: APIService) {}
 
   /**
    * This function is ran when the component has been initialized
@@ -87,12 +86,12 @@ export class FormWithTableComponent implements OnInit {
     // if there's no preloaded data and a form ID provided
     if (!this._Handler.formData && this._Handler.formDataID) {
       //use the form ID to get form config from db
-      this.selectionService.getPayloadById(this._Handler.formDataID).subscribe((data: any) => {
+      this.apiService.getPayloadById(this._Handler.formDataID).subscribe((data: any) => {
         //if the data has been returned
         if (data && data.length > 0) {
           //form data is stored under the key config
           this._Handler.formData = JSON.parse(data[0].config);
-          this.selectionService.getPayloadById(this._Handler.tableDataID).subscribe((response: any) => {
+          this.apiService.getPayloadById(this._Handler.tableDataID).subscribe((response: any) => {
             this.tableData = JSON.parse(response[0].config);
             // console.log(this.tableData);
             this.configureTable();
@@ -110,13 +109,13 @@ export class FormWithTableComponent implements OnInit {
    */
   configureTable() {
     this.tableUrl = this._Handler.formData.apiEndpoint + "getAll/";
-    this.selectionService.genericGetAPICall(this.tableUrl).subscribe((data) => {
-      this.tableDataHandler = new FormTableDataHandler(data, this._Handler.formData,this.tableData);
+    this.apiService.genericGetAPICall(this.tableUrl).subscribe((data) => {
+      this.tableDataHandler = new FormTableDataHandler(data, this._Handler.formData, this.tableData);
     });
   }
 
   /**
-   * 
+   *
    * @returns the class to be wrapped around the feedback message
    */
   feedbackClass() {
@@ -128,8 +127,8 @@ export class FormWithTableComponent implements OnInit {
   }
 
   /**
-   * This function is used to send data to be registered or updated 
-   * @param formSubmissionData 
+   * This function is used to send data to be registered or updated
+   * @param formSubmissionData
    */
   formSubmission(formSubmissionData) {
     // console.log(formSubmissionData);
@@ -152,7 +151,7 @@ export class FormWithTableComponent implements OnInit {
       });
     }
     // console.log(payload);
-    this.selectionService.genericPostAPICall(strRegisterEndpoint, payload).subscribe((data) => {
+    this.apiService.genericPostAPICall(strRegisterEndpoint, payload).subscribe((data) => {
       // console.log(data);
       //TODO: add success/ fail message
       if (data["success"]) {
@@ -180,7 +179,7 @@ export class FormWithTableComponent implements OnInit {
    * This is used to dynamically call a function from this class
    * @param data - this is an object passed that contains data for a function and the name of the function to be called
    */
-  runPassedFunction(data){
+  runPassedFunction(data) {
     this[data.passedFunction](data.data);
   }
 
@@ -195,7 +194,7 @@ export class FormWithTableComponent implements OnInit {
 
   /**
    * This is used to dynamically change the form information
-   * @param formData - This is the data for the form that determines what's going to be displayed 
+   * @param formData - This is the data for the form that determines what's going to be displayed
    */
   updateFormData(formData) {
     this.formData = formData;
@@ -208,7 +207,7 @@ export class FormWithTableComponent implements OnInit {
    */
   deleteFormData(formData) {
     let strDeleteEndpoint = this._Handler.formData.apiEndpoint + "delete/";
-    this.selectionService.genericPostAPICall(strDeleteEndpoint, formData).subscribe((data) => {
+    this.apiService.genericPostAPICall(strDeleteEndpoint, formData).subscribe((data) => {
       //   console.log(data);
       if (data["success"]) {
         this.feedbackStatus = "success";

@@ -76,18 +76,10 @@ export * from "./lib/_components/dashboard-population/lookups";
 /**
  * Services List
  */
-export * from "./lib/_services/auth.service";
 export * from "./lib/_services/broker.service";
-export * from "./lib/_services/dynapi.service";
-export * from "./lib/_services/interface.service";
-export * from "./lib/_services/labtest.service";
-export * from "./lib/_services/messaging.service";
-export * from "./lib/_services/patient.service";
 export * from "./lib/_services/population.service";
 export * from "./lib/_services/populationmanagement.service";
 export * from "./lib/_services/resize.service";
-export * from "./lib/_services/results.service";
-export * from "./lib/_services/usergroup.service";
 export * from "./lib/_services/api.service";
 export * from "./lib/_services/apig.service";
 

@@ -1,14 +1,12 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { DebugElement } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "../../_modules/material.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ImageGalleryDialog } from "./image-gallery.component";
-import { DynamicApiService } from "../../_services/dynapi.service";
+import { APIService } from "../../_services/api.service";
 
 describe("ImageGalleryDialog", () => {
   let component: ImageGalleryDialog;
@@ -24,7 +22,7 @@ describe("ImageGalleryDialog", () => {
           provide: MatDialogRef,
           useValue: {},
         },
-        DynamicApiService,
+        APIService,
       ],
     }).compileComponents();
   }));

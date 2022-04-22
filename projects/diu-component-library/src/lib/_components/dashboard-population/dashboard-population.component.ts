@@ -3,9 +3,9 @@ import * as d3 from "d3";
 import * as dc from "dc";
 declare var window: any;
 import jwt_decode from "jwt-decode";
-import { DynamicApiService } from "../../_services/dynapi.service";
 import { DeprivationColorCodes, iWardDetails } from "./lookups";
 import { collapseAnimations } from "../../_functions/helper_functions";
+import { APIService } from "../../_services/api.service";
 
 @Component({
   selector: "app-population",
@@ -47,7 +47,7 @@ export class DashboardPopulationComponent implements OnInit {
   compCharts = {};
   toolTip: any;
   mapReset = true;
-  cfUrl = "https://population.nexusintelligencenw.nhs.uk/populations/getMiniCrossfilter";
+  cfUrl = "https://population.nexusintelligencenw.nhs.uk/populations/getMiniCrossfilter"; //TODO: Change fixed url to dynamic
   /* #endregion */
 
   @HostListener("window:resize", ["$event"])
@@ -57,7 +57,7 @@ export class DashboardPopulationComponent implements OnInit {
     }, 0);
   }
 
-  constructor(private dynapiService: DynamicApiService) {
+  constructor(private apiService: APIService) {
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);
@@ -67,7 +67,7 @@ export class DashboardPopulationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dynapiService.getWardDetails().subscribe((res: iWardDetails[]) => {
+    this.apiService.getWardDetails().subscribe((res: iWardDetails[]) => {
       this.allWardDetails = res;
       this.buildCF();
       this.mouseLeave();
@@ -142,7 +142,7 @@ export class DashboardPopulationComponent implements OnInit {
 
   buildCF() {
     this.myDC = dc;
-    this.dynapiService.genericGetAPICall(this.cfUrl).subscribe((res: any) => {
+    this.apiService.genericGetAPICall(this.cfUrl).subscribe((res: any) => {
       if (res && res.all) {
         this.filteredData = res;
         this.totalsize = this.filteredData["all"].values;

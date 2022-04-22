@@ -5,8 +5,11 @@ export class BaseService {
    * API Subdomain
    */
   baseUrl = "";
+  devURL = "nhs-bi-platform.co.uk";
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, env?: any) {
+    if (env) this.devURL = env.websiteURL || "nhs-bi-platform.co.uk";
+  }
 
   /**
    * Method for adding Subdomain to current Browser Location
@@ -14,7 +17,7 @@ export class BaseService {
   public combineURL(origin: string, subdomain: string) {
     const domain = origin.split("//")[1].split("/")[0].replace("www", "");
     if (domain.includes("localhost")) {
-      return "https://" + subdomain + ".dev.nexusintelligencenw.nhs.uk/";
+      return "https://" + subdomain + "." + this.devURL + "/";
     } else if (domain.includes("dev") || domain.includes("demo")) {
       return "https://" + subdomain + "." + domain + "/";
     }

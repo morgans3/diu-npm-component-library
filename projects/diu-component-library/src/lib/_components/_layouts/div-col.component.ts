@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { DynamicApiService } from "../../_services/dynapi.service";
 import { cLayoutHandler, fetchChildren } from "../../_models/componentHandler";
+import { APIService } from "../../_services/api.service";
 
 /**
  * Div Column Component Class
@@ -23,7 +23,7 @@ export class DivColComponent implements OnInit {
   /**
    * Constructor Function
    */
-  constructor(private dynapiService: DynamicApiService, private changeDetection: ChangeDetectorRef) {}
+  constructor(private apiService: APIService, private changeDetection: ChangeDetectorRef) {}
 
   /**
    * Initialisation Function
@@ -31,7 +31,7 @@ export class DivColComponent implements OnInit {
   ngOnInit() {
     this._Handler = new cLayoutHandler(this.config);
     if (this._Handler.config.children && this._Handler.config.children.length > 0) {
-      fetchChildren(this._Handler.config.children, this.dynapiService).then((result: any) => {
+      fetchChildren(this._Handler.config.children, this.apiService).then((result: any) => {
         this._Handler.children = result;
         this.changeDetection.detectChanges();
       });
