@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, Output, EventEmitter, Inject } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { iImages } from "../../_models/images.interface";
 import { APIService } from "../../_services/api.service";
@@ -20,7 +20,7 @@ export class ImageGalleryDialog implements OnInit {
   /**
    * DIU Image API Endpoint
    */
-  imageEndpoint = "https://images.nexusintelligencenwnhs.co.uk/imageuploader/"; // TODO: Change to dyanmic link not fixed url
+  imageEndpoint = `https://images.nhs-bi-platform.co.uk/imageuploader/`;
 
   /**
    * Image Gallery Modal Constructor
@@ -33,8 +33,11 @@ export class ImageGalleryDialog implements OnInit {
     /**
      * Mat Dialog Library to handle component actions
      */
-    public dialogRef: MatDialogRef<ImageGalleryDialog>
-  ) {}
+    public dialogRef: MatDialogRef<ImageGalleryDialog>,
+    @Inject("environment") environment
+  ) {
+    if (environment) this.imageEndpoint = `https://images.${environment.websiteURL}/` || `https://images.nhs-bi-platform.co.uk/`;
+  }
 
   /**
    * Angular lifecycle hook event called when the component is first constructed
