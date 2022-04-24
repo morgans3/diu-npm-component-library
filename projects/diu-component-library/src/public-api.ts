@@ -81,7 +81,6 @@ export * from "./lib/_services/population.service";
 export * from "./lib/_services/populationmanagement.service";
 export * from "./lib/_services/resize.service";
 export * from "./lib/_services/api.service";
-export * from "./lib/_services/apig.service";
 
 /**
  * Modules List

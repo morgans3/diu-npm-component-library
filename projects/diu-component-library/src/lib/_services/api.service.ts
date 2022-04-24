@@ -39,6 +39,10 @@ export class APIService extends BaseService {
     return this.http.get(this.baseUrl + "payloads/" + payloadID);
   }
 
+  public getAllPayloads() {
+    return this.http.get(this.baseUrl + "payloads/getAll");
+  }
+
   /**
    * Generic Method to make any GET request
    */
@@ -689,7 +693,7 @@ export class APIService extends BaseService {
   }
 
   public getApps() {
-    return this.http.get(this.baseUrl + "publicapps/getAll/");
+    return this.http.get(this.baseUrl + "apps/getAll/");
   }
 
   public addApp(payload: iApplication) {
@@ -715,7 +719,7 @@ export class APIService extends BaseService {
   }
 
   public getOrganisations() {
-    return this.http.get(this.baseUrl + "organisation/getAll");
+    return this.http.get(this.baseUrl + "organisations/getAll");
   }
 
   public addOrganisation(payload: iOrganisation) {
@@ -724,6 +728,10 @@ export class APIService extends BaseService {
 
   public updateOrganisation(payload: iOrganisation) {
     return this.http.post(this.baseUrl + "organisations/update", payload);
+  }
+
+  public removeOrganisation(payload: iOrganisation) {
+    return this.http.delete(this.baseUrl + "organisations/remove", { body: payload });
   }
 
   public getPointsOfInterest() {
