@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from "@angular/core";
 import { iNewsFeed } from "../../_models/installations.interface";
-import { DynamicApiService } from "../../_services/dynapi.service";
+import { APIService } from "../../_services/api.service";
 import { ResizeService } from "../../_services/resize.service";
 declare var window: any;
 
@@ -15,14 +15,14 @@ export class DashboardTwitterComponent implements OnInit, AfterViewChecked {
   displayed = 0;
   isIE = /msie\s|trident\//i.test(window.navigator.userAgent);
 
-  constructor(private applicationService: DynamicApiService, private resizeSvc: ResizeService, private cdRef: ChangeDetectorRef) {
+  constructor(private apiService: APIService, private resizeSvc: ResizeService, private cdRef: ChangeDetectorRef) {
     this.resizeSvc.onResize$.subscribe((x) => {
       this.cols = x;
     });
   }
 
   ngOnInit() {
-    this.applicationService.getNewsFeeds().subscribe((data: iNewsFeed[]) => {
+    this.apiService.getNewsFeeds().subscribe((data: iNewsFeed[]) => {
       this.visible = true;
       this.twitterfeeds = data.filter((x) => x.type === "Twitter").sort((a, b) => parseInt(b.priority) - parseInt(a.priority));
     });

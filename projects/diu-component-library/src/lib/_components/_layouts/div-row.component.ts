@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { cComponentHandler, fetchChildren } from "../../_models/componentHandler";
-import { DynamicApiService } from "../../_services/dynapi.service";
+import { APIService } from "../../_services/api.service";
 /**
  * Div Row Component Class
  */
@@ -28,7 +28,7 @@ export class DivRowComponent implements OnInit {
   /**
    * Constructor Function
    */
-  constructor(private dynapiService: DynamicApiService, private changeDetection: ChangeDetectorRef) {}
+  constructor(private apiService: APIService, private changeDetection: ChangeDetectorRef) {}
 
   /**
    * Initialisation Function
@@ -36,7 +36,7 @@ export class DivRowComponent implements OnInit {
   ngOnInit() {
     this._Handler = new cComponentHandler(this.config);
     if (this._Handler.config.children && this._Handler.config.children.length > 0) {
-      fetchChildren(this._Handler.config.children, this.dynapiService).then((result: any) => {
+      fetchChildren(this._Handler.config.children, this.apiService).then((result: any) => {
         this._Handler.children = result;
         this.changeDetection.detectChanges();
       });

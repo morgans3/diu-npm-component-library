@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from "@angular/forms";
 import { iFieldConfig } from "../../_models/field.interface";
-import { DynamicApiService } from "../../_services/dynapi.service";
+import { APIService } from "../../_services/api.service";
 
 /**
  * Dynamic Form Component Class
@@ -53,7 +53,7 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Dynamic Form Component Constructor
    */
-  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef, private selectionService: DynamicApiService) {}
+  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef, private apiService: APIService) {}
 
   /**
    * Angular Life-cycle hook that is executed when the dynamic form component is initialized
@@ -64,7 +64,7 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     // if there's no preloaded data and a form ID provided
     if (!this.formData && this.formDataID) {
       //use the form ID to get form config from db
-      this.selectionService.getPayloadById(this.formDataID).subscribe((data) => {
+      this.apiService.getPayloadById(this.formDataID).subscribe((data) => {
         //if the data has been returned
         if (data) {
           //get by ID returns 1 row of data

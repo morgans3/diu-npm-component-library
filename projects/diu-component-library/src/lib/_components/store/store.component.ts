@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { iApplication, iInstallation } from "../../_models/installations.interface";
 import jwt_decode from "jwt-decode";
-import { DynamicApiService } from "../../_services/dynapi.service";
 import { cStoreHandler } from "../../_models/componentHandler";
+import { APIService } from "../../_services/api.service";
 
 export interface iAppContainer {
   app: iApplication;
@@ -25,7 +25,7 @@ export class AppstoreComponent implements OnInit {
   Apps: iApplication[] = [];
   AppStore: iAppContainer[] = [];
 
-  constructor(private appService: DynamicApiService) {
+  constructor(private apiService: APIService) {
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);
@@ -48,7 +48,7 @@ export class AppstoreComponent implements OnInit {
     if (this.tokenDecoded.memberships && this.tokenDecoded.memberships.length > 0) {
       const myteams: any[] = this.tokenDecoded.memberships;
       myteams.forEach((x) => {
-        this.appService.genericGetAPICallByParam(this._Handler.getInstallsByTeamcodeEndpoint, x.teamcode).subscribe((res: iInstallation[]) => {
+        this.apiService.genericGetAPICallByParam(this._Handler.getInstallsByTeamcodeEndpoint, x.teamcode).subscribe((res: iInstallation[]) => {
           if (res.length > 0) {
             res.forEach((install: iInstallation) => {
               const apparray = this.AppStore.filter((y) => y.app.name === install.app_name);
@@ -78,7 +78,7 @@ export class AppstoreComponent implements OnInit {
   loadMyApps() {
     this.InstalledApps = [];
     this.RequestedApps = [];
-    this.appService.genericGetAPICallByParam(this._Handler.getInstallsByUsernameEndpoint, this.tokenDecoded.username).subscribe((res: iInstallation[]) => {
+    this.apiService.genericGetAPICallByParam(this._Handler.getInstallsByUsernameEndpoint, this.tokenDecoded.username).subscribe((res: iInstallation[]) => {
       if (res.length > 0) {
         res.forEach((install: iInstallation) => {
           const apparray = this.AppStore.filter((x) => x.app.name === install.app_name);
@@ -106,7 +106,7 @@ export class AppstoreComponent implements OnInit {
     this.TeamApps = [];
     this.Apps = [];
     this.AppStore = [];
-    this.appService.genericGetAPICall(this._Handler.getAllStoreEndpoint).subscribe((res: iApplication[]) => {
+    this.apiService.genericGetAPICall(this._Handler.getAllStoreEndpoint).subscribe((res: iApplication[]) => {
       this.Apps = res;
       this.AppStore = this.container(res);
       this.loadMyApps();

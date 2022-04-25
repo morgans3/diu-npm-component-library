@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import jwt_decode from "jwt-decode";
-import { DynamicApiService } from "../../_services/dynapi.service";
 import { generateID } from "../../_functions/helper_functions";
 import { cDisplayListsHandler, iDisplayListConfig } from "../../_models/componentHandler";
 import { iApplication, iInstallation } from "../../_models/installations.interface";
+import { APIService } from "../../_services/api.service";
 
 @Component({
   selector: "app-profile-installs",
@@ -16,7 +16,7 @@ export class ProfileInstallsComponent implements OnInit {
   displayListsLoaded = false;
   installationlist: iInstallation[] = [];
 
-  constructor(private applicationService: DynamicApiService) {
+  constructor(private apiService: APIService) {
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);
@@ -36,8 +36,8 @@ export class ProfileInstallsComponent implements OnInit {
   }
 
   getList(list: iDisplayListConfig) {
-    this.applicationService.genericGetAPICall(list.getAllEndpoint).subscribe((allInfo: iApplication[]) => {
-      this.applicationService.genericGetAPICall(list.getByUsernameEndpoint + this.tokenDecoded.username).subscribe((userInfo: iInstallation[]) => {
+    this.apiService.genericGetAPICall(list.getAllEndpoint).subscribe((allInfo: iApplication[]) => {
+      this.apiService.genericGetAPICall(list.getByUsernameEndpoint + this.tokenDecoded.username).subscribe((userInfo: iInstallation[]) => {
         list.displayConfigData = this.updateX(userInfo, allInfo);
         this.displayListsLoaded = true;
       });
@@ -82,7 +82,7 @@ export class ProfileInstallsComponent implements OnInit {
     };
     const selectedList = this._Handler.displayLists.find((x) => x.title === title);
     if (selectedList) {
-      this.applicationService.genericPostAPICall(selectedList.registerEndpoint, newInstall).subscribe((res: any) => {
+      this.apiService.genericPostAPICall(selectedList.registerEndpoint, newInstall).subscribe((res: any) => {
         if (res.err) {
           console.log(res.err);
         } else {
@@ -97,7 +97,7 @@ export class ProfileInstallsComponent implements OnInit {
     const install = this.installationlist.find((x) => x.app_name === app.name);
     const selectedList = this._Handler.displayLists.find((x) => x.title === title);
     if (selectedList) {
-      this.applicationService.genericPostAPICall(selectedList.removeEndpoint, install).subscribe((res: any) => {
+      this.apiService.genericPostAPICall(selectedList.removeEndpoint, install).subscribe((res: any) => {
         if (res.err) {
           console.log(res.err);
         } else {

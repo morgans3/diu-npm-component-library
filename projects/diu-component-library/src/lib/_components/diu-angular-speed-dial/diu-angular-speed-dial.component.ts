@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import { MatDialog } from "@angular/material/dialog";
 import { VerifyDialogComponent } from "./dialogs/dialogverify";
 import { ValidateDialogComponent } from "./dialogs/dialogvalidate";
-import { MFAAuthService } from "../../_services/auth.service";
+import { APIService } from "../../_services/api.service";
 
 @Component({
   selector: "lib-diu-angular-speed-dial",
@@ -35,7 +35,7 @@ export class DiuAngularSpeedDialComponent implements OnInit {
   buttons = [];
   fabTogglerState = "inactive";
 
-  constructor(private _location: Location, public dialog: MatDialog, private authService: MFAAuthService) {}
+  constructor(private _location: Location, public dialog: MatDialog, private apiService: APIService) {}
 
   ngOnInit() {
     if (this.token) {
@@ -79,7 +79,7 @@ export class DiuAngularSpeedDialComponent implements OnInit {
     if (this.tokenDecoded.mfa) {
       this.newMFAToken.emit(this.token);
     } else {
-      this.authService.checkMFA().subscribe((res: any) => {
+      this.apiService.checkMFA().subscribe((res: any) => {
         if (res.error) {
           this.errorMessage.emit("Unable to contact Authentication Service");
         } else {
@@ -95,7 +95,7 @@ export class DiuAngularSpeedDialComponent implements OnInit {
               }
             });
           } else {
-            this.authService.registerMFA().subscribe((reg: any) => {
+            this.apiService.registerMFA().subscribe((reg: any) => {
               if (reg.tempSecret) {
                 const dialogRef = this.dialog.open(VerifyDialogComponent, {
                   width: "350px",

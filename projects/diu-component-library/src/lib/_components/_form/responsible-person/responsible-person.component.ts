@@ -1,27 +1,25 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { iFieldConfig } from "../../../_models/field.interface";
 import { iFullUser } from "../../../_models/user.interface";
-import { UserGroupService } from "../../../_services/usergroup.service";
 import { UserSearchDialogComponent } from "../../user-search/dialogusersearch";
 
 @Component({
   selector: "responsible-person",
-  templateUrl:'./responsible-person.component.html',
-  styles: []
+  templateUrl: "./responsible-person.component.html",
+  styles: [],
 })
-export class ResponsiblePersonComponent implements OnInit,OnChanges {
-  
+export class ResponsiblePersonComponent implements OnInit, OnChanges {
   @Input() field: iFieldConfig;
   @Input() group: FormGroup;
-  
+
   responsiblepeople: string[] = [];
-  
-  constructor(private usergroupService: UserGroupService, public dialog: MatDialog) {}
-  
+
+  constructor(public dialog: MatDialog) {}
+
   ngOnInit() {}
-  
+
   ngOnChanges() {}
 
   removePerson(person: string) {
@@ -40,5 +38,4 @@ export class ResponsiblePersonComponent implements OnInit,OnChanges {
       }
     });
   }
-
 }

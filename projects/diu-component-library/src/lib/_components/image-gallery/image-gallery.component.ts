@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, Output, EventEmitter } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { iImages } from "../../_models/images.interface";
-import { DynamicApiService } from "../../_services/dynapi.service";
+import { APIService } from "../../_services/api.service";
 
 /**
  * Image Gallery Modal Component
@@ -20,7 +20,7 @@ export class ImageGalleryDialog implements OnInit {
   /**
    * DIU Image API Endpoint
    */
-  imageEndpoint = "https://images.nexusintelligencenwnhs.co.uk/imageuploader/";
+  imageEndpoint = "https://images.nexusintelligencenwnhs.co.uk/imageuploader/"; // TODO: Change to dyanmic link not fixed url
 
   /**
    * Image Gallery Modal Constructor
@@ -29,7 +29,7 @@ export class ImageGalleryDialog implements OnInit {
     /**
      * Service to handle API calls
      */
-    private selectionService: DynamicApiService,
+    private apiService: APIService,
     /**
      * Mat Dialog Library to handle component actions
      */
@@ -47,7 +47,7 @@ export class ImageGalleryDialog implements OnInit {
    * Function to retrieve the list of available Images
    */
   getAllImages() {
-    this.selectionService.genericGetAPICall(this.imageEndpoint + "getall/").subscribe((data: iImages[]) => {
+    this.apiService.genericGetAPICall(this.imageEndpoint + "getall/").subscribe((data: iImages[]) => {
       this.storedImages = data;
     });
   }
@@ -63,7 +63,7 @@ export class ImageGalleryDialog implements OnInit {
    * Function to remove an Image
    */
   deleteSelectedImage(imageData) {
-    this.selectionService.genericPostAPICall(this.imageEndpoint + "delete/", imageData).subscribe((data: any) => {
+    this.apiService.genericPostAPICall(this.imageEndpoint + "delete/", imageData).subscribe((data: any) => {
       if (data && data.success) {
         this.storedImages.splice(
           this.storedImages.findIndex((x) => (x = imageData)),

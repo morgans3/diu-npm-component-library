@@ -4,11 +4,11 @@ This codebase is an Angular Library of our re-usable components for the NHS BI P
 
 ## Useful commands
 
-- Run the command `ng build <project-name> --prod` (or `ng build <project-name> --configuration production` for newer versions of Angular) from your workspace folder to build your component, the output files are created in the `dist/<project-name>` folder.
+- Run the command `ng build diu-component-library --prod` (or `ng build diu-component-library --configuration production` for newer versions of Angular) from your workspace folder to build your component, the output files are created in the `dist/diu-component-library` folder.
 - Run `npm login` from the command line and enter the credentials that you used to sign up to npm in the first step.
-- Navigate to the project dist folder with the command `cd dist/<project-name>`
+- Navigate to the project dist folder with the command `cd dist/diu-component-library`
 - Run the command `npm publish --ignore-scripts` to publish the component the npm.
-- Now go and check out your new Angular component on the npm website at <https://www.npmjs.com/package/project-name>. You can also run `npm info <project-name>` from the command line to see all the metadata info about your package that's stored on the npm registry.
+- Now go and check out your new Angular component on the npm website at <https://www.npmjs.com/package/project-name>. You can also run `npm info diu-component-library` from the command line to see all the metadata info about your package that's stored on the npm registry.
 
 NOTE: To update your package in npm you just need to increment the version number in the package.json file and run npm publish again.
 

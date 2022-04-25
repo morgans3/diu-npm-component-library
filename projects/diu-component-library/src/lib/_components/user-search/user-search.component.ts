@@ -3,13 +3,13 @@ import { cComponentHandler } from "../../_models/componentHandler";
 import { iOrganisation } from "../../_models/organisation.interface";
 import { iFullUser, iSearchResults, iSection } from "../../_models/user.interface";
 import { BrokerService } from "../../_services/broker.service";
-import { UserGroupService } from "../../_services/usergroup.service";
 import jwt_decode from "jwt-decode";
+import { APIService } from "../../_services/api.service";
 
 /**
  * User Search Component Class
  */
- @Component({
+@Component({
   selector: "lib-user-search",
   templateUrl: "./user-search.component.html",
   styleUrls: ["./user-search.component.css"],
@@ -57,7 +57,7 @@ export class UserSearchComponent implements OnInit {
     /**
      * User Group API Service
      */
-    private userGroupService: UserGroupService,
+    private apiService: APIService,
     /**
      * User Group API Service
      */
@@ -101,7 +101,7 @@ export class UserSearchComponent implements OnInit {
     if (this.organisation.authmethod !== "Demo") {
       if (searchValue.length > 4) {
         this.searching = true;
-        this.userGroupService.searchOrgUserProfiles(searchValue, this.organisation.authmethod).subscribe((response: iSearchResults[]) => {
+        this.apiService.searchOrgUserProfiles(searchValue, this.organisation.authmethod).subscribe((response: iSearchResults[]) => {
           this.searching = false;
           this.teamresults = response[0].results;
         });
@@ -118,7 +118,7 @@ export class UserSearchComponent implements OnInit {
     const searchValue = this.searchname;
     this.teamresults = [];
     this.searching = true;
-    this.userGroupService.searchOrgUserProfiles(searchValue, this.organisation.authmethod).subscribe((response: iSearchResults[]) => {
+    this.apiService.searchOrgUserProfiles(searchValue, this.organisation.authmethod).subscribe((response: iSearchResults[]) => {
       this.searching = false;
       if (response && response.length > 0 && response[0].results) {
         this.teamresults = response[0].results;

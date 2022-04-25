@@ -1,9 +1,9 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { DynamicApiService } from "../../_services/dynapi.service";
 import jwt_decode from "jwt-decode";
 import { generateID } from "../../_functions/helper_functions";
 import { iApplication, iInstallation } from "../../_models/installations.interface";
+import { APIService } from "../../_services/api.service";
 
 @Component({
   selector: "dialog-information",
@@ -14,7 +14,7 @@ export class ApplicationInfoDialogComponent implements OnInit {
   tokenDecoded: any;
   loadedData: iApplication;
 
-  constructor(public dialogRef: MatDialogRef<ApplicationInfoDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: iApplication, private applicationService: DynamicApiService) {
+  constructor(public dialogRef: MatDialogRef<ApplicationInfoDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: iApplication, private apiService: APIService) {
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);
@@ -44,7 +44,7 @@ export class ApplicationInfoDialogComponent implements OnInit {
       approveddate: new Date(),
       username: this.tokenDecoded.username,
     };
-    // this.applicationService.addInstallation(newInstall).subscribe((res: any) => {
+    // this.apiService.addInstallation(newInstall).subscribe((res: any) => {
     //   if (!res.err) {
     //     this.dialogRef.close({ choice: "install" });
     //   }

@@ -3,7 +3,6 @@ import { MatDialog } from "@angular/material/dialog";
 import { iApplication, iInstallation } from "../../_models/installations.interface";
 import { ApplicationInfoDialogComponent } from "./dialoginformation";
 import jwt_decode from "jwt-decode";
-import { DynamicApiService } from "../../_services/dynapi.service";
 
 @Component({
   selector: "app-application-tile",
@@ -19,7 +18,7 @@ export class ApplicationTileComponent implements OnInit {
   tokenDecoded: any;
   status: any;
 
-  constructor(public dialog: MatDialog, private applicationService: DynamicApiService) {
+  constructor(public dialog: MatDialog) {
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);

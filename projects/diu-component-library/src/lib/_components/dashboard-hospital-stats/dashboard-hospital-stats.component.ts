@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { iInpatientCounts, iOutpatientCounts, iAECounts, iEPCCounts, iECSCounts } from "../../_models/hospitalstats.interface";
 import jwt_decode from "jwt-decode";
 import { iNewsStand } from "../../_models/newsitem.interface";
-import { InterfaceService } from "../../_services/interface.service";
+import { APIService } from "../../_services/api.service";
 
 @Component({
   selector: "app-dashboard-hospital-stats",
@@ -16,7 +16,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
   tokenDecoded: any;
   orgCheck = false;
 
-  constructor(private interfaceService: InterfaceService) {
+  constructor(private apiService: APIService) {
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);
@@ -180,7 +180,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
   }
 
   loadNewsStand() {
-    this.interfaceService.authenticate().subscribe((res: any) => {
+    this.apiService.authenticate().subscribe((res: any) => {
       if (res.success) {
         if (res.msg && res.msg.token) {
           this.BTHToken = res.msg.token;
@@ -196,7 +196,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
   }
 
   populateStand(token: string) {
-    this.interfaceService.inpatientCounts(token).subscribe((res: { success: boolean; msg: any }) => {
+    this.apiService.inpatientCounts(token).subscribe((res: { success: boolean; msg: any }) => {
       if (res.success && res.msg.length > 0) {
         const parsed: iInpatientCounts[] = JSON.parse(res.msg);
         const inpatientNewsIndex = this.newstandItems.findIndex((n) => n.name === "Inpatients");
@@ -250,7 +250,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
         }
       }
     });
-    this.interfaceService.outpatientCounts(token).subscribe((res: { success: boolean; msg: any }) => {
+    this.apiService.outpatientCounts(token).subscribe((res: { success: boolean; msg: any }) => {
       if (res.success && res.msg.length > 0) {
         const parsed: iOutpatientCounts[] = JSON.parse(res.msg);
         const outpatientNewsIndex = this.newstandItems.findIndex((n) => n.name === "Outpatients");
@@ -291,7 +291,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
         }
       }
     });
-    this.interfaceService.aeCounts(token).subscribe((res: { success: boolean; msg: any }) => {
+    this.apiService.aeCounts(token).subscribe((res: { success: boolean; msg: any }) => {
       if (res.success && res.msg.length > 0) {
         const parsed: iAECounts[] = JSON.parse(res.msg);
         const emergencyNewsIndex = this.newstandItems.findIndex((n) => n.name === "Emergency");
@@ -346,7 +346,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
     });
     let communityNews = this.newstandItems.find((n) => n.name === "Community");
     this.communityNews = 0;
-    this.interfaceService.ecsCounts(token).subscribe((res: { success: boolean; msg: any }) => {
+    this.apiService.ecsCounts(token).subscribe((res: { success: boolean; msg: any }) => {
       if (res.success && res.msg.length > 0) {
         const parsed: iECSCounts[] = JSON.parse(res.msg);
         if (!communityNews) {
@@ -393,7 +393,7 @@ export class AcuteHospitalStatsComponent implements OnInit {
         communityNews.total = this.communityNews.toString();
       }
     });
-    this.interfaceService.epcCounts(token).subscribe((res: { success: boolean; msg: any }) => {
+    this.apiService.epcCounts(token).subscribe((res: { success: boolean; msg: any }) => {
       if (res.success && res.msg.length > 0) {
         const parsed: iEPCCounts[] = JSON.parse(res.msg);
         if (!communityNews) {

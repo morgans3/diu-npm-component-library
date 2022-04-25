@@ -7,16 +7,16 @@ import { DiuAngularNavigationComponent } from "../_components/diu-angular-naviga
 import { ValidateDialogComponent } from "../_components/diu-angular-speed-dial/dialogs/dialogvalidate";
 import { VerifyDialogComponent } from "../_components/diu-angular-speed-dial/dialogs/dialogverify";
 import { DiuAngularSpeedDialComponent } from "../_components/diu-angular-speed-dial/diu-angular-speed-dial.component";
-import { MFAAuthService } from "../_services/auth.service";
 import { MaterialModule } from "./material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { APIService } from "../_services/api.service";
 
 @NgModule({
   declarations: [DiuAngularNavigationComponent, DiuAngularSpeedDialComponent, AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective, ValidateDialogComponent, VerifyDialogComponent],
   imports: [MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule],
   exports: [DiuAngularNavigationComponent, DiuAngularSpeedDialComponent, ValidateDialogComponent, VerifyDialogComponent],
-  providers: [MFAAuthService],
+  providers: [APIService],
 })
 export class DiuAngularNavigationModule {}
