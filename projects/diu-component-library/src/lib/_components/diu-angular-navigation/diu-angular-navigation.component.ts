@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnChanges, OnInit } from "@angular/core";
 import { iMenu } from "../../_models/menu-items.interface";
 
 @Component({
@@ -11,7 +11,11 @@ export class DiuAngularNavigationComponent implements OnInit, OnChanges {
   @Input() isMinisidebar: boolean = false;
   minisidebar = false;
   shownMenuItems: iMenu[] = [];
-  constructor() {}
+  url = "";
+
+  constructor(@Inject("environment") environment) {
+    this.url = environment.websiteURL;
+  }
 
   ngOnChanges() {
     this.shownMenuItems = this.menuItems;
@@ -24,7 +28,7 @@ export class DiuAngularNavigationComponent implements OnInit, OnChanges {
   }
 
   navHome() {
-    window.open("https://www.nexusintelligencenw.nhs.uk/dashboard", "_self");
+    window.open("https://www." + this.url + "/dashboard", "_self");
   }
 
   nonsubChildren(children) {

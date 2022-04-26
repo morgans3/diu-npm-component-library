@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, HostListener, ViewChild, ElementRef, Inject } from "@angular/core";
 import * as d3 from "d3";
 import * as dc from "dc";
 declare var window: any;
@@ -47,7 +47,7 @@ export class DashboardPopulationComponent implements OnInit {
   compCharts = {};
   toolTip: any;
   mapReset = true;
-  cfUrl = "https://population.nexusintelligencenw.nhs.uk/populations/getMiniCrossfilter"; //TODO: Change fixed url to dynamic
+  cfUrl = "https://popmini.nhs-bi-platform.co.uk/dataset/getCrossfilter";
   /* #endregion */
 
   @HostListener("window:resize", ["$event"])
@@ -57,7 +57,8 @@ export class DashboardPopulationComponent implements OnInit {
     }, 0);
   }
 
-  constructor(private apiService: APIService) {
+  constructor(private apiService: APIService, @Inject("environment") environment) {
+    if (environment && environment.websiteURL) this.cfUrl = `https://popmini.${environment.websiteURL}/dataset/getCrossfilter`;
     const token = localStorage.getItem("@@STATE");
     if (token) {
       const jsonToken = JSON.parse(token);

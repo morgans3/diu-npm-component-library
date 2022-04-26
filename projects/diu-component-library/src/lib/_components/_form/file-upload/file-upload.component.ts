@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output, ViewEncapsulation } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { iFieldConfig } from "../../../_models/field.interface";
 import { ImageUploaderOptions } from "ngx-image-uploader-next";
@@ -42,7 +42,7 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
   options: ImageUploaderOptions = {
     thumbnailHeight: 150,
     thumbnailWidth: 150,
-    uploadUrl: "https://images.nexusintelligencenwnhs.co.uk/imageuploader/upload",
+    uploadUrl: "https://images.nhs-bi-platform.co.uk/imageuploader/upload",
     allowedImageTypes: ["image/png", "image/jpeg"],
     maxImageSize: 3,
   };
@@ -50,7 +50,8 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
   /**
    * Constructor Function
    */
-  constructor(public dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(public dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef, @Inject("environment") environment) {
+    if (environment && environment.websiteURL) this.options.uploadUrl = `https://images.${environment.websiteURL}/imageuploader/upload`;
     this.group.setControl(this.formName, new FormControl(null, null));
   }
 
