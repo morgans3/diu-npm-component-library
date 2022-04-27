@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ElementRef, ViewChild, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, OnChanges, ElementRef, ViewChild, Output, EventEmitter, Inject } from "@angular/core";
 import * as d3 from "d3";
 import * as d3zoom from "d3-zoom";
 import { APIService } from "../../../_services/api.service";
@@ -46,15 +46,17 @@ export class WardmapComponent implements OnInit, OnChanges {
   trigger: boolean;
   loading = true;
 
-  sqlUrl = "https://sqlapi.nexusintelligencenw.nhs.uk/"; // TODO: change url to be dynamic and not hard coded
+  url = `https://api.nhs-bi-platform.co.uk/`;
 
-  constructor(private apiService: APIService) {}
+  constructor(private apiService: APIService, @Inject("environment") environment) {
+    if (environment) this.url = `https://api.${environment.websiteURL}/` || `https://api.nhs-bi-platform.co.uk/`;
+  }
 
   ngOnInit() {
     this.check = this.crossfilterData;
     this.width = document.getElementById("wardMapMain").getBoundingClientRect().width;
     this.allwardDetails = this.wardDetails;
-    this.apiService.genericGetAPICall(this.sqlUrl + "wards/getAll").subscribe((res: any[]) => {
+    this.apiService.genericGetAPICall(this.url + "wards/getAll").subscribe((res: any[]) => {
       if (res.length > 0) {
         this.wards = res[0];
         this.wardlist = this.wards.features.map((key) => key.properties.wd15cd);
@@ -66,7 +68,7 @@ export class WardmapComponent implements OnInit, OnChanges {
         this.loading = false;
       }
     });
-    this.apiService.genericGetAPICall(this.sqlUrl + "orgboundaries/getTopoJSON").subscribe((res: any[]) => {
+    this.apiService.genericGetAPICall(this.url + "orgboundaries/getTopoJSON").subscribe((res: any[]) => {
       if (res.length > 0) {
         this.ICSboundaries = res[0];
         if (this.g) this.addBoundaries();
