@@ -219,7 +219,7 @@ export class APIService extends BaseService {
     return this.http.get(this.baseUrl + "trials/getAll");
   }
 
-  public searchClinicalTrials(search: string, phases: string, min_date: string) {
+  public searchClinicalTrials(search: string, phases: string = null, min_date: string = null) {
     return this.http.post(this.baseUrl + "trials/getSearchTop1000", { search: search, phases: phases, min_date: min_date });
   }
 
@@ -551,8 +551,10 @@ export class APIService extends BaseService {
   /**
    * GET: Method to retrieve all shielding citizens
    */
-  public getCitizens() {
-    return this.http.get(this.baseUrl + "shielding/getCitizens");
+  public getCitizens(limit = null) {
+    return this.http.get(this.baseUrl + "shielding/getCitizens", {
+      params: { limit: limit }
+    });
   }
 
   /**
@@ -1176,5 +1178,47 @@ export class APIService extends BaseService {
    */
   public updateVWNotes(id, notes) {
     return this.http.post(this.baseUrl + "virtualward_decision/updateNotes", { id: id, notes: notes });
+  }
+
+  /**
+   * GET: Get cohorts by a user's username
+   */
+  public getCohortsByUsername(username: string) {
+    return this.http.get(this.baseUrl + "cvicohorts/getByusername?username=" + username);
+  }
+
+   /**
+   * POST: Create new cohort
+   */
+  public registerCohort(payload) {
+    return this.http.post(this.baseUrl + "cvicohorts/register/", payload);
+  }
+
+   /**
+   * POST: Delete a cohort
+   */
+  public removeCohort(payload) {
+    return this.http.post(this.baseUrl + "cvicohorts/delete/", payload);
+  }
+
+  /**
+   * GET: Get caseloads by a user's username
+   */
+  public getCviCaseloadsByUsername(username: string) {
+    return this.http.get(this.baseUrl + "cvicaseload/getByusername?username=" + username);
+  }
+
+  /**
+   * POST: Compare two cohorts
+   */
+  public getCohortComparison(payload) {
+    return this.http.post(this.baseUrl + "populations/getComparison/", payload);
+  }
+
+  /**
+   * GET: Query the postcode.io for data
+   */
+  public getPostcodeData(postcode) {
+    return this.http.get("https://postcodes.io/postcodes/" + postcode);
   }
 }
