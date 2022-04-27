@@ -219,7 +219,7 @@ export class APIService extends BaseService {
     return this.http.get(this.baseUrl + "trials/getAll");
   }
 
-  public searchClinicalTrials(search: string, phases: string = null, min_date: string = null) {
+  public searchClinicalTrials(search: string, phases: string = "", min_date: string = "") {
     return this.http.post(this.baseUrl + "trials/getSearchTop1000", { search: search, phases: phases, min_date: min_date });
   }
 
@@ -1090,20 +1090,6 @@ export class APIService extends BaseService {
    */
   public getPostcodeLookup() {
     return this.http.get(this.baseUrl + "tpindex/getPostcodeLookup/");
-  }
-
-  /**
-   * GET: Method to retrieve cross filter
-   */
-  public getCFServer() {
-    return this.http.get(this.baseUrl + "tpindex/getCrossfilter/");
-  }
-
-  /**
-   * GET: Method to rebuild and retrieve new cross filter
-   */
-  public rebuildCFServer() {
-    return this.http.get(this.baseUrl + "tpindex/rebuildCrossfilter/");
   }
 
   /**

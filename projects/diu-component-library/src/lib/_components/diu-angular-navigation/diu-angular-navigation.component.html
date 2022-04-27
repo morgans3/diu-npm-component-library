@@ -9,7 +9,8 @@
 
 <mat-nav-list appAccordion>
   <mat-list-item appAccordionLink *ngFor="let menuitem of shownMenuItems" routerLinkActive="selected">
-    <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+    <!-- Internal link -->
+    <a class="" appAccordionToggle [routerLink]="menuitem.state" *ngIf="menuitem.type === 'link'">
       <mat-icon *ngIf="!menuitem.icon.includes('fas fa')">{{ menuitem.icon }}</mat-icon>
       <i *ngIf="menuitem.icon.includes('fas fa')" [class]="menuitem.icon" style="margin-right: 8px; font-size: 20px"></i>
       <span>{{ menuitem.name }}</span>
@@ -17,18 +18,23 @@
       <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
     </a>
 
+    <!-- External link -->
     <a class="" appAccordionToggle href="{{ menuitem.state }}" *ngIf="menuitem.type === 'extLink'">
       <mat-icon>{{ menuitem.icon }}</mat-icon>
       <span>{{ menuitem.name }}</span>
       <span fxFlex></span>
       <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
     </a>
+
+    <!-- External tab link -->
     <a class="" appAccordionToggle href="{{ menuitem.state }}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
       <mat-icon>{{ menuitem.icon }}</mat-icon>
       <span>{{ menuitem.name }}</span>
       <span fxFlex></span>
       <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
     </a>
+
+    <!-- Submenu items -->
     <a class="" appAccordionToggle href="javascript:;" *ngIf="menuitem.type === 'sub'">
       <mat-icon *ngIf="!menuitem.icon.includes('fas fa')">{{ menuitem.icon }}</mat-icon>
       <i *ngIf="menuitem.icon.includes('fas fa')" [class]="menuitem.icon" style="margin-right: 8px; font-size: 20px"></i>
@@ -43,16 +49,18 @@
         {{ childitem.name }}
       </mat-nav-list>
       <mat-list-item *ngFor="let childitem of nonsubChildren(menuitem.children)" routerLinkActive="selected">
-        <a *ngIf="childitem.id" [routerLink]="['/', childitem.state, childitem.id]" class="relative" routerLinkActive="selected">
+        <a *ngIf="childitem.id" [routerLink]="childitem.state" class="relative" routerLinkActive="selected">
           <i *ngIf="childitem.icon && childitem.icon.includes('fas fa')" [class]="childitem.icon" style="margin-right: 8px; font-size: 20px"></i>
           {{ childitem.name }}</a
         >
-        <a *ngIf="!childitem.id" [routerLink]="['/', childitem.state]" class="relative" routerLinkActive="selected">
+        <a *ngIf="!childitem.id" [routerLink]="childitem.state" class="relative" routerLinkActive="selected">
           <i *ngIf="childitem.icon && childitem.icon.includes('fas fa')" [class]="childitem.icon" style="margin-right: 8px; font-size: 20px"></i>
           {{ childitem.name }}</a
         >
       </mat-list-item>
     </mat-nav-list>
+
+    <!-- Seperator -->
     <div class="saperator text-muted" *ngIf="menuitem.type === 'saperator'">
       <span>{{ menuitem.name }}</span>
     </div>
