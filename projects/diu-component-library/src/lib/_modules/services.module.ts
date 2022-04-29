@@ -4,6 +4,6 @@ import { PopulationService } from "../_services/population.service";
 import { PopulationManagementService } from "../_services/populationmanagement.service";
 
 @NgModule({
-  providers: [PopulationService, PopulationManagementService, APIService],
+    providers: [PopulationService, PopulationManagementService, APIService],
 })
 export class DIUServicesModule {}

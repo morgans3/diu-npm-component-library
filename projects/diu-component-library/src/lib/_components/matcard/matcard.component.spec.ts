@@ -8,23 +8,23 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { HttpClientModule } from "@angular/common/http";
 
 describe("MatCardComponent", () => {
-  let component: MatCardComponent;
-  let fixture: ComponentFixture<MatCardComponent>;
+    let component: MatCardComponent;
+    let fixture: ComponentFixture<MatCardComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [MaterialModule, FlexLayoutModule, HttpClientModule],
-      declarations: [MatCardComponent],
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [MaterialModule, FlexLayoutModule, HttpClientModule],
+            declarations: [MatCardComponent],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MatCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(MatCardComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

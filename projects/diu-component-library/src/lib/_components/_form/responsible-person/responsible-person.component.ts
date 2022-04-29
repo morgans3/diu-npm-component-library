@@ -6,36 +6,36 @@ import { iFullUser } from "../../../_models/user.interface";
 import { UserSearchDialogComponent } from "../../user-search/dialogusersearch";
 
 @Component({
-  selector: "responsible-person",
-  templateUrl: "./responsible-person.component.html",
-  styles: [],
+    selector: "responsible-person",
+    templateUrl: "./responsible-person.component.html",
+    styles: [],
 })
 export class ResponsiblePersonComponent implements OnInit, OnChanges {
-  @Input() field: iFieldConfig;
-  @Input() group: FormGroup;
+    @Input() field: iFieldConfig;
+    @Input() group: FormGroup;
 
-  responsiblepeople: string[] = [];
+    responsiblepeople: string[] = [];
 
-  constructor(public dialog: MatDialog) {}
+    constructor(public dialog: MatDialog) {}
 
-  ngOnInit() {}
+    ngOnInit() {}
 
-  ngOnChanges() {}
+    ngOnChanges() {}
 
-  removePerson(person: string) {
-    this.responsiblepeople.splice(this.responsiblepeople.indexOf(person), 1);
-  }
+    removePerson(person: string) {
+        this.responsiblepeople.splice(this.responsiblepeople.indexOf(person), 1);
+    }
 
-  findPeople() {
-    const dialogRef = this.dialog.open(UserSearchDialogComponent, {
-      width: "600px",
-      data: null,
-    });
+    findPeople() {
+        const dialogRef = this.dialog.open(UserSearchDialogComponent, {
+            width: "600px",
+            data: null,
+        });
 
-    dialogRef.afterClosed().subscribe((result: iFullUser) => {
-      if (result) {
-        this.responsiblepeople.push(result.username);
-      }
-    });
-  }
+        dialogRef.afterClosed().subscribe((result: iFullUser) => {
+            if (result) {
+                this.responsiblepeople.push(result.username);
+            }
+        });
+    }
 }

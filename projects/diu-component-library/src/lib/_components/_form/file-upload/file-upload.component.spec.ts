@@ -12,30 +12,30 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ImageUploaderModule } from "ngx-image-uploader-next";
 
 describe("FileUploadComponent", () => {
-  let component: FileUploadComponent;
-  let fixture: ComponentFixture<FileUploadComponent>;
+    let component: FileUploadComponent;
+    let fixture: ComponentFixture<FileUploadComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MaterialModule, HttpClientModule, BrowserAnimationsModule, ImageUploaderModule],
-      declarations: [FileUploadComponent, ImageGalleryDialog],
-      providers: [
-        { provide: MAT_DIALOG_DATA, useValue: {} },
-        {
-          provide: MatDialogRef,
-          useValue: {},
-        },
-      ],
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [FormsModule, ReactiveFormsModule, MaterialModule, HttpClientModule, BrowserAnimationsModule, ImageUploaderModule],
+            declarations: [FileUploadComponent, ImageGalleryDialog],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: {} },
+                {
+                    provide: MatDialogRef,
+                    useValue: {},
+                },
+            ],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(FileUploadComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(FileUploadComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

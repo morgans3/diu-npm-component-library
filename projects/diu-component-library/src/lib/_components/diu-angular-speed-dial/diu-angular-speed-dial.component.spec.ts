@@ -10,23 +10,30 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "../../_modules/material.module";
 
 describe("DiuAngularSpeedDialComponent", () => {
-  let component: DiuAngularSpeedDialComponent;
-  let fixture: ComponentFixture<DiuAngularSpeedDialComponent>;
+    let component: DiuAngularSpeedDialComponent;
+    let fixture: ComponentFixture<DiuAngularSpeedDialComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DiuAngularSpeedDialComponent],
-      imports: [MaterialModule, RouterModule.forRoot([]), HttpClientModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [DiuAngularSpeedDialComponent],
+            imports: [
+                MaterialModule,
+                RouterModule.forRoot([]),
+                HttpClientModule,
+                FormsModule,
+                ReactiveFormsModule,
+                BrowserAnimationsModule,
+            ],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DiuAngularSpeedDialComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DiuAngularSpeedDialComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

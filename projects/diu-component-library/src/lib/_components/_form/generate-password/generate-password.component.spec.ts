@@ -9,24 +9,24 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PasswordGeneratorComponent } from "./generate-password.component";
 
 describe("PasswordGeneratorComponent", () => {
-  let component: PasswordGeneratorComponent;
-  let fixture: ComponentFixture<PasswordGeneratorComponent>;
+    let component: PasswordGeneratorComponent;
+    let fixture: ComponentFixture<PasswordGeneratorComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, MaterialModule, HttpClientModule, BrowserAnimationsModule],
-      declarations: [PasswordGeneratorComponent],
-      providers: [],
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [FormsModule, ReactiveFormsModule, MaterialModule, HttpClientModule, BrowserAnimationsModule],
+            declarations: [PasswordGeneratorComponent],
+            providers: [],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PasswordGeneratorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PasswordGeneratorComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

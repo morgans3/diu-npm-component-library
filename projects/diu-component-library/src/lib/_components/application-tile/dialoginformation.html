@@ -1,21 +1,23 @@
 <div mat-dialog-actions style="display: inherit !important">
-  <div fxLayout="row wrap">
-    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="center center">
-      <mat-card-title *ngIf="loadedData && loadedData.name">{{ loadedData.name.split("_").join(" ") }}</mat-card-title>
+    <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="center center">
+            <mat-card-title *ngIf="loadedData && loadedData.name">{{ loadedData.name.split("_").join(" ") }}</mat-card-title>
+        </div>
     </div>
-  </div>
 
-  <hr />
-  <div fxLayout="row wrap" *ngIf="loadedData">
-    <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" style="padding: 10px">
-      <p *ngIf="loadedData.description">{{loadedData.description}}</p>
-      <p>If you require more information prior to requesting access, please contact {{loadedData.ownerEmail}}</p>
+    <hr />
+    <div fxLayout="row wrap" *ngIf="loadedData">
+        <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" style="padding: 10px">
+            <p *ngIf="loadedData.description">{{loadedData.description}}</p>
+            <p>If you require more information prior to requesting access, please contact {{loadedData.ownerEmail}}</p>
+        </div>
     </div>
-  </div>
 
-  <div *ngIf="!loadedData">No Application selected.</div>
+    <div *ngIf="!loadedData">No Application selected.</div>
 
-  <button mat-raised-button color="primary" style="width: 100%; padding-left: 5px; padding-right: 5px" (click)="installApp()">Install</button>
-  <br /><br />
-  <button mat-raised-button color="warn" style="width: 100%; padding-left: 5px; padding-right: 5px" (click)="onNoClick()">Close</button>
+    <button mat-raised-button color="primary" style="width: 100%; padding-left: 5px; padding-right: 5px" (click)="installApp()">
+        Install
+    </button>
+    <br /><br />
+    <button mat-raised-button color="warn" style="width: 100%; padding-left: 5px; padding-right: 5px" (click)="onNoClick()">Close</button>
 </div>

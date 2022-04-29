@@ -9,23 +9,23 @@ import { RouterModule } from "@angular/router";
 import { MaterialModule } from "../../_modules/material.module";
 
 describe("DiuAngularNavigationComponent", () => {
-  let component: DiuAngularNavigationComponent;
-  let fixture: ComponentFixture<DiuAngularNavigationComponent>;
+    let component: DiuAngularNavigationComponent;
+    let fixture: ComponentFixture<DiuAngularNavigationComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DiuAngularNavigationComponent],
-      imports: [MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule],
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [DiuAngularNavigationComponent],
+            imports: [MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DiuAngularNavigationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DiuAngularNavigationComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

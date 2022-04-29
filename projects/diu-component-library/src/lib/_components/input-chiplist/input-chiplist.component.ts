@@ -1,24 +1,23 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
+import { FocusMonitor } from "@angular/cdk/a11y";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
-import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self } from '@angular/core';
-import { MAT_FORM_FIELD, MatFormField, MatFormFieldControl } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
+import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self } from "@angular/core";
+import { MAT_FORM_FIELD, MatFormField, MatFormFieldControl } from "@angular/material/form-field";
+import { Subject } from "rxjs";
 
 @Component({
-    selector: 'input-chiplist',
-    templateUrl: 'input-chiplist.component.html',
+    selector: "input-chiplist",
+    templateUrl: "input-chiplist.component.html",
     providers: [{ provide: MatFormFieldControl, useExisting: InputChipList }],
     host: {
-        '[class.example-floating]': 'shouldLabelFloat',
-        '[id]': 'id',
-    }
+        "[class.example-floating]": "shouldLabelFloat",
+        "[id]": "id",
+    },
 })
 export class InputChipList implements ControlValueAccessor, MatFormFieldControl<Array<string>>, OnDestroy {
-
     static nextId = 0;
-    controlType = 'input-chiplist';
+    controlType = "input-chiplist";
     id = `input-chiplist-${InputChipList.nextId++}`;
 
     focused = false;
@@ -26,9 +25,9 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
     formControl: FormControl = new FormControl([]);
     separatorKeysCodes = [ENTER, COMMA];
     stateChanges = new Subject<void>();
-    
-    onChange = (_: any) => { };
-    onTouched = () => { };
+
+    onChange = (_: any) => {};
+    onTouched = () => {};
 
     get empty() {
         return !this.formControl.value.length;
@@ -99,8 +98,8 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
     }
 
     setDescribedByIds(ids: string[]) {
-        const controlElement = this._elementRef.nativeElement.querySelector('.mat-form-field-type-input-chiplist')!;
-        controlElement.setAttribute('aria-describedby', ids.join(' '));
+        const controlElement = this._elementRef.nativeElement.querySelector(".mat-form-field-type-input-chiplist")!;
+        controlElement.setAttribute("aria-describedby", ids.join(" "));
     }
 
     onContainerClick() {}
