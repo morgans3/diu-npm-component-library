@@ -13,16 +13,6 @@ import { FormTableDataHandler } from "../api-table-data-handler/api-table-data.h
  */
 export class FormWithTableComponent implements OnInit {
     /**
-     * config is the data reuired for the handler
-     */
-    config: any;
-
-    /**
-     * this is the data handler class for form with table
-     */
-    _Handler: cFormWithTableHander;
-
-    /**
      * Form data passed through to the parent to be passed to either the dynamic-form or display-table component
      */
     @Input() formData?: any;
@@ -36,6 +26,15 @@ export class FormWithTableComponent implements OnInit {
      * FormAnswers are the already answered questions from the form.
      */
     @Input() formAnswers: any;
+    /**
+     * config is the data reuired for the handler
+     */
+    config: any;
+
+    /**
+     * this is the data handler class for form with table
+     */
+    Handler: cFormWithTableHander;
 
     /**
      * The data handler for tables attached to forms
@@ -48,7 +47,8 @@ export class FormWithTableComponent implements OnInit {
     submissionData: any;
 
     /**
-     * Updates the default values for data when the data is being updated, this is used to ensure the missing values from the form can be posted when updated as the API won't accept a payload without all of the values in place
+     * Updates the default values for data when the data is being updated, this is used to ensure the missing values
+     * from the form can be posted when updated as the API won't accept a payload without all of the values in place
      */
     arrDefaultValues: any;
 
@@ -74,6 +74,7 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * Function constructor funciton
+     *
      * @param apiService - This service is used to communicate with the API
      */
     constructor(private apiService: APIService) {}
@@ -82,16 +83,16 @@ export class FormWithTableComponent implements OnInit {
      * This function is ran when the component has been initialized
      */
     ngOnInit() {
-        this._Handler = new cFormWithTableHander(this.config);
+        this.Handler = new cFormWithTableHander(this.config);
         // if there's no preloaded data and a form ID provided
-        if (!this._Handler.formData && this._Handler.formDataID) {
-            //use the form ID to get form config from db
-            this.apiService.getPayloadById(this._Handler.formDataID).subscribe((data: any) => {
-                //if the data has been returned
+        if (!this.Handler.formData && this.Handler.formDataID) {
+            //  use the form ID to get form config from db
+            this.apiService.getPayloadById(this.Handler.formDataID).subscribe((data: any) => {
+                //  if the data has been returned
                 if (data && data.length > 0) {
-                    //form data is stored under the key config
-                    this._Handler.formData = JSON.parse(data[0].config);
-                    this.apiService.getPayloadById(this._Handler.tableDataID).subscribe((response: any) => {
+                    //  form data is stored under the key config
+                    this.Handler.formData = JSON.parse(data[0].config);
+                    this.apiService.getPayloadById(this.Handler.tableDataID).subscribe((response: any) => {
                         this.tableData = JSON.parse(response[0].config);
                         // console.log(this.tableData);
                         this.configureTable();
@@ -99,7 +100,7 @@ export class FormWithTableComponent implements OnInit {
                 }
             });
         }
-        if (this._Handler.formData) {
+        if (this.Handler.formData) {
             this.configureTable();
         }
     }
@@ -108,9 +109,9 @@ export class FormWithTableComponent implements OnInit {
      * This function is used to get the data for the handler from the API
      */
     configureTable() {
-        this.tableUrl = this._Handler.formData.apiEndpoint + "getAll/";
+        this.tableUrl = (this.Handler.formData.apiEndpoint as string) + "getAll/";
         this.apiService.genericGetAPICall(this.tableUrl).subscribe((data) => {
-            this.tableDataHandler = new FormTableDataHandler(data, this._Handler.formData, this.tableData);
+            this.tableDataHandler = new FormTableDataHandler(data, this.Handler.formData, this.tableData);
         });
     }
 
@@ -119,7 +120,7 @@ export class FormWithTableComponent implements OnInit {
      * @returns the class to be wrapped around the feedback message
      */
     feedbackClass() {
-        if (this.feedbackStatus == "success") {
+        if (this.feedbackStatus === "success") {
             return "successMessage";
         } else {
             return "errorMessage";
@@ -128,13 +129,14 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This function is used to send data to be registered or updated
+     *
      * @param formSubmissionData
      */
     formSubmission(formSubmissionData) {
         // console.log(formSubmissionData);
-        let strRegisterEndpoint = this._Handler.formData.apiEndpoint + "register/";
+        let strRegisterEndpoint = (this.Handler.formData.apiEndpoint as string) + "register/";
         if (this.submissionData) {
-            strRegisterEndpoint = this._Handler.formData.apiEndpoint + "update/";
+            strRegisterEndpoint = (this.Handler.formData.apiEndpoint as string) + "update/";
         }
 
         const payload = formSubmissionData;
@@ -142,7 +144,7 @@ export class FormWithTableComponent implements OnInit {
             payload[key] = this.returnDefaultValue(payload[key]);
         });
         if (this.tableDataHandler.defaultValues) {
-            this.tableDataHandler.defaultValues.forEach((defaultValue, index) => {
+            this.tableDataHandler.defaultValues.forEach((defaultValue) => {
                 // console.log(defaultValue);
                 // console.log(this.arrDefaultValues[index]);
                 if (defaultValue.value && defaultValue.label) {
@@ -153,7 +155,7 @@ export class FormWithTableComponent implements OnInit {
         // console.log(payload);
         this.apiService.genericPostAPICall(strRegisterEndpoint, payload).subscribe((data) => {
             // console.log(data);
-            //TODO: add success/ fail message
+            // TODO: add success/ fail message
             if (data["success"]) {
                 this.feedbackStatus = "success";
                 if (this.submissionData) {
@@ -177,6 +179,7 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This is used to dynamically call a function from this class
+     *
      * @param data - this is an object passed that contains data for a function and the name of the function to be called
      */
     runPassedFunction(data) {
@@ -185,6 +188,7 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This is used to put a row of data from the table into the dynamic-form component
+     *
      * @param formData - When the table action for update is ran this is the row data
      */
     updateFormAnswers(formData) {
@@ -194,6 +198,7 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This is used to dynamically change the form information
+     *
      * @param formData - This is the data for the form that determines what's going to be displayed
      */
     updateFormData(formData) {
@@ -203,10 +208,11 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This is used to remove data from the databse via the API
+     *
      * @param formData - When the table action for delete is ran this is the row data
      */
     deleteFormData(formData) {
-        let strDeleteEndpoint = this._Handler.formData.apiEndpoint + "delete/";
+        const strDeleteEndpoint = (this.Handler.formData.apiEndpoint as string) + "delete/";
         this.apiService.genericPostAPICall(strDeleteEndpoint, formData).subscribe((data) => {
             //   console.log(data);
             if (data["success"]) {
@@ -223,14 +229,16 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This is used to update the API endpoint if data changes
+     *
      * @param data - the new API endpoint
      */
     updateEndpoint(data) {
-        this._Handler.formData.apiEndpoint = data;
+        this.Handler.formData.apiEndpoint = data;
     }
 
     /**
      * This function is used to update the default values array
+     *
      * @param data - This is an array containing default value information
      */
     updateDefaultValues(data) {
@@ -240,14 +248,15 @@ export class FormWithTableComponent implements OnInit {
 
     /**
      * This is used to turn string data into a boolean
+     *
      * @param value - form data passed through
      * @returns - the updated form data
      */
     returnDefaultValue(value) {
-        if (value == "true") {
+        if (value === "true") {
             return true;
         }
-        if (value == "false") {
+        if (value === "false") {
             return false;
         }
         // if(!isNaN(value) && typeof value == 'string'){

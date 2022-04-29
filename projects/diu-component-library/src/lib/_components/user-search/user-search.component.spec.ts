@@ -1,10 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { DebugElement } from "@angular/core";
 
 import { UserSearchComponent } from "./user-search.component";
-import { UserGroupService } from "../../_services/usergroup.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "../../_modules/material.module";
@@ -18,7 +15,7 @@ describe("UserSearchComponent", () => {
         TestBed.configureTestingModule({
             imports: [FormsModule, ReactiveFormsModule, MaterialModule, HttpClientModule, BrowserAnimationsModule],
             declarations: [UserSearchComponent],
-            providers: [UserGroupService],
+            providers: [],
         }).compileComponents();
     }));
 

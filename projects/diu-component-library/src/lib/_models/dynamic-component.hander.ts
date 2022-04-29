@@ -7,6 +7,7 @@ export class dynamicContentHandler extends cComponentHandler {
     data: any;
     /**
      * Class Constructor
+     *
      * @param data - Data for the component that's unique to each component (Labels, for example)
      * @param config - The configeration required to load the component correctly
      */

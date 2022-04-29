@@ -14,7 +14,7 @@ import { BrokerService } from "../../_services/broker.service";
 })
 export class UserSearchDialogComponent implements OnInit {
     @Input() config: any;
-    _Handler: cComponentHandler;
+    Handler: cComponentHandler;
     usersearchConfig: any;
 
     /**
@@ -33,16 +33,16 @@ export class UserSearchDialogComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        if (this.config) this._Handler = new cComponentHandler(this.config);
-        else if (this.data) this._Handler = new cComponentHandler(this.data);
+        if (this.config) this.Handler = new cComponentHandler(this.config);
+        else if (this.data) this.Handler = new cComponentHandler(this.data);
 
-        if (this._Handler && this._Handler.actions.length > 0) {
+        if (this.Handler && this.Handler.actions.length > 0) {
             this.usersearchConfig = {
-                actions: this._Handler.actions,
+                actions: this.Handler.actions,
             };
 
             this.brokerService.currentMessage.subscribe((event: iEventActions) => {
-                const matches = this._Handler.actions.filter((x) => x.action === event.action);
+                const matches = this.Handler.actions.filter((x) => x.action === event.action);
                 if (matches.length > 0) {
                     this.selectUser(event.payload);
                 }

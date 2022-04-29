@@ -7,7 +7,7 @@ import { GalleryItem, ImageItem } from "ng-gallery";
 })
 export class ScreenshotsComponent implements OnInit, OnChanges {
     @Input() images: string[];
-    _album: GalleryItem[] = [];
+    album: GalleryItem[] = [];
 
     constructor() {}
 
@@ -20,13 +20,13 @@ export class ScreenshotsComponent implements OnInit, OnChanges {
     }
 
     loadImagesToAlbum() {
-        if (this.images.length > 0 && this._album.length === 0) {
+        if (this.images.length > 0 && this.album.length === 0) {
             this.images.forEach((i) => {
                 const img = new ImageItem({
                     src: "/assets/images/screens/" + i,
                     thumb: "/assets/images/screens/" + i,
                 });
-                this._album.push(img);
+                this.album.push(img);
             });
         }
     }

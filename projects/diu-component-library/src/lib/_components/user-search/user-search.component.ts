@@ -19,10 +19,11 @@ export class UserSearchComponent implements OnInit {
      * Input: Configuration of component
      */
     @Input() config: any;
+    @Output() selectedUser = new EventEmitter<any>();
     /**
      * Handler Class for Component
      */
-    _Handler: cComponentHandler;
+    Handler: cComponentHandler;
     /**
      * Decoded JWT Token
      */
@@ -47,8 +48,6 @@ export class UserSearchComponent implements OnInit {
      * Initialise boolean to show when the API is being checked for results
      */
     searching = false;
-
-    @Output() selectedUser = new EventEmitter<any>();
 
     /**
      * User Search Component Constructor
@@ -77,7 +76,7 @@ export class UserSearchComponent implements OnInit {
      * User Search Component Initialiser
      */
     ngOnInit() {
-        if (this.config) this._Handler = new cComponentHandler(this.config);
+        if (this.config) this.Handler = new cComponentHandler(this.config);
         this.setDefaultOrg();
     }
 
@@ -134,8 +133,8 @@ export class UserSearchComponent implements OnInit {
      */
     selectUser(user: iFullUser) {
         this.selectedUser.emit(user);
-        if (this._Handler && this._Handler.actions.length > 0) {
-            this._Handler.actions.forEach((x) => {
+        if (this.Handler && this.Handler.actions.length > 0) {
+            this.Handler.actions.forEach((x) => {
                 this.brokerService.sendMessage({
                     id: x.id,
                     action: x.action,

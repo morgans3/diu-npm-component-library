@@ -33,11 +33,11 @@ export class DynamicFieldDirective implements OnInit {
      * Angular Life-cycle hook that is executed when the dynamic form component is initialized
      */
     ngOnInit() {
-        //create field component
+        // create field component
         this.createComponent();
-        //add field config from passed data
+        // add field config from passed data
         this.componentRef.instance.field = this.field;
-        //add group config from passed data
+        // add group config from passed data
         this.componentRef.instance.group = this.group;
     }
 
@@ -45,14 +45,14 @@ export class DynamicFieldDirective implements OnInit {
      * Creates the component
      */
     createComponent() {
-        //set a variable and potentially override it based on field config of type/ inputType
+        // set a variable and potentially override it based on field config of type/ inputType
         let component = this.field.type;
-        if (component == "html") {
+        if (component === "html") {
             component = this.field.inputType;
         }
-        //uses the compnent variable to input the class of the component that will be created
+        // uses the compnent variable to input the class of the component that will be created
         const factory = this.resolver.resolveComponentFactory(componentMapper[component]);
-        //create the component by passing the factory.
+        // create the component by passing the factory.
         this.componentRef = this.container.createComponent(factory);
     }
 }

@@ -52,7 +52,7 @@ export class RadiobuttonComponent implements OnInit {
      */
     setValidation(validators: iValidator[]) {
         // 1. Initialise an empty array
-        let arrValidation = [];
+        const arrValidation = [];
         // 2. Loop through the validators and add to the array
         validators.forEach((validator: iValidator) => {
             switch (validator.name) {
@@ -66,8 +66,8 @@ export class RadiobuttonComponent implements OnInit {
         });
 
         let currValue = null;
-        let attributeSelector = '[ng-reflect-name="' + this.field.name + '"] .mat-radio-checked';
-        const domElem = <HTMLInputElement>document.querySelector(attributeSelector);
+        const attributeSelector = `[ng-reflect-name="` + this.field.name + `"] .mat-radio-checked`;
+        const domElem = document.querySelector(attributeSelector);
         if (domElem && domElem.getAttribute("ng-reflect-value")) {
             currValue = domElem.getAttribute("ng-reflect-value");
         }
@@ -78,7 +78,7 @@ export class RadiobuttonComponent implements OnInit {
      * Function to check Validation in Radiobutton list
      */
     checkValidation() {
-        let objCurrentGroup = this.group.get(this.field.name);
+        const objCurrentGroup = this.group.get(this.field.name);
         let blnValid = false;
         if (objCurrentGroup.hasError("required") && objCurrentGroup.touched) {
             blnValid = true;

@@ -13,7 +13,7 @@ import { UserSearchDialogComponent } from "./_components/user-search/dialogusers
 import { UserSearchComponent } from "./_components/user-search/user-search.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FileUploadComponent } from "./_components/_form/file-upload/file-upload.component";
-import { ImageGalleryDialog } from "./_components/image-gallery/image-gallery.component";
+import { ImageGalleryDialogComponent } from "./_components/image-gallery/image-gallery.component";
 import { ImageUploaderModule } from "ngx-image-uploader-next";
 import { DisplayApplicationsComponent } from "./_components/display-applications/display-applications.component";
 import { PasswordGeneratorComponent } from "./_components/_form/generate-password/generate-password.component";
@@ -46,7 +46,7 @@ import { ApplicationTileComponent } from "./_components/application-tile/applica
 import { AppstoreComponent } from "./_components/store/store.component";
 import { BrokerService } from "./_services/broker.service";
 import { ResponsiblePersonComponent } from "./_components/_form/responsible-person/responsible-person.component";
-import { InputChipList } from "./_components/input-chiplist/input-chiplist.component";
+import { InputChipListComponent } from "./_components/input-chiplist/input-chiplist.component";
 
 @NgModule({
     declarations: [
@@ -60,7 +60,7 @@ import { InputChipList } from "./_components/input-chiplist/input-chiplist.compo
         DynamicComponentDirective,
         DisplayTableComponent,
         FileUploadComponent,
-        ImageGalleryDialog,
+        ImageGalleryDialogComponent,
         PasswordGeneratorComponent,
         DisplayApplicationsComponent,
         UserSearchDialogComponent,
@@ -86,7 +86,7 @@ import { InputChipList } from "./_components/input-chiplist/input-chiplist.compo
         ApplicationTileComponent,
         AppstoreComponent,
         ResponsiblePersonComponent,
-        InputChipList,
+        InputChipListComponent,
     ],
     imports: [
         FormsModule,
@@ -111,7 +111,7 @@ import { InputChipList } from "./_components/input-chiplist/input-chiplist.compo
         DynamicComponentDirective,
         DisplayTableComponent,
         FileUploadComponent,
-        ImageGalleryDialog,
+        ImageGalleryDialogComponent,
         PasswordGeneratorComponent,
         DisplayApplicationsComponent,
         AutocompleteComponent,
@@ -135,7 +135,7 @@ import { InputChipList } from "./_components/input-chiplist/input-chiplist.compo
         ApplicationTileComponent,
         AppstoreComponent,
         ResponsiblePersonComponent,
-        InputChipList,
+        InputChipListComponent,
     ],
     entryComponents: [
         DynamicFormComponent,

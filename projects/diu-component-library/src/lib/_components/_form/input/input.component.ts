@@ -47,7 +47,7 @@ export class InputComponent implements OnInit {
      */
     setValidation(validators: iValidator[]) {
         // 1. Initialise an empty array
-        let arrValidation = [];
+        const arrValidation = [];
         // 2. Loop through the validators and add to the array
 
         validators.forEach((validator: iValidator) => {
@@ -67,7 +67,7 @@ export class InputComponent implements OnInit {
 
         // Set the current fieldvalue based on what data has been passed if the form is re-rendered
         let currValue = null;
-        const domElem = <HTMLInputElement>document.getElementById(this.dataHandler.name);
+        const domElem = document.getElementById(this.dataHandler.name) as HTMLInputElement;
         if (domElem && domElem.value) {
             currValue = domElem.value;
         }
@@ -78,16 +78,14 @@ export class InputComponent implements OnInit {
      * Function adds custom validation to different input types, this validation is always required for the field
      */
     addCustomValidation(strInputType: string) {
-        //set pattern using regex or a function to ensure the data matches a specific formula based on an input type
+        // set pattern using regex or a function to ensure the data matches a specific formula based on an input type
         let strPattern;
         switch (strInputType) {
             case "email":
-                strPattern =
-                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                strPattern = /\S+@\S+\.\S+/;
                 break;
             case "postcode":
-                strPattern =
-                    /^(([gG][iI][rR] {0,}0[aA]{2})|(([aA][sS][cC][nN]|[sS][tT][hH][lL]|[tT][dD][cC][uU]|[bB][bB][nN][dD]|[bB][iI][qQ][qQ]|[fF][iI][qQ][qQ]|[pP][cC][rR][nN]|[sS][iI][qQ][qQ]|[iT][kK][cC][aA]) {0,}1[zZ]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,1}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/;
+                strPattern = /^([A-Z][A-HJ-Y]?\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0A{2})$/;
                 break;
             case "password":
                 strPattern = /^(?=.*[0-9]{1,})(?=.*[a-z])(?=.*[A-Z]{1,})(?=.*[!@£$%^&*()]{1,})([a-zA-Z0-9!@£$%^&*()]{8,})$/;
@@ -133,29 +131,29 @@ export class InputComponent implements OnInit {
         if (nhsNumber) {
             nhsNumber = nhsNumber.replace(/\s/g, "");
         }
-        //fail validation if the number is not 10 characters, has non numerical characters or no value
+        // fail validation if the number is not 10 characters, has non numerical characters or no value
         if (nhsNumber === undefined || nhsNumber === null || isNaN(Number(nhsNumber)) || nhsNumber.toString().length !== 10) {
             return { nhsNumber: true };
         }
-        //turn number into string to split into an array
+        // turn number into string to split into an array
         if (Number.isInteger(nhsNumber)) {
             nhsNumber = nhsNumber.toString();
         }
-        //turn NHS number into an array
-        var nhsNumberAsArray = nhsNumber.split("");
-        //get the remainder by adding each multiplied value together and dividing by 11.
-        var remainder = nhsNumberAsArray.slice(0, 9).map(multiplyByPosition).reduce(addTogether, 0) % 11;
-        var checkDigit = 11 - remainder;
+        // turn NHS number into an array
+        const nhsNumberAsArray = nhsNumber.split("");
+        // get the remainder by adding each multiplied value together and dividing by 11.
+        const remainder = nhsNumberAsArray.slice(0, 9).map(multiplyByPosition).reduce(addTogether, 0) % 11;
+        let checkDigit = 11 - remainder;
         if (checkDigit === 11) {
             checkDigit = 0;
         }
-        //check that the last digit matches the remainder
-        var providedCheckDigit = nhsNumberAsArray[9];
-        //if the last digit matches the checkDigit number then return null (anything returned means validation failed)
+        // check that the last digit matches the remainder
+        const providedCheckDigit = nhsNumberAsArray[9];
+        // if the last digit matches the checkDigit number then return null (anything returned means validation failed)
         if (checkDigit === Number(providedCheckDigit)) {
             return null;
         }
-        //return a fail if the function hasn't passed
+        // return a fail if the function hasn't passed
         return { nhsNumber: true };
     }
 }
@@ -163,12 +161,12 @@ export class InputComponent implements OnInit {
 /**
  * Multiply each number by the reverse of their position in the array (1st number by 10, second number by 9 and so on)
  */
-function multiplyByPosition(digit, index) {
+const multiplyByPosition = (digit: number, index: number) => {
     return digit * (11 - (index + 1));
-}
+};
 /**
  * Add 2 values together
  */
-function addTogether(previousValue, currentValue) {
+const addTogether = (previousValue: number, currentValue: number) => {
     return previousValue + currentValue;
-}
+};

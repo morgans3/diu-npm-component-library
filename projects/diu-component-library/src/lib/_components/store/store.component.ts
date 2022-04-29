@@ -16,7 +16,7 @@ export interface iAppContainer {
 })
 export class AppstoreComponent implements OnInit {
     config: any;
-    _Handler: cStoreHandler;
+    Handler: cStoreHandler;
 
     tokenDecoded: any;
     InstalledApps: iAppContainer[] = [];
@@ -35,11 +35,11 @@ export class AppstoreComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._Handler = new cStoreHandler(this.config);
+        this.Handler = new cStoreHandler(this.config);
         this.loadAllApps();
     }
 
-    reloadApps(event: any) {
+    reloadApps() {
         this.loadAllApps();
     }
 
@@ -49,7 +49,7 @@ export class AppstoreComponent implements OnInit {
             const myteams: any[] = this.tokenDecoded.memberships;
             myteams.forEach((x) => {
                 this.apiService
-                    .genericGetAPICallByParam(this._Handler.getInstallsByTeamcodeEndpoint, x.teamcode)
+                    .genericGetAPICallByParam(this.Handler.getInstallsByTeamcodeEndpoint, x.teamcode)
                     .subscribe((res: iInstallation[]) => {
                         if (res.length > 0) {
                             res.forEach((install: iInstallation) => {
@@ -81,7 +81,7 @@ export class AppstoreComponent implements OnInit {
         this.InstalledApps = [];
         this.RequestedApps = [];
         this.apiService
-            .genericGetAPICallByParam(this._Handler.getInstallsByUsernameEndpoint, this.tokenDecoded.username)
+            .genericGetAPICallByParam(this.Handler.getInstallsByUsernameEndpoint, this.tokenDecoded.username)
             .subscribe((res: iInstallation[]) => {
                 if (res.length > 0) {
                     res.forEach((install: iInstallation) => {
@@ -110,7 +110,7 @@ export class AppstoreComponent implements OnInit {
         this.TeamApps = [];
         this.Apps = [];
         this.AppStore = [];
-        this.apiService.genericGetAPICall(this._Handler.getAllStoreEndpoint).subscribe((res: iApplication[]) => {
+        this.apiService.genericGetAPICall(this.Handler.getAllStoreEndpoint).subscribe((res: iApplication[]) => {
             this.Apps = res;
             this.AppStore = this.container(res);
             this.loadMyApps();
@@ -120,7 +120,7 @@ export class AppstoreComponent implements OnInit {
     container(apps: iApplication[]): iAppContainer[] {
         const response: iAppContainer[] = [];
         apps.forEach((app) => {
-            response.push({ app: app });
+            response.push({ app });
         });
         return response;
     }

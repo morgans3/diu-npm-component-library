@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, Inject } from "@angular/core";
 import * as d3 from "d3";
 import * as dc from "dc";
-declare var window: any;
+declare const window: any;
 import jwt_decode from "jwt-decode";
 import { DeprivationColorCodes, iWardDetails } from "./lookups";
 import { collapseAnimations } from "../../_functions/helper_functions";
@@ -41,8 +41,7 @@ export class DashboardPopulationComponent implements OnInit {
     openCloseWardAnim = "close";
     visible = false;
     width: any;
-    @ViewChild("deprivationChartParent", { static: false })
-    deprivationChartParent: ElementRef;
+    @ViewChild("deprivationChartParent", { static: false }) deprivationChartParent: ElementRef;
     deprivationChart: any;
     compCharts = {};
     toolTip: any;
@@ -51,14 +50,16 @@ export class DashboardPopulationComponent implements OnInit {
     /* #endregion */
 
     @HostListener("window:resize", ["$event"])
-    onResize(event) {
+    onResize() {
         setTimeout(() => {
             this.createCharts();
         }, 0);
     }
 
     constructor(private apiService: APIService, @Inject("environment") environment) {
-        if (environment && environment.websiteURL) this.cfUrl = `https://popmini.${environment.websiteURL}/dataset/getCrossfilter`;
+        if (environment && environment.websiteURL) {
+            this.cfUrl = `https://popmini.${environment.websiteURL as string}/dataset/getCrossfilter`;
+        }
         const token = localStorage.getItem("@@STATE");
         if (token) {
             const jsonToken = JSON.parse(token);
@@ -179,14 +180,14 @@ export class DashboardPopulationComponent implements OnInit {
                 }
                 this.refresh(this.queryFilter);
             },
-            filterAll: function () {},
+            filterAll: () => {},
         };
         this.WDimGroup = {
             all: () => {
                 return this.filteredData["WDimension"].values;
             },
-            order: function () {},
-            top: function () {},
+            order: () => {},
+            top: () => {},
         };
         this.AgeDimensionM = {
             filter: (f) => {
@@ -198,13 +199,13 @@ export class DashboardPopulationComponent implements OnInit {
                 }
                 this.refresh(this.queryFilter);
             },
-            filterAll: function () {},
+            filterAll: () => {},
         };
         this.AgeDimGroupM = {
             all: () => {
                 return this.extractValues("M", this.filteredData["AgeDimension"].values);
             },
-            order: function () {},
+            order: () => {},
             top: () => {
                 return this.filteredData["AgeDimension"].top;
             },
@@ -219,13 +220,13 @@ export class DashboardPopulationComponent implements OnInit {
                 }
                 this.refresh(this.queryFilter);
             },
-            filterAll: function () {},
+            filterAll: () => {},
         };
         this.AgeDimGroupF = {
             all: () => {
                 return this.extractValues("F", this.filteredData["AgeDimension"].values);
             },
-            order: function () {},
+            order: () => {},
             top: () => {
                 return this.filteredData["AgeDimension"].top;
             },
@@ -239,14 +240,14 @@ export class DashboardPopulationComponent implements OnInit {
                 }
                 this.refresh(this.queryFilter);
             },
-            filterAll: function () {},
+            filterAll: () => {},
         };
         this.DDimGroup = {
             all: () => {
                 return this.filteredData["DDimension"].values;
             },
-            order: function () {},
-            top: function () {},
+            order: () => {},
+            top: () => {},
         };
     }
 
@@ -257,7 +258,7 @@ export class DashboardPopulationComponent implements OnInit {
             const elemCat = this.getAgeCategory(parseInt(elem["key"].split(":")[1]));
             const item = response.filter((i) => i.key === elemCat);
             if (item.length > 0) {
-                item[0].value = item[0].value + elem["value"];
+                item[0].value = item[0].value + (elem["value"] as number);
             } else {
                 response.push({ key: elemCat, value: elem["value"] });
             }
@@ -317,7 +318,7 @@ export class DashboardPopulationComponent implements OnInit {
             this.lastQueryFilter = JSON.parse(JSON.stringify(queryFilter));
             this.queryFilter = queryFilter;
             d3.json(this.cfUrl + "?filter=" + JSON.stringify(queryFilter), {
-                headers: new Headers({ Authorization: "JWT " + this.token }),
+                headers: new Headers({ Authorization: "JWT " + (this.token as string) }),
             }).then((d) => {
                 if (this.filteredData !== d) {
                     this.filteredData = d;
@@ -330,7 +331,7 @@ export class DashboardPopulationComponent implements OnInit {
     resetToWholePop() {
         this.queryFilter = {};
         d3.json(this.cfUrl, {
-            headers: new Headers({ Authorization: "JWT " + this.token }),
+            headers: new Headers({ Authorization: "JWT " + (this.token as string) }),
         }).then((d) => {
             this.filteredData = d;
             this.createCharts();
@@ -384,13 +385,13 @@ export class DashboardPopulationComponent implements OnInit {
         const theData = group.all();
         const end = theData
             .map((key) => key.value)
-            .reduce(function (acc, key) {
+            .reduce((acc: string, key: string) => {
                 return key + acc;
             });
         let i = 0;
         theData.forEach((elem) => {
             elem.start = i;
-            elem.end = i + elem.value;
+            elem.end = i + (elem.value as number);
             i = elem.end;
         });
         this.deprivationChart = d3.select("#" + chartName);
@@ -403,7 +404,7 @@ export class DashboardPopulationComponent implements OnInit {
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr("transform", "translate(" + margin.left.toString() + "," + margin.top.toString() + ")");
         } else {
             this.deprivationChart
                 .select("svg")
@@ -416,13 +417,13 @@ export class DashboardPopulationComponent implements OnInit {
         const linearScale = d3.scaleLinear().domain([0, end]).range([0, width]);
         const xAxis = d3.axisBottom(linearScale);
 
-        const barData = this.deprivationChart.selectAll(".bar").data(theData, function (d) {
+        const barData = this.deprivationChart.selectAll(".bar").data(theData, (d) => {
             return d;
         });
         barData
             .enter()
             .append("rect")
-            .attr("x", function (d) {
+            .attr("x", (d) => {
                 return linearScale(d.start);
             })
             .style("fill", (d) => {
@@ -438,10 +439,10 @@ export class DashboardPopulationComponent implements OnInit {
                 }
                 return "bar pointed";
             })
-            .attr("height", function (d) {
+            .attr("height", (d) => {
                 return 30;
             })
-            .attr("width", function (d, i) {
+            .attr("width", (d) => {
                 return linearScale(d.end) - linearScale(d.start);
             });
 
@@ -458,7 +459,7 @@ export class DashboardPopulationComponent implements OnInit {
             this.deprivationChart
                 .append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
+                .attr("transform", "translate(0," + height.toString() + ")")
                 .call(xAxis);
         } else {
             this.deprivationChart.select(".x").transition().duration(750).call(xAxis);
@@ -472,10 +473,10 @@ export class DashboardPopulationComponent implements OnInit {
     applyAxisScale(chart, scale, axis) {
         chart
             .selectAll(".bar")
-            .attr("x", function (d, i) {
+            .attr("x", (d) => {
                 return scale(d.start);
             })
-            .attr("width", function (d, i) {
+            .attr("width", (d) => {
                 return scale(d.end) - scale(d.start);
             });
         axis.scale(scale);
@@ -506,13 +507,13 @@ export class DashboardPopulationComponent implements OnInit {
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom + 10)
             .append("g")
-            .attr("transform", "translate(" + shift + "," + margin.top + ")")
+            .attr("transform", "translate(" + shift.toString() + "," + margin.top.toString() + ")")
             .on("mouseout.something", () => this.mouseLeave());
 
-        let axisCrossPoint = 0.0;
-        if (male) {
-            axisCrossPoint = 100.0;
-        }
+        // let axisCrossPoint = 0.0;
+        // if (male) {
+        //     axisCrossPoint = 100.0;
+        // }
         const x = d3
             .scaleLinear()
             .domain([0, top])
@@ -612,9 +613,9 @@ export class DashboardPopulationComponent implements OnInit {
             });
         if (!male) {
             const xAxis = d3.axisBottom(x);
-            const gyBottom = this.compCharts[chartName]
+            this.compCharts[chartName]
                 .append("g")
-                .attr("transform", "translate(0, " + height + ")")
+                .attr("transform", "translate(0, " + height.toString() + ")")
                 .call(xAxis);
         } else {
             const x2 = d3
@@ -622,9 +623,9 @@ export class DashboardPopulationComponent implements OnInit {
                 .domain([top, 0])
                 .range([0, width - 10]);
             const xAxis = d3.axisBottom(x2);
-            const gyBottom = this.compCharts[chartName]
+            this.compCharts[chartName]
                 .append("g")
-                .attr("transform", "translate(-" + (shift - margin.right) + ", " + height + ")")
+                .attr("transform", "translate(-" + (shift - margin.right).toString() + ", " + height.toString() + ")")
                 .call(xAxis);
         }
     }
@@ -654,8 +655,8 @@ export class DashboardPopulationComponent implements OnInit {
         this.toolTip.transition().duration(200).style("opacity", 0.9);
         this.toolTip
             .html(this.htmlTooltip(datum, text))
-            .style("left", leftvalue + "px")
-            .style("top", drawer.scrollTop + rect.top + y - 110 + "px");
+            .style("left", leftvalue.toString() + "px")
+            .style("top", (drawer.scrollTop + rect.top + y - 110).toString() + "px");
     }
 
     mouseLeave() {
@@ -665,14 +666,15 @@ export class DashboardPopulationComponent implements OnInit {
     }
 
     htmlTooltip(d: any, text: string) {
-        let usedCompType, output;
-        if (typeof d.data === "undefined") {
-            usedCompType = d.key;
-        } else {
-            usedCompType = d.data.key;
-        }
-        output = "	<div id='toolTip' class='container d3-tip'>";
-        output += "					<h5>" + text + ": " + d.key + "</h5><h5>Total: " + d.value + "</h5>";
+        // let usedCompType;
+        let output;
+        // if (typeof d.data === "undefined") {
+        //     usedCompType = d.key;
+        // } else {
+        //     usedCompType = d.data.key;
+        // }
+        output = "<div id='toolTip' class='container d3-tip'>";
+        output += " <h5>" + text + ": " + (d.key as string) + "</h5><h5>Total: " + (d.value as string) + "</h5>";
         output += "	</div>";
         return output;
     }

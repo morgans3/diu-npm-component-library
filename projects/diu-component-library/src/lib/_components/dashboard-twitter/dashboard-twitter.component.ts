@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from "@angular
 import { iNewsFeed } from "../../_models/installations.interface";
 import { APIService } from "../../_services/api.service";
 import { ResizeService } from "../../_services/resize.service";
-declare var window: any;
+declare const window: any;
 
 @Component({
     selector: "app-dashboard-twitter",

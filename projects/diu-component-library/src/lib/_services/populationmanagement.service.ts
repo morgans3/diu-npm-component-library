@@ -4,7 +4,7 @@ import { BaseService } from "./_baseclass.service";
 /**
  * Reference to Browser Window
  */
-declare var window: any;
+declare const window: any;
 
 /**
  * Population Management Service Class
@@ -18,7 +18,7 @@ export class PopulationManagementService extends BaseService {
      */
     constructor(protected http: HttpClient) {
         super(http);
-        const origin = window.location.href;
+        const origin: string = window.location.href;
         this.baseUrl = this.combineURL(origin, "crossfilter");
     }
 

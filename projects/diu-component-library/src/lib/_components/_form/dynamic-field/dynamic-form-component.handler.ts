@@ -107,6 +107,7 @@ export class dynamicFormInputHandler extends dynamicContentHandler {
 
     /**
      * Constructor function
+     *
      * @param data
      * @param config
      */

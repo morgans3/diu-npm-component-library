@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, Input, OnChanges, OnInit, SimpleChanges, ViewContainerRef } from "@angular/core";
+import { ComponentFactoryResolver, Directive, Input, OnInit, ViewContainerRef } from "@angular/core";
 import { componentMapper } from "../_mapping/componentMapping";
 
 /**
@@ -27,16 +27,16 @@ export class DynamicComponentDirective implements OnInit {
      * Angular Life-cycle hook that is executed when the dynamic form component is initialized
      */
     ngOnInit() {
-        //create field component
+        // create field component
         if (this.config && this.config.type) {
             this.createComponent();
-            //add handler config from passed data
+            // add handler config from passed data
             this.componentRef.instance.config = this.config;
             if (this.config) {
                 Object.keys(this.config).forEach((key) => {
                     switch (key) {
                         case "type":
-                            //do nothing
+                            // do nothing
                             break;
                         default:
                             this.componentRef.instance[key] = this.config[key];
@@ -51,12 +51,12 @@ export class DynamicComponentDirective implements OnInit {
      * Creates the component
      */
     createComponent() {
-        //set a variable and potentially override it based on field config of type/ inputType
+        // set a variable and potentially override it based on field config of type/ inputType
         const component = this.config.type;
 
-        //uses the compnent variable to input the class of the component that will be created
+        // uses the compnent variable to input the class of the component that will be created
         const factory = this.resolver.resolveComponentFactory(componentMapper[component]);
-        //create the component by passing the factory.
+        // create the component by passing the factory.
         this.componentRef = this.container.createComponent(factory);
     }
 }

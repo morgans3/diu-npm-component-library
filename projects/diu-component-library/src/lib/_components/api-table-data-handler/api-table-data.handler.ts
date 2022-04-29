@@ -7,7 +7,7 @@ export class TableDataHandler {
     objTableColumns;
     arrTableColumns;
     tableData;
-    actions: Object[] = [];
+    actions: object[] = [];
     constructor(data: any) {
         this.tableData = data;
     }
@@ -38,12 +38,14 @@ export class FormTableDataHandler extends TableDataHandler {
     apiEndpoint: any;
 
     /**
-     * tableConfig is the data sent by the table data handler, table config can be used instead of formData to determine what data should appear in the form
+     * tableConfig is the data sent by the table data handler,
+     * table config can be used instead of formData to determine what data should appear in the form
      */
     tableConfig: any;
 
     /**
      * Constructor function
+     *
      * @param data - the data to be displayed in rows
      * @param formInfo - formData comes from this passed variable
      * @param tableConfig - tableConfig comes from this variable
@@ -94,11 +96,11 @@ export class FormTableDataHandler extends TableDataHandler {
      */
     setColumnData() {
         if (!this.objTableColumns && !this.arrTableColumns) {
-            let objTableColumns = {};
-            let arrTableColumns = [];
+            const objTableColumns = {};
+            const arrTableColumns = [];
             if (this.formValues) {
                 this.formValues.forEach((formValue) => {
-                    if (formValue.showInTable == "yes") {
+                    if (formValue.showInTable === "yes") {
                         objTableColumns[formValue.name] = formValue.label;
                         arrTableColumns.push(formValue.name);
                     }
@@ -106,7 +108,7 @@ export class FormTableDataHandler extends TableDataHandler {
             }
             if (this.defaultValues) {
                 this.defaultValues.forEach((formValue) => {
-                    if (formValue.showInTable == "yes") {
+                    if (formValue.showInTable === "yes") {
                         objTableColumns[formValue.label] = formValue.label;
                         arrTableColumns.push(formValue.label);
                     }
@@ -132,8 +134,8 @@ export class FormTableDataHandler extends TableDataHandler {
      * This function will create the array required for differnt actions that could be taken by the form
      */
     setActions() {
-        if (this.editable == "yes") {
-            let editable = {
+        if (this.editable === "yes") {
+            const editable = {
                 icon: "border_color",
                 action: "updateFormAnswers",
                 colour: "primary",
@@ -143,8 +145,8 @@ export class FormTableDataHandler extends TableDataHandler {
                 this.arrTableColumns.push("actions");
             }
         }
-        if (this.deletable == "yes") {
-            let deletable = {
+        if (this.deletable === "yes") {
+            const deletable = {
                 icon: "delete",
                 action: "deleteFormData",
                 colour: "warn",

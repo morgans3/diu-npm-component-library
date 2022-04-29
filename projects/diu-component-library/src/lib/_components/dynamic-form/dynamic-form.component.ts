@@ -7,7 +7,6 @@ import {
     OnChanges,
     OnInit,
     Output,
-    ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from "@angular/forms";
@@ -27,10 +26,13 @@ import { APIService } from "../../_services/api.service";
 })
 export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     /**
+     * Event passed to parent when form is submissionted
+     */
+    @Output() submission: EventEmitter<any> = new EventEmitter<any>();
+    /**
      * Input for the data for the Form, including the configuration
      */
     @Input() formData?: any;
-    //The name of the form data in the db
     /**
      * Input for the unique ID of the Form
      */
@@ -57,11 +59,6 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     form: FormGroup;
 
     /**
-     * Event passed to parent when form is submitted
-     */
-    @Output() submit: EventEmitter<any> = new EventEmitter<any>();
-
-    /**
      * Dynamic Form Component Constructor
      */
     constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef, private apiService: APIService) {}
@@ -74,13 +71,13 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
         this.form = this.createControl();
         // if there's no preloaded data and a form ID provided
         if (!this.formData && this.formDataID) {
-            //use the form ID to get form config from db
+            //  use the form ID to get form config from db
             this.apiService.getPayloadById(this.formDataID).subscribe((data) => {
-                //if the data has been returned
+                //  if the data has been returned
                 if (data) {
-                    //get by ID returns 1 row of data
+                    //  get by ID returns 1 row of data
                     if (data[0]) {
-                        //form data is stored under the key config
+                        //  form data is stored under the key config
                         this.formData = JSON.parse(data[0].config);
                         this.setFormData();
                     }
@@ -88,7 +85,7 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
             });
             return;
         }
-        //if formData has already been provided
+        //  if formData has already been provided
         if (this.formData) {
             this.setFormData();
         }
@@ -103,19 +100,18 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
             // Set the changed answers to the newly passed answers
             this.changedAnswers = this.formAnswers;
             // create config to pass form answers to dynamic form
-            let config = this.formAnswers;
-            // loop through each value passed to make sure the form has controls (data from a table may contain more field answers than the dynamic form)
+            const config = this.formAnswers;
             Object.keys(config).forEach((key) => {
                 // If the form answers are in an array (checkboxes, for example)
                 if (typeof config[key] === "object") {
-                    let arrFormControls: FormArray = this.form.get(key) as FormArray;
+                    const arrFormControls: FormArray = this.form.get(key) as FormArray;
                     config[key].forEach((elem) => {
                         arrFormControls.push(new FormControl(elem));
                     });
                     config[key] = arrFormControls;
                 } else {
                     // get the current form input
-                    let objCurrentGroup = this.form.get(key);
+                    const objCurrentGroup = this.form.get(key);
                     // if the form input isn't in the form, remove the value from the config override
                     if (!objCurrentGroup) {
                         delete config[key];
@@ -145,14 +141,14 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     /**
-     * Function to emit data to the parent component when submitted
+     * Function to emit data to the parent component when submissionted
      */
     onSubmit(event: Event) {
         event.preventDefault();
         event.stopPropagation();
-        //if the form is valid pass the data to the parent else mark each field as touched to trigger validation
+        //  if the form is valid pass the data to the parent else mark each field as touched to trigger validation
         if (this.form.valid) {
-            this.submit.emit(this.form.value);
+            this.submission.emit(this.form.value);
         } else {
             this.validateAllFormFields(this.form);
         }
@@ -164,19 +160,17 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     createControl() {
         // create form group using the formbuilder object
         const group = this.fb.group({});
-        //loop through each field to set the control required
+        //  loop through each field to set the control required
         this.fields.forEach((field) => {
             // different field types require different controls
             switch (field.type) {
                 case "button":
                     return;
                 case "checkbox":
-                    const array = this.fb.array(field.value || [], this.bindValidations(field.validators || []));
-                    group.addControl(field.name, array);
+                    group.addControl(field.name, this.fb.array(field.value || [], this.bindValidations(field.validators || [])));
                     break;
                 default:
-                    const control = this.fb.control(field.value, this.bindValidations(field.validators || []));
-                    group.addControl(field.name, control);
+                    group.addControl(field.name, this.fb.control(field.value, this.bindValidations(field.validators || [])));
                     break;
             }
         });

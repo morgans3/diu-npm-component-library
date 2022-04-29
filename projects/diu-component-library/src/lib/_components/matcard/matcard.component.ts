@@ -14,7 +14,7 @@ export class MatCardComponent implements OnInit {
      * Initialise iMatCardConfig
      */
     config: any;
-    _Handler: cComponentHandler;
+    Handler: cComponentHandler;
 
     /**
      * Constructor Function
@@ -26,10 +26,10 @@ export class MatCardComponent implements OnInit {
      */
     ngOnInit() {
         if (this.config) {
-            this._Handler = new cComponentHandler(this.config);
-            if (this._Handler.config.children && this._Handler.config.children.length > 0) {
-                fetchChildren(this._Handler.config.children, this.apiService).then((result: any) => {
-                    this._Handler.children = result;
+            this.Handler = new cComponentHandler(this.config);
+            if (this.Handler.config.children && this.Handler.config.children.length > 0) {
+                fetchChildren(this.Handler.config.children, this.apiService).then((result: any) => {
+                    this.Handler.children = result;
                     this.changeDetection.detectChanges();
                 });
             }

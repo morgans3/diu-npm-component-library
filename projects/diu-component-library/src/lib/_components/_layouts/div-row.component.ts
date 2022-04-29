@@ -11,8 +11,8 @@ import { APIService } from "../../_services/api.service";
             <div>
                 <ng-content></ng-content>
             </div>
-            <div fxLayout="row wrap" *ngIf="_Handler">
-                <ng-container *ngFor="let child of _Handler.children" dynamicComponent [config]="child.config"></ng-container>
+            <div fxLayout="row wrap" *ngIf="Handler">
+                <ng-container *ngFor="let child of Handler.children" dynamicComponent [config]="child.config"></ng-container>
             </div>
         </ng-template>
         <ng-container *ngTemplateOutlet="myComponentTemplate"></ng-container>
@@ -23,7 +23,7 @@ export class DivRowComponent implements OnInit {
      * Initialise Config
      */
     config: any;
-    _Handler: cComponentHandler;
+    Handler: cComponentHandler;
 
     /**
      * Constructor Function
@@ -34,10 +34,10 @@ export class DivRowComponent implements OnInit {
      * Initialisation Function
      */
     ngOnInit() {
-        this._Handler = new cComponentHandler(this.config);
-        if (this._Handler.config.children && this._Handler.config.children.length > 0) {
-            fetchChildren(this._Handler.config.children, this.apiService).then((result: any) => {
-                this._Handler.children = result;
+        this.Handler = new cComponentHandler(this.config);
+        if (this.Handler.config.children && this.Handler.config.children.length > 0) {
+            fetchChildren(this.Handler.config.children, this.apiService).then((result: any) => {
+                this.Handler.children = result;
                 this.changeDetection.detectChanges();
             });
         }

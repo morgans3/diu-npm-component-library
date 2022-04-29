@@ -17,14 +17,14 @@ export class TabsComponent implements OnInit {
     config: any;
 
     /**
-     * _Handler is a class containing functionality for making this component work
+     * Handler is a class containing functionality for making this component work
      */
-    _Handler: cTabHandler;
+    Handler: cTabHandler;
 
     /**
      * This is a boolean that determins if the tabs are going to be output above or to the left of the content
      */
-    leftTabGroup: boolean = false;
+    leftTabGroup = false;
 
     /**
      * tabs contains data for each tab to be displayed, this includes the label and the components to be contained
@@ -40,8 +40,8 @@ export class TabsComponent implements OnInit {
      * Angular Life-cycle hook that is executed when the dynamic form component is initialized
      */
     ngOnInit() {
-        this._Handler = new cTabHandler(this.config);
-        if (this._Handler.leftTabGroup) this.leftTabGroup = this._Handler.leftTabGroup;
-        if (this._Handler.tabs) this.tabs = this._Handler.tabs;
+        this.Handler = new cTabHandler(this.config);
+        if (this.Handler.leftTabGroup) this.leftTabGroup = this.Handler.leftTabGroup;
+        if (this.Handler.tabs) this.tabs = this.Handler.tabs;
     }
 }

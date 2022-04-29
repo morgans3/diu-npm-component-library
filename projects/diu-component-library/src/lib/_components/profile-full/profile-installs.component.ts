@@ -11,7 +11,7 @@ import { APIService } from "../../_services/api.service";
 })
 export class ProfileInstallsComponent implements OnInit {
     config: any;
-    _Handler: cDisplayListsHandler;
+    Handler: cDisplayListsHandler;
     tokenDecoded: any;
     displayListsLoaded = false;
     installationlist: iInstallation[] = [];
@@ -27,9 +27,9 @@ export class ProfileInstallsComponent implements OnInit {
 
     ngOnInit() {
         if (this.config) {
-            this._Handler = new cDisplayListsHandler(this.config);
-            console.log(this._Handler);
-            this._Handler.displayLists.forEach((list: iDisplayListConfig) => {
+            this.Handler = new cDisplayListsHandler(this.config);
+            console.log(this.Handler);
+            this.Handler.displayLists.forEach((list: iDisplayListConfig) => {
                 this.getList(list);
             });
         }
@@ -37,12 +37,11 @@ export class ProfileInstallsComponent implements OnInit {
 
     getList(list: iDisplayListConfig) {
         this.apiService.genericGetAPICall(list.getAllEndpoint).subscribe((allInfo: iApplication[]) => {
-            this.apiService
-                .genericGetAPICall(list.getByUsernameEndpoint + this.tokenDecoded.username)
-                .subscribe((userInfo: iInstallation[]) => {
-                    list.displayConfigData = this.updateX(userInfo, allInfo);
-                    this.displayListsLoaded = true;
-                });
+            const url: string = list.getAllEndpoint + (this.tokenDecoded.username as string);
+            this.apiService.genericGetAPICall(url).subscribe((userInfo: iInstallation[]) => {
+                list.displayConfigData = this.updateX(userInfo, allInfo);
+                this.displayListsLoaded = true;
+            });
         });
     }
 
@@ -82,7 +81,7 @@ export class ProfileInstallsComponent implements OnInit {
             approveddate: new Date(),
             username: this.tokenDecoded.username,
         };
-        const selectedList = this._Handler.displayLists.find((x) => x.title === title);
+        const selectedList = this.Handler.displayLists.find((x) => x.title === title);
         if (selectedList) {
             this.apiService.genericPostAPICall(selectedList.registerEndpoint, newInstall).subscribe((res: any) => {
                 if (res.err) {
@@ -97,7 +96,7 @@ export class ProfileInstallsComponent implements OnInit {
 
     remove(app, title) {
         const install = this.installationlist.find((x) => x.app_name === app.name);
-        const selectedList = this._Handler.displayLists.find((x) => x.title === title);
+        const selectedList = this.Handler.displayLists.find((x) => x.title === title);
         if (selectedList) {
             this.apiService.genericPostAPICall(selectedList.removeEndpoint, install).subscribe((res: any) => {
                 if (res.err) {

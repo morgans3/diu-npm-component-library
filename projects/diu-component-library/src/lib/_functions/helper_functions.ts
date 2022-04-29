@@ -1,6 +1,6 @@
 import { style, state, animate, trigger, transition } from "@angular/animations";
 
-export const generateID = function () {
+export const generateID = () => {
     return new Date().toISOString().split("-").join().split(":").join().split(".").join().replace("T", "").replace("Z", "");
 };
 

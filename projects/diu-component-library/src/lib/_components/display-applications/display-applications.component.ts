@@ -18,7 +18,7 @@ export class DisplayApplicationsComponent implements OnInit, OnChanges {
     /**
      * Title of List
      */
-    @Input() applicationTitle: string = "";
+    @Input() applicationTitle = "";
 
     /**
      * Event for notifying parent that an item in the list needs to be removed
@@ -50,6 +50,7 @@ export class DisplayApplicationsComponent implements OnInit, OnChanges {
 
     /**
      * Data to be emitted when the remove app button is clicked
+     *
      * @param app
      */
     removeApp(app: iDisplayList) {
@@ -58,6 +59,7 @@ export class DisplayApplicationsComponent implements OnInit, OnChanges {
 
     /**
      * Data to be emitted when the request app button is clicked
+     *
      * @param app
      */
     requestApp(app: iDisplayList) {
@@ -66,8 +68,8 @@ export class DisplayApplicationsComponent implements OnInit, OnChanges {
 
     sortData() {
         this.applicationData.sort((a, b) => {
-            var textA = a.name.toUpperCase();
-            var textB = b.name.toUpperCase();
+            const textA = a.name.toUpperCase();
+            const textB = b.name.toUpperCase();
             return textA < textB ? -1 : textA > textB ? 1 : 0;
         });
     }

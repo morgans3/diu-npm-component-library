@@ -18,21 +18,17 @@ export class selectComponentHandler extends dynamicFormInputHandler {
     setOptions() {
         if (this["stateOptions"]) {
             let optionData = JSON.parse(localStorage["@@STATE"]);
-            // console.log(optionData);
-            let arrStateKeys = this["stateOptions"]["stateOptionData"].split(".");
-            arrStateKeys.forEach((string) => {
-                // console.log(string);
-                optionData = optionData[string];
+            const arrStateKeys = this["stateOptions"]["stateOptionData"].split(".");
+            arrStateKeys.forEach((item: string) => {
+                optionData = optionData[item];
             });
-            // console.log(optionData);
-            let key = this["stateOptions"]["stateOptionKey"];
-            let value = this["stateOptions"]["stateOptionValue"];
-            let dataForOptions = Array.from(optionData);
+            const key = this["stateOptions"]["stateOptionKey"];
+            const value = this["stateOptions"]["stateOptionValue"];
+            const dataForOptions = Array.from(optionData);
             let counter = 0;
-            let newOptions = [];
+            const newOptions = [];
             dataForOptions.forEach((option) => {
-                // console.log(option);
-                let data = {
+                const data = {
                     optionKey: option[key],
                     optionValue: option[value],
                     ordernumber: counter,

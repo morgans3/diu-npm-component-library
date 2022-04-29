@@ -7,13 +7,13 @@ import { cCarouselHandler, iCarouselItem } from "../../_models/componentHandler"
 })
 export class CarouselComponent implements OnInit {
     config: any;
-    _Handler: cCarouselHandler;
+    Handler: cCarouselHandler;
     carouselItems: iCarouselItem[] = [];
 
     constructor() {}
 
     ngOnInit() {
-        this._Handler = new cCarouselHandler(this.config);
-        this.carouselItems = this._Handler.carouselItems;
+        this.Handler = new cCarouselHandler(this.config);
+        this.carouselItems = this.Handler.carouselItems;
     }
 }

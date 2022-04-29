@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Output, EventEmitter, Inject } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, Inject } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { iImages } from "../../_models/images.interface";
 import { APIService } from "../../_services/api.service";
@@ -12,7 +12,7 @@ import { APIService } from "../../_services/api.service";
     styleUrls: ["./image-gallery.component.scss"],
     encapsulation: ViewEncapsulation.None,
 })
-export class ImageGalleryDialog implements OnInit {
+export class ImageGalleryDialogComponent implements OnInit {
     /**
      * Declaration for stored image meta data
      */
@@ -33,10 +33,13 @@ export class ImageGalleryDialog implements OnInit {
         /**
          * Mat Dialog Library to handle component actions
          */
-        public dialogRef: MatDialogRef<ImageGalleryDialog>,
+        public dialogRef: MatDialogRef<ImageGalleryDialogComponent>,
         @Inject("environment") environment
     ) {
-        if (environment) this.imageEndpoint = `https://images.${environment.websiteURL}/` || `https://images.nhs-bi-platform.co.uk/`;
+        if (environment)
+            this.imageEndpoint =
+                `https://images
+        .${environment.websiteURL as string}/` || `https://images.nhs-bi-platform.co.uk/`;
     }
 
     /**

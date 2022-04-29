@@ -8,8 +8,8 @@ import { APIService } from "../../_services/api.service";
 @Component({
     selector: "app-divcol",
     template: `
-        <div [fxFlex.gt-sm]="_Handler.colsize" fxFlex.gt-xs="100" fxFlex="100">
-            <ng-container *ngFor="let child of _Handler.children" dynamicComponent [config]="child.config"></ng-container>
+        <div [fxFlex.gt-sm]="Handler.colsize" fxFlex.gt-xs="100" fxFlex="100">
+            <ng-container *ngFor="let child of Handler.children" dynamicComponent [config]="child.config"></ng-container>
         </div>
     `,
 })
@@ -18,7 +18,7 @@ export class DivColComponent implements OnInit {
      * Initialise Config
      */
     config: any;
-    _Handler: cLayoutHandler;
+    Handler: cLayoutHandler;
 
     /**
      * Constructor Function
@@ -29,10 +29,10 @@ export class DivColComponent implements OnInit {
      * Initialisation Function
      */
     ngOnInit() {
-        this._Handler = new cLayoutHandler(this.config);
-        if (this._Handler.config.children && this._Handler.config.children.length > 0) {
-            fetchChildren(this._Handler.config.children, this.apiService).then((result: any) => {
-                this._Handler.children = result;
+        this.Handler = new cLayoutHandler(this.config);
+        if (this.Handler.config.children && this.Handler.config.children.length > 0) {
+            fetchChildren(this.Handler.config.children, this.apiService).then((result: any) => {
+                this.Handler.children = result;
                 this.changeDetection.detectChanges();
             });
         }

@@ -1,6 +1,6 @@
-<div *ngIf="_Handler && _Handler.displayLists && displayListsLoaded">
+<div *ngIf="Handler && Handler.displayLists && displayListsLoaded">
     <display-applications
-        *ngFor="let list of _Handler.displayLists"
+        *ngFor="let list of Handler.displayLists"
         [applicationData]="list.displayConfigData"
         [applicationTitle]="list.title"
     ></display-applications>

@@ -4,13 +4,16 @@ import { iEventActions } from "../_models/eventactions";
 
 @Injectable()
 export class BrokerService {
+    currentMessage;
+
     private messageSubject = new BehaviorSubject<iEventActions>({
         id: "default",
         action: "none",
     });
-    currentMessage = this.messageSubject.asObservable();
 
-    constructor() {}
+    constructor() {
+        this.currentMessage = this.messageSubject.asObservable();
+    }
 
     sendMessage(message: iEventActions) {
         this.messageSubject.next(message);

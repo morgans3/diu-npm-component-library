@@ -12,14 +12,14 @@ export enum SCREEN_SIZE {
 
 @Injectable()
 export class ResizeService {
-    get onResize$(): Observable<SCREEN_SIZE> {
-        return this.resizeSubject.asObservable().pipe(distinctUntilChanged());
-    }
-
     private resizeSubject: Subject<SCREEN_SIZE>;
 
     constructor() {
         this.resizeSubject = new Subject();
+    }
+
+    get onResize$(): Observable<SCREEN_SIZE> {
+        return this.resizeSubject.asObservable().pipe(distinctUntilChanged());
     }
 
     onResize(size: SCREEN_SIZE) {

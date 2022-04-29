@@ -1,13 +1,11 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { DebugElement } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "../../../_modules/material.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FileUploadComponent } from "./file-upload.component";
-import { ImageGalleryDialog } from "../../image-gallery/image-gallery.component";
+import { ImageGalleryDialogComponent } from "../../image-gallery/image-gallery.component";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ImageUploaderModule } from "ngx-image-uploader-next";
 
@@ -18,7 +16,7 @@ describe("FileUploadComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule, ReactiveFormsModule, MaterialModule, HttpClientModule, BrowserAnimationsModule, ImageUploaderModule],
-            declarations: [FileUploadComponent, ImageGalleryDialog],
+            declarations: [FileUploadComponent, ImageGalleryDialogComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 {

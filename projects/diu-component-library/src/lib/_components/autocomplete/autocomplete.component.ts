@@ -44,7 +44,7 @@ export class AutocompleteComponent implements OnInit {
      * function to be ran when the component is initialised
      */
     ngOnInit() {
-        //If the component is being included as a from input set the controls
+        // If the component is being included as a from input set the controls
         if (this.group) {
             this.group.setControl(this.field.name, new FormControl(null, null));
             this.formControl = this.group.controls[this.field.name] as FormControl;

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { iNotifications, iSystemAlerts, iTasks } from "../../_models/header.interface";
+import { iSystemAlerts } from "../../_models/header.interface";
 import { SystemAlertDialogComponent } from "./dialogs/systemalertdialog.component";
 
 /**
@@ -56,14 +56,15 @@ export class DiuAngularHeaderComponent implements OnInit, OnChanges {
     /**
      * Logged in person's display name
      */
-    strDisplayName: string = "Guest";
+    strDisplayName = "Guest";
     /**
      * Logged in person's username
      */
-    strUsername: string = "Guest";
+    strUsername = "Guest";
 
     /**
      * Class Constructor
+     *
      * @param dialog Injected Handler for Material Dialog Library
      */
     constructor(

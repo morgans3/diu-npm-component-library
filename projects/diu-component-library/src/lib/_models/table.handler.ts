@@ -110,11 +110,11 @@ export class cFormTableDataHandler extends cTableDataHandler {
      * Function to set columns
      */
     setColumnData() {
-        let objTableColumns = [];
-        let arrTableColumns = [];
+        const objTableColumns = [];
+        const arrTableColumns = [];
         if (this.formValues) {
             this.formValues.forEach((formValue) => {
-                if (formValue.showInTable == "yes") {
+                if (formValue.showInTable === "yes") {
                     objTableColumns.push({ key: [formValue.name], value: formValue.label });
                     arrTableColumns.push(formValue.name);
                 }
@@ -122,7 +122,7 @@ export class cFormTableDataHandler extends cTableDataHandler {
         }
         if (this.defaultValues) {
             this.defaultValues.forEach((formValue) => {
-                if (formValue.showInTable == "yes") {
+                if (formValue.showInTable === "yes") {
                     objTableColumns.push({ key: [formValue.label], value: formValue.label });
                     arrTableColumns.push(formValue.label);
                 }

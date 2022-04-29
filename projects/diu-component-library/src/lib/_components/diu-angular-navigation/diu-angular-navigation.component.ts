@@ -8,7 +8,7 @@ import { iMenu } from "../../_models/menu-items.interface";
 })
 export class DiuAngularNavigationComponent implements OnInit, OnChanges {
     @Input() menuItems: iMenu[];
-    @Input() isMinisidebar: boolean = false;
+    @Input() isMinisidebar = false;
     minisidebar = false;
     shownMenuItems: iMenu[] = [];
     url = "";

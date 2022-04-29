@@ -12,6 +12,7 @@ import { iSystemAlerts } from "../../../_models/header.interface";
 export class SystemAlertDialogComponent {
     /**
      * System Alert Modal Component Constructor
+     *
      * @param dialogRef Injectable for Angular Material Modal Library
      * @param data Injectable for data passed into the Modal by launching component
      */

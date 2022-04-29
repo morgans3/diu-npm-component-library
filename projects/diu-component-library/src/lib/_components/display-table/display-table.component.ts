@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -12,7 +12,7 @@ import { cTableDataHandler } from "../../_models/table.handler";
     templateUrl: "./display-table.component.html",
     styles: [],
 })
-export class DisplayTableComponent implements OnInit, OnChanges {
+export class DisplayTableComponent implements OnInit, OnChanges, AfterViewInit {
     /**
      * Table Component Handler Class
      */
@@ -84,7 +84,7 @@ export class DisplayTableComponent implements OnInit, OnChanges {
      * Function that runs once a user selects to update, outputs value to parent
      */
     actionSelected(passedFunction, data) {
-        this.actionTrigger.emit({ passedFunction: passedFunction, data: data });
+        this.actionTrigger.emit({ passedFunction, data });
     }
 
     /**

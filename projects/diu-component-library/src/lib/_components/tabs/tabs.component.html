@@ -1,4 +1,4 @@
-<mat-card *ngIf="_Handler">
+<mat-card *ngIf="Handler">
     <mat-card-content>
         <mat-tab-group [ngClass]="{ leftTabGroup: leftTabGroup }">
             <mat-tab *ngFor="let tab of tabs" [label]="tab.label">

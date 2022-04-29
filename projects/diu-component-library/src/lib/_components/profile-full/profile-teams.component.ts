@@ -8,7 +8,7 @@ import { cDisplayListsHandler, iDisplayListConfig } from "../../_models/componen
 })
 export class ProfileTeamsComponent implements OnInit {
     config: any;
-    _Handler: cDisplayListsHandler;
+    Handler: cDisplayListsHandler;
     tokenDecoded: any;
     displayListsLoaded = false;
     teams: any[] = [];
@@ -27,20 +27,16 @@ export class ProfileTeamsComponent implements OnInit {
 
     ngOnInit() {
         if (this.config) {
-            this._Handler = new cDisplayListsHandler(this.config);
-            this._Handler.displayLists.forEach((list: iDisplayListConfig) => {
+            this.Handler = new cDisplayListsHandler(this.config);
+            this.Handler.displayLists.forEach((list: iDisplayListConfig) => {
                 this.getList(list);
             });
         }
     }
 
     getList(list: iDisplayListConfig) {
-        // this.applicationService.genericGetAPICall(list.getAllEndpoint).subscribe((allInfo: iApplication[]) => {
-        // this.applicationService.genericGetAPICall(list.getByUsernameEndpoint + this.tokenDecoded.username).subscribe((userInfo: iInstallation[]) => {
         list.displayConfigData = this.updateX(this.memberships, this.teams);
         this.displayListsLoaded = true;
-        // });
-        //});
     }
 
     updateX(selectList: any[], fullList: any[]) {

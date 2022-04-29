@@ -33,7 +33,7 @@ export class SelectComponent implements OnInit {
      * Select Component Initialiser function
      */
     ngOnInit() {
-        //sort the options based on their sort order
+        // sort the options based on their sort order
         this.dataHandler = new selectComponentHandler(this.field, this.group);
         if (this.dataHandler.options) {
             this.dataHandler.options = this.sortItems(this.dataHandler.options);
@@ -57,7 +57,7 @@ export class SelectComponent implements OnInit {
      */
     setValidation(validators: iValidator[]) {
         // 1. Initialise an empty array
-        let arrValidation = [];
+        const arrValidation = [];
         // 2. Loop through the validators and add to the array
         validators.forEach((validator: iValidator) => {
             switch (validator.name) {
@@ -70,16 +70,20 @@ export class SelectComponent implements OnInit {
             }
         });
 
-        //set the current fieldvalue based on what data has been passed if the form is re-rendered
+        // set the current fieldvalue based on what data has been passed if the form is re-rendered
         let currValue = null;
         let selectedValue = "";
-        let attributeSelector = '[ng-reflect-name="' + this.dataHandler.name + '"] span.mat-select-value-text span.ng-star-inserted';
-        const domElem = <HTMLInputElement>document.querySelector(attributeSelector);
+        const attributeSelector =
+            `[ng-reflect-name="` +
+            (this.dataHandler.name as string) +
+            `"]
+        span.mat-select-value-text span.ng-star-inserted`;
+        const domElem = document.querySelector(attributeSelector);
         if (domElem && domElem.innerHTML) {
             selectedValue = domElem.innerHTML;
         }
         this.dataHandler.options.forEach((option) => {
-            if (selectedValue == option.optionValue) {
+            if (selectedValue === option.optionValue) {
                 currValue = option.optionKey;
             }
         });

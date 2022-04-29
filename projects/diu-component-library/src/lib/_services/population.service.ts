@@ -4,7 +4,7 @@ import { BaseService } from "./_baseclass.service";
 /**
  * Reference to Browser Window
  */
-declare var window: any;
+declare const window: any;
 
 /**
  * Population Service Class
@@ -13,13 +13,13 @@ declare var window: any;
     providedIn: "root",
 })
 export class PopulationService extends BaseService {
-    miniUrl;
+    miniUrl = "";
     /**
      * Population Service Constructor
      */
     constructor(protected http: HttpClient) {
         super(http);
-        const origin = window.location.href;
+        const origin: string = window.location.href;
         this.baseUrl = this.combineURL(origin, "population");
         this.miniUrl = this.combineURL(origin, "popmini");
     }

@@ -8,7 +8,7 @@
                     <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of RequestedApps">
                         <app-application-tile
                             [thisApp]="fave.app"
-                            (appStatusChange)="reloadApps($event)"
+                            (appStatusChange)="reloadApps()"
                             [thisInstallation]="fave.install"
                         ></app-application-tile>
                     </div>
@@ -26,7 +26,7 @@
                     <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of InstalledApps">
                         <app-application-tile
                             [thisApp]="fave.app"
-                            (appStatusChange)="reloadApps($event)"
+                            (appStatusChange)="reloadApps()"
                             [thisInstallation]="fave.install"
                         ></app-application-tile>
                     </div>
@@ -44,7 +44,7 @@
                     <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of TeamApps">
                         <app-application-tile
                             [thisApp]="fave.app"
-                            (appStatusChange)="reloadApps($event)"
+                            (appStatusChange)="reloadApps()"
                             [teamInstall]="true"
                         ></app-application-tile>
                     </div>
@@ -62,7 +62,7 @@
 
                 <div fxLayout="row wrap">
                     <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let fave of AppStore">
-                        <app-application-tile [thisApp]="fave.app" (appStatusChange)="reloadApps($event)"></app-application-tile>
+                        <app-application-tile [thisApp]="fave.app" (appStatusChange)="reloadApps()"></app-application-tile>
                     </div>
                 </div>
 

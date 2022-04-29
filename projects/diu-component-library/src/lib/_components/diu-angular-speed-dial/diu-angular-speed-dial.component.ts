@@ -35,7 +35,7 @@ export class DiuAngularSpeedDialComponent implements OnInit {
     buttons = [];
     fabTogglerState = "inactive";
 
-    constructor(private _location: Location, public dialog: MatDialog, private apiService: APIService) {}
+    constructor(private curLocation: Location, public dialog: MatDialog, private apiService: APIService) {}
 
     ngOnInit() {
         if (this.token) {
@@ -52,7 +52,7 @@ export class DiuAngularSpeedDialComponent implements OnInit {
                 location.reload();
                 break;
             case "reply":
-                this._location.back();
+                this.curLocation.back();
                 break;
             case "security":
                 this.obtainMFA();

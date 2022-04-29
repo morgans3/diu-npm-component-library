@@ -9,9 +9,8 @@ import { iNewsStand } from "../../_models/newsitem.interface";
 export class NewsStandComponent {
     @Input() config: any;
     @Input() selectedCCG: string;
-    selected: string;
     @Input() thisNewsStand: iNewsStand;
-
+    selected: string;
     constructor() {}
 
     updateBG(color: string) {

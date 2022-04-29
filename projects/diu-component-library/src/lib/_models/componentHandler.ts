@@ -3,11 +3,12 @@ import { iDisplayList } from "./installations.interface";
 
 /**
  * This function is used to get child component configeration from the API
+ *
  * @param newchildren
  * @param injectedService
  * @returns
  */
-export async function fetchChildren(newchildren: any[], injectedService) {
+export const fetchChildren = async (newchildren: any[], injectedService) => {
     const childDetails = [];
     await newchildren.forEach(async (child: any) => {
         await injectedService.getPayloadById(child.id).subscribe((data: any) => {
@@ -23,20 +24,21 @@ export async function fetchChildren(newchildren: any[], injectedService) {
         });
     });
     return childDetails;
-}
+};
 
 /**
  * This function parses stringified data from the DB
+ *
  * @param config - A JSON.stringified() payload containing configeration for the component coming from the DB
  * @returns
  */
-export function modifyConfig(config: any) {
+export const modifyConfig = (config: any) => {
     try {
         return JSON.parse(config);
     } catch {
         return config;
     }
-}
+};
 
 /**
  * This class is the highest level class for handling components, this class gets the configeration and child components
@@ -91,6 +93,7 @@ export class cDisplayListsHandler extends cComponentHandler {
 
     /**
      * Class constructor function
+     *
      * @param configstring JSON.stringify data for the component, passed to the parent to be parsed
      */
     constructor(configstring: string) {
