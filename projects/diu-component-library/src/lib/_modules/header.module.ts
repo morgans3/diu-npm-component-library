@@ -7,9 +7,9 @@ import { SystemAlertDialogComponent } from "../_components/diu-angular-header/di
 import { CommonModule } from "@angular/common";
 
 @NgModule({
-  declarations: [DiuAngularHeaderComponent, SystemAlertDialogComponent],
-  imports: [MaterialModule, PerfectScrollbarModule, RouterModule, CommonModule],
-  exports: [DiuAngularHeaderComponent, SystemAlertDialogComponent],
-  entryComponents: [SystemAlertDialogComponent],
+    declarations: [DiuAngularHeaderComponent, SystemAlertDialogComponent],
+    imports: [MaterialModule, PerfectScrollbarModule, RouterModule, CommonModule],
+    exports: [DiuAngularHeaderComponent, SystemAlertDialogComponent],
+    entryComponents: [SystemAlertDialogComponent],
 })
 export class DiuHeaderModule {}

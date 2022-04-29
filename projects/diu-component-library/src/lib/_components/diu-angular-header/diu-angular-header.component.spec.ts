@@ -8,23 +8,28 @@ import { SystemAlertDialogComponent } from "./dialogs/systemalertdialog.componen
 import { DiuAngularHeaderComponent } from "./diu-angular-header.component";
 
 describe("DiuAngularHeaderComponent", () => {
-  let component: DiuAngularHeaderComponent;
-  let fixture: ComponentFixture<DiuAngularHeaderComponent>;
+    let component: DiuAngularHeaderComponent;
+    let fixture: ComponentFixture<DiuAngularHeaderComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DiuAngularHeaderComponent, SystemAlertDialogComponent],
-      imports: [MaterialModule, PerfectScrollbarModule, RouterModule.forRoot([{ path: "", component: DiuAngularHeaderComponent }]), CommonModule],
-    }).compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [DiuAngularHeaderComponent, SystemAlertDialogComponent],
+            imports: [
+                MaterialModule,
+                PerfectScrollbarModule,
+                RouterModule.forRoot([{ path: "", component: DiuAngularHeaderComponent }]),
+                CommonModule,
+            ],
+        }).compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DiuAngularHeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DiuAngularHeaderComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    it("should create", () => {
+        expect(component).toBeTruthy();
+    });
 });

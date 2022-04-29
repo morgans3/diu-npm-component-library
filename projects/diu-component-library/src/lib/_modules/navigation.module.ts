@@ -14,9 +14,17 @@ import { CommonModule } from "@angular/common";
 import { APIService } from "../_services/api.service";
 
 @NgModule({
-  declarations: [DiuAngularNavigationComponent, DiuAngularSpeedDialComponent, AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective, ValidateDialogComponent, VerifyDialogComponent],
-  imports: [MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule],
-  exports: [DiuAngularNavigationComponent, DiuAngularSpeedDialComponent, ValidateDialogComponent, VerifyDialogComponent],
-  providers: [APIService],
+    declarations: [
+        DiuAngularNavigationComponent,
+        DiuAngularSpeedDialComponent,
+        AccordionAnchorDirective,
+        AccordionLinkDirective,
+        AccordionDirective,
+        ValidateDialogComponent,
+        VerifyDialogComponent,
+    ],
+    imports: [MaterialModule, RouterModule, HttpClientModule, FormsModule, ReactiveFormsModule, CommonModule],
+    exports: [DiuAngularNavigationComponent, DiuAngularSpeedDialComponent, ValidateDialogComponent, VerifyDialogComponent],
+    providers: [APIService],
 })
 export class DiuAngularNavigationModule {}

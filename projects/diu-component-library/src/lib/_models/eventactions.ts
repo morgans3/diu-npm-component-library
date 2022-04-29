@@ -1,5 +1,5 @@
 export interface iEventActions {
-  id: string;
-  action: string;
-  payload?: any;
+    id: string;
+    action: string;
+    payload?: any;
 }
