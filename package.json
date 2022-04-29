@@ -15,7 +15,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build",
+        "build": "ng build diu-component-library",
         "test": "ng test",
         "test-coverage": "ng test --no-watch --code-coverage",
         "e2e": "ng e2e",
