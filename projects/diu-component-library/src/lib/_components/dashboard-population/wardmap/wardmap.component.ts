@@ -49,7 +49,7 @@ export class WardmapComponent implements OnInit, OnChanges {
     url = `https://api.nhs-bi-platform.co.uk/`;
 
     constructor(private apiService: APIService, @Inject("environment") environment) {
-        if (environment) this.url = `https://api.${environment.websiteURL}/` || `https://api.nhs-bi-platform.co.uk/`;
+        if (environment) this.url = `https://api.${environment.websiteURL as string}/` || `https://api.nhs-bi-platform.co.uk/`;
     }
 
     ngOnInit() {
@@ -130,7 +130,7 @@ export class WardmapComponent implements OnInit, OnChanges {
         if (this.boundaryShown) {
             text = "block";
         }
-        const boundaries = d3.selectAll("path").filter(".boundary").style("display", text);
+        d3.selectAll("path").filter(".boundary").style("display", text);
         this.g
             .selectAll("path .feature")
             .data(geoms.features)
@@ -138,7 +138,7 @@ export class WardmapComponent implements OnInit, OnChanges {
             .append("path")
             .attr("d", this.path)
             .attr("class", "feature")
-            .attr("data-name", function (d) {
+            .attr("data-name", (d) => {
                 return d.properties.wd15cd;
             })
             .attr("fill", (d) => {
@@ -165,7 +165,17 @@ export class WardmapComponent implements OnInit, OnChanges {
         const warddets = this.allwardDetails.filter((x) => x.code === wrdcode);
         if (warddets.length > 0) {
             const rgb = this.hexToRgb(this.calculateStroke(warddets[0].icp));
-            return "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ", " + (1 - this.mapDomain(value)) + ")";
+            return (
+                "rgba(" +
+                rgb.r.toString() +
+                "," +
+                rgb.g.toString() +
+                "," +
+                rgb.b.toString() +
+                ", " +
+                (1 - this.mapDomain(value)).toString() +
+                ")"
+            );
         }
         if (this.filteredWardList.includes(wrdcode)) {
             return "rgb(255,255,255,0.6)";
@@ -178,7 +188,7 @@ export class WardmapComponent implements OnInit, OnChanges {
         const selected = d3
             .selectAll("path")
             .filter(".feature")
-            .filter(function (x: any) {
+            .filter((x: any) => {
                 return x.properties.wd15cd === wrdcode;
             });
         if (this.active) {
@@ -193,13 +203,13 @@ export class WardmapComponent implements OnInit, OnChanges {
         this.active = selected;
         this.selectedwrdcode = wrdcode;
         this.active.attr("fill", "tomato");
-        const bounds = this.path.bounds(d),
-            dx = bounds[1][0] - bounds[0][0],
-            dy = bounds[1][1] - bounds[0][1],
-            x = (bounds[0][0] + bounds[1][0]) / 2,
-            y = (bounds[0][1] + bounds[1][1]) / 2,
-            scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / this.width, dy / this.height))),
-            translate = [this.width / 2 - scale * x, this.height / 2 - scale * y];
+        const bounds = this.path.bounds(d);
+        const dx = bounds[1][0] - bounds[0][0];
+        const dy = bounds[1][1] - bounds[0][1];
+        const x = ((bounds[0][0] as number) + (bounds[1][0] as number)) / 2;
+        const y = ((bounds[0][1] as number) + (bounds[1][1] as number)) / 2;
+        const scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / this.width, dy / this.height)));
+        const translate = [this.width / 2 - scale * x, this.height / 2 - scale * y];
 
         this.svg.transition().duration(750).call(this.zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
         this.emitted = true;
@@ -259,7 +269,7 @@ export class WardmapComponent implements OnInit, OnChanges {
         const newselected = d3
             .selectAll("path")
             .filter(".feature")
-            .filter(function (x: any) {
+            .filter((x: any) => {
                 return x.properties.wd15cd === wrdcode;
             });
         newselected.dispatch("click");
@@ -281,15 +291,15 @@ export class WardmapComponent implements OnInit, OnChanges {
             .append("path")
             .attr("d", this.path)
             .attr("class", "boundary")
-            .attr("data-name", function (d) {
+            .attr("data-name", (d) => {
                 return d.properties.ICP;
             })
-            .attr("title", function (d) {
+            .attr("title", (d) => {
                 return d.properties.ICP;
             })
             .attr("fill", (d) => {
                 const rgb = this.hexToRgb(this.calculateStroke(d.properties.ICP));
-                return "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.2)";
+                return "rgba(" + rgb.r.toString() + "," + rgb.g.toString() + "," + rgb.b.toString() + ",0.2)";
             })
             .style("stroke", (d) => {
                 return this.calculateStroke(d.properties.ICP);
@@ -300,10 +310,10 @@ export class WardmapComponent implements OnInit, OnChanges {
         this.boundaryShown = !this.boundaryShown;
         if (this.boundaryShown) {
             if (this.ICSboundaries) {
-                const boundaries = d3.selectAll("path").filter(".boundary").style("display", "block");
+                d3.selectAll("path").filter(".boundary").style("display", "block");
             }
         } else {
-            const boundaries = d3.selectAll("path").filter(".boundary").style("display", "none");
+            d3.selectAll("path").filter(".boundary").style("display", "none");
         }
     }
 
@@ -317,18 +327,15 @@ export class WardmapComponent implements OnInit, OnChanges {
 
     hexToRgb(hex) {
         const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        hex = hex.replace(shorthandRegex, (m, r: string, g: string, b: string) => {
             return r + r + g + g + b + b;
         });
 
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result
-            ? {
-                  r: parseInt(result[1], 16),
-                  g: parseInt(result[2], 16),
-                  b: parseInt(result[3], 16),
-              }
-            : null;
+        const r = parseInt(result[1], 16);
+        const g = parseInt(result[2], 16);
+        const b = parseInt(result[3], 16);
+        return result ? { r, g, b } : null;
     }
 
     closesvgtooltip() {
