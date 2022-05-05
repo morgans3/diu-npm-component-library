@@ -36,11 +36,11 @@ export class APIService extends BaseService {
      * Method to get Payloads by ID
      */
     public getPayloadById(payloadID: string) {
-        return this.http.get(this.baseUrl + "payloads/" + payloadID);
+        return this.http.get(this.baseUrl + "atomic/payloads/" + payloadID);
     }
 
     public getAllPayloads() {
-        return this.http.get(this.baseUrl + "payloads/getAll");
+        return this.http.get(this.baseUrl + "atomic/payloads");
     }
 
     /**
@@ -549,14 +549,14 @@ export class APIService extends BaseService {
      * GET: Method to retrieve all Wards
      */
     public getWards() {
-        return this.http.get(this.baseUrl + "wards/getAll");
+        return this.http.get(this.baseUrl + "wards");
     }
 
     /**
      * GET: Method to retrieve all GP Practices
      */
     public getGPPractices() {
-        return this.http.get(this.baseUrl + "gppractices/getAll");
+        return this.http.get(this.baseUrl + "gppractices");
     }
 
     /**
@@ -576,8 +576,10 @@ export class APIService extends BaseService {
     /**
      * GET: Method to retrieve all shielding citizens
      */
-    public getCitizens() {
-        return this.http.get(this.baseUrl + "shielding/getCitizens");
+    public getCitizens(limit = null) {
+        return this.http.get(this.baseUrl + "shielding", {
+            params: { limit }
+        });
     }
 
     /**
@@ -612,7 +614,7 @@ export class APIService extends BaseService {
      * GET: Method to retrieve all patients
      */
     public getPatients(limit: string) {
-        return this.http.get(this.baseUrl + "patientlists/getPatients?Limit=" + limit);
+        return this.http.get(this.baseUrl + "patientlists/?Limit=" + limit);
     }
 
     /**
@@ -689,14 +691,14 @@ export class APIService extends BaseService {
      * GET: Method to retrieve news feeds
      */
     public getNewsFeeds() {
-        return this.http.get(this.baseUrl + "newsfeeds/getAll/");
+        return this.http.get(this.baseUrl + "newsfeeds/");
     }
 
     /**
      * GET: Method to retrieve ward details
      */
     public getWardDetails() {
-        return this.http.get(this.baseUrl + "warddetails/getAll");
+        return this.http.get(this.baseUrl + "warddetails");
     }
 
     public archiveTask(payload: any) {
@@ -718,7 +720,7 @@ export class APIService extends BaseService {
     }
 
     public getApps() {
-        return this.http.get(this.baseUrl + "apps/getAll/");
+        return this.http.get(this.baseUrl + "apps/");
     }
 
     public addApp(payload: iApplication) {
@@ -744,7 +746,7 @@ export class APIService extends BaseService {
     }
 
     public getOrganisations() {
-        return this.http.get(this.baseUrl + "organisations/getAll");
+        return this.http.get(this.baseUrl + "organisations");
     }
 
     public addOrganisation(payload: iOrganisation) {
@@ -760,11 +762,11 @@ export class APIService extends BaseService {
     }
 
     public getPointsOfInterest() {
-        return this.http.get(this.baseUrl + "pointsofinterest/getAll");
+        return this.http.get(this.baseUrl + "pointsofinterest");
     }
 
     public getMosiacs() {
-        return this.http.get(this.baseUrl + "mosaic/getAll");
+        return this.http.get(this.baseUrl + "mosaic");
     }
 
     public getCodefromPostCode(code: string) {
@@ -802,7 +804,7 @@ export class APIService extends BaseService {
      * GET: Method to get all teams from the database
      */
     public getTeamMembers() {
-        return this.http.get(this.baseUrl + "teammembers/getAll");
+        return this.http.get(this.baseUrl + "teammembers");
     }
 
     /**
@@ -839,7 +841,7 @@ export class APIService extends BaseService {
      * GET: Method to get all teams from the database
      */
     public getTeamProfiles() {
-        return this.http.get(this.baseUrl + "teamprofiles/getAll");
+        return this.http.get(this.baseUrl + "teamprofiles");
     }
 
     /**
@@ -869,14 +871,14 @@ export class APIService extends BaseService {
      * GET: Method to return all user profiles
      */
     public getUserProfiles() {
-        return this.http.get(this.baseUrl + "userprofiles/getAll");
+        return this.http.get(this.baseUrl + "userprofiles");
     }
 
     /**
      * GET: Method to get profile by username
      */
     public getUserProfileByUsername(username: string) {
-        return this.http.get(this.baseUrl + "userprofiles/getUserProfileByUsername?username=" + username);
+        return this.http.get(this.baseUrl + "userprofiles/" + username);
     }
 
     /**

@@ -56,7 +56,7 @@ export class WardmapComponent implements OnInit, OnChanges {
         this.check = this.crossfilterData;
         this.width = document.getElementById("wardMapMain").getBoundingClientRect().width;
         this.allwardDetails = this.wardDetails;
-        this.apiService.genericGetAPICall(this.url + "wards/getAll").subscribe((res: any[]) => {
+        this.apiService.genericGetAPICall(this.url + "wards").subscribe((res: any[]) => {
             if (res.length > 0) {
                 this.wards = res[0];
                 this.wardlist = this.wards.features.map((key) => key.properties.wd15cd);
