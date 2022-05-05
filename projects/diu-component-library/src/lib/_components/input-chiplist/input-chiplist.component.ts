@@ -1,34 +1,33 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
+import { FocusMonitor } from "@angular/cdk/a11y";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
-import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self, Output, EventEmitter } from '@angular/core';
-import { MAT_FORM_FIELD, MatFormField, MatFormFieldControl } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
+import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { Component, ElementRef, Inject, Input, OnDestroy, Optional, Self } from "@angular/core";
+import { MAT_FORM_FIELD, MatFormField, MatFormFieldControl } from "@angular/material/form-field";
+import { Subject } from "rxjs";
 
 @Component({
-    selector: 'input-chiplist',
-    templateUrl: 'input-chiplist.component.html',
-    providers: [{ provide: MatFormFieldControl, useExisting: InputChipList }],
+    selector: "input-chiplist",
+    templateUrl: "input-chiplist.component.html",
+    providers: [{ provide: MatFormFieldControl, useExisting: InputChipListComponent }],
     host: {
-        '[class.example-floating]': 'shouldLabelFloat',
-        '[id]': 'id',
-    }
+        "[class.example-floating]": "shouldLabelFloat",
+        "[id]": "id",
+    },
 })
-export class InputChipList implements ControlValueAccessor, MatFormFieldControl<Array<string>>, OnDestroy {
-
+export class InputChipListComponent implements ControlValueAccessor, MatFormFieldControl<Array<string>>, OnDestroy {
     static nextId = 0;
-    controlType = 'input-chiplist';
-    id = `input-chiplist-${InputChipList.nextId++}`;
+    controlType = "input-chiplist";
+    id = `input-chiplist-${InputChipListComponent.nextId++}`;
 
     focused = false;
     touched = false;
     formControl: FormControl = new FormControl([]);
     separatorKeysCodes = [ENTER, COMMA];
     stateChanges = new Subject<void>();
-    
-    onChange = (_: any) => { };
-    onTouched = () => { };
+
+    onChange = () => {};
+    onTouched = () => {};
 
     get empty() {
         return !this.formControl.value.length;
@@ -40,34 +39,34 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
 
     @Input()
     get placeholder(): string {
-        return this._placeholder;
+        return this.strPlaceholder;
     }
     set placeholder(value: string) {
-        this._placeholder = value;
+        this.strPlaceholder = value;
         this.stateChanges.next();
     }
-    private _placeholder: string;
+    private strPlaceholder: string;
 
     @Input()
     get required(): boolean {
-        return this._required;
+        return this.boolRequired;
     }
     set required(value: boolean) {
-        this._required = coerceBooleanProperty(value);
+        this.boolRequired = coerceBooleanProperty(value);
         this.stateChanges.next();
     }
-    private _required = false;
+    private boolRequired = false;
 
     @Input()
     get disabled(): boolean {
-        return this._disabled;
+        return this.boolDisabled;
     }
     set disabled(value: boolean) {
-        this._disabled = coerceBooleanProperty(value);
-        this._disabled ? this.formControl.disable() : this.formControl.enable();
+        this.boolDisabled = coerceBooleanProperty(value);
+        this.boolDisabled ? this.formControl.disable() : this.formControl.enable();
         this.stateChanges.next();
     }
-    private _disabled = false;
+    private boolDisabled = false;
 
     @Input()
     get value(): Array<string> | null {
@@ -85,8 +84,8 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
     @Output('selected') selected = new EventEmitter();
 
     constructor(
-        private _focusMonitor: FocusMonitor,
-        private _elementRef: ElementRef<HTMLElement>,
+        private aFocusMonitor: FocusMonitor,
+        private elemRef: ElementRef<HTMLElement>,
         @Optional() @Inject(MAT_FORM_FIELD) public _formField: MatFormField,
         @Optional() @Self() public ngControl: NgControl
     ) {
@@ -97,12 +96,14 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
 
     ngOnDestroy() {
         this.stateChanges.complete();
-        this._focusMonitor.stopMonitoring(this._elementRef);
+        this.aFocusMonitor.stopMonitoring(this.elemRef);
     }
 
     setDescribedByIds(ids: string[]) {
-        const controlElement = this._elementRef.nativeElement.querySelector('.mat-form-field-type-input-chiplist')!;
-        controlElement.setAttribute('aria-describedby', ids.join(' '));
+        if (this.elemRef && this.elemRef.nativeElement) {
+            const controlElement = this.elemRef?.nativeElement.querySelector(".mat-form-field-type-input-chiplist");
+            controlElement.setAttribute("aria-describedby", ids.join(" "));
+        }
     }
 
     onContainerClick() {}
@@ -124,27 +125,27 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
     }
 
     addItem(event) {
-        //Get mdt and value
-        let items = this.formControl.value;
-        let item = (event.value || "").trim();
+        // Get mdt and value
+        const items = this.formControl.value;
+        const item = (event.value || "").trim();
 
-        //Add to array
+        // Add to array
         if (item) {
             items.push(item);
             this.formControl.setValue(items);
             this.selected.emit(items);
         }
 
-        //Clear the input value
+        // Clear the input value
         event.input.value = "";
     }
 
     removeItem(mdt) {
-        //Get mdt and find index
-        let items = this.formControl.value;
-        let index = items.indexOf(mdt);
+        // Get mdt and find index
+        const items = this.formControl.value;
+        const index = items.indexOf(mdt);
 
-        //Remove from array
+        // Remove from array
         if (index >= 0) {
             items.splice(index, 1);
             this.formControl.setValue(items);
@@ -152,6 +153,6 @@ export class InputChipList implements ControlValueAccessor, MatFormFieldControl<
         }
     }
 
-    static ngAcceptInputType_disabled: BooleanInput;
-    static ngAcceptInputType_required: BooleanInput;
+    static ngAcceptInputTypeboolDisabled: BooleanInput;
+    static ngAcceptInputTypeboolRequired: BooleanInput;
 }

@@ -1,8 +1,8 @@
 export interface iTeamResults {
-    _id:string;
-    joindate:string;
-    teamcode:string;
-    username:string;
+    _id: string;
+    joindate: string;
+    teamcode: string;
+    username: string;
 }
 
 export interface iTeam {
@@ -15,7 +15,7 @@ export interface iTeam {
 }
   
 export interface iTeamMembers {
-    _id?: string;
+    _id: string;
     teamcode: string;
     username: string;
     rolecode?: string;
@@ -35,4 +35,4 @@ export interface iTeamRequest {
     approveddate?: Date;
     refusedate?: Date;
     __v?: number;
-  }
+}

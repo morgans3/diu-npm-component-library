@@ -1,48 +1,52 @@
 <app-size-detector></app-size-detector>
 <div fxLayout="row wrap" style="margin-top: 10px 0 0">
-  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="center center">
-    <mat-card style="width: 100%; margin-bottom: 0">
-      <mat-card-header (click)="visible = !visible">
-        <mat-card-title-group>
-          <mat-card-title style="padding-top: 2px; padding-left: 15px">Latest News (NHS Twitter)</mat-card-title>
-        </mat-card-title-group>
-        <div fxFlex></div>
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="center center">
+        <mat-card style="width: 100%; margin-bottom: 0">
+            <mat-card-header (click)="visible = !visible">
+                <mat-card-title-group>
+                    <mat-card-title style="padding-top: 2px; padding-left: 15px">Latest News (NHS Twitter)</mat-card-title>
+                </mat-card-title-group>
+                <div fxFlex></div>
 
-        <div fxLayoutAlign="center center">
-          <button mat-icon-button color="accent" title="Collapse">
-            <mat-icon>swap_vertical_circle</mat-icon>
-          </button>
-        </div>
-      </mat-card-header>
-    </mat-card>
-  </div>
+                <div fxLayoutAlign="center center">
+                    <button mat-icon-button color="accent" title="Collapse">
+                        <mat-icon>swap_vertical_circle</mat-icon>
+                    </button>
+                </div>
+            </mat-card-header>
+        </mat-card>
+    </div>
 </div>
 
 <div fxLayout="row wrap" *ngIf="isIE">
-  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-    <mat-card class="slim-top bg-warning" style="padding-bottom: 10px">
-      <mat-card-content class="text-white" style="padding-top: 10px; padding-bottom: 10px">
-        <div fxLayoutAlign="center center">
-          <i class="icon-2x fas fa-circle-exclamation"></i>
-          <p style="margin-left: 5px; text-align: center">Twitter Feeds are not supported in this Browser.</p>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+    <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card class="slim-top bg-warning" style="padding-bottom: 10px">
+            <mat-card-content class="text-white" style="padding-top: 10px; padding-bottom: 10px">
+                <div fxLayoutAlign="center center">
+                    <i class="icon-2x fas fa-circle-exclamation"></i>
+                    <p style="margin-left: 5px; text-align: center">Twitter Feeds are not supported in this Browser.</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
 
 <div fxLayout="row wrap" style="margin-bottom: 10px" *ngIf="visible && !isIE" fxLayoutAlign="center top">
-  <button mat-mini-fab color="primary" [disabled]="displayed === 0" (click)="decreaseDisplayed()" style="margin-top: 20px">
-    <mat-icon>chevron_left</mat-icon>
-  </button>
-  <div *ngFor="let feed of twitterfeeds; let i = index" [fxHide]="elementOutOfRange(i, cols)">
-    <mat-card>
-      <mat-card-content>
-        <ngx-twitter-timeline [data]="{ sourceType: 'url', url: 'https://twitter.com/' + feed.destination }" [opts]="{ tweetLimit: 5 }"> </ngx-twitter-timeline>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <button mat-mini-fab color="primary" [disabled]="getRightState()" (click)="increaseDisplayed()" style="margin-top: 20px">
-    <mat-icon>chevron_right</mat-icon>
-  </button>
+    <button mat-mini-fab color="primary" [disabled]="displayed === 0" (click)="decreaseDisplayed()" style="margin-top: 20px">
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+    <div *ngFor="let feed of twitterfeeds; let i = index" [fxHide]="elementOutOfRange(i, cols)">
+        <mat-card>
+            <mat-card-content>
+                <ngx-twitter-timeline
+                    [data]="{ sourceType: 'url', url: 'https://twitter.com/' + feed.destination }"
+                    [opts]="{ tweetLimit: 5 }"
+                >
+                </ngx-twitter-timeline>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <button mat-mini-fab color="primary" [disabled]="getRightState()" (click)="increaseDisplayed()" style="margin-top: 20px">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
 </div>
