@@ -86,13 +86,13 @@ export class FormWithTableComponent implements OnInit {
     // if there's no preloaded data and a form ID provided
     if (!this._Handler.formData && this._Handler.formDataID) {
       //use the form ID to get form config from db
-      this.apiService.getPayloadById(this._Handler.formDataID).subscribe((data: any) => {
+      this.apiService.getPayloadById(this._Handler.formDataID).subscribe((payload: any) => {
         //if the data has been returned
-        if (data && data.length > 0) {
+        if (payload) {
           //form data is stored under the key config
-          this._Handler.formData = JSON.parse(data[0].config);
-          this.apiService.getPayloadById(this._Handler.tableDataID).subscribe((response: any) => {
-            this.tableData = JSON.parse(response[0].config);
+          this._Handler.formData = JSON.parse(payload.config);
+          this.apiService.getPayloadById(this._Handler.tableDataID).subscribe((payload: any) => {
+            this.tableData = JSON.parse(payload.config);
             // console.log(this.tableData);
             this.configureTable();
           });

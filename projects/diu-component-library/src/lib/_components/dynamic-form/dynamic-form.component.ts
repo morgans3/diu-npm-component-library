@@ -64,15 +64,12 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     // if there's no preloaded data and a form ID provided
     if (!this.formData && this.formDataID) {
       //use the form ID to get form config from db
-      this.apiService.getPayloadById(this.formDataID).subscribe((data) => {
+      this.apiService.getPayloadById(this.formDataID).subscribe((payload: any) => {
         //if the data has been returned
-        if (data) {
-          //get by ID returns 1 row of data
-          if (data[0]) {
-            //form data is stored under the key config
-            this.formData = JSON.parse(data[0].config);
-            this.setFormData();
-          }
+        if (payload) {
+          //form data is stored under the key config
+          this.formData = JSON.parse(payload.config);
+          this.setFormData();
         }
       });
       return;

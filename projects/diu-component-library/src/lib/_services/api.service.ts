@@ -36,11 +36,11 @@ export class APIService extends BaseService {
    * Method to get Payloads by ID
    */
   public getPayloadById(payloadID) {
-    return this.http.get(this.baseUrl + "payloads/" + payloadID);
+    return this.http.get(this.baseUrl + "atomic/payloads/" + payloadID);
   }
 
   public getAllPayloads() {
-    return this.http.get(this.baseUrl + "payloads/getAll");
+    return this.http.get(this.baseUrl + "atomic/payloads/getAll");
   }
 
   /**
@@ -1164,41 +1164,6 @@ export class APIService extends BaseService {
    */
   public updateVWNotes(id, notes) {
     return this.http.post(this.baseUrl + "virtualward_decision/updateNotes", { id: id, notes: notes });
-  }
-
-  /**
-   * GET: Get cohorts by a user's username
-   */
-  public getCohortsByUsername(username: string) {
-    return this.http.get(this.baseUrl + "cvicohorts/getByusername?username=" + username);
-  }
-
-   /**
-   * POST: Create new cohort
-   */
-  public registerCohort(payload) {
-    return this.http.post(this.baseUrl + "cvicohorts/register/", payload);
-  }
-
-   /**
-   * POST: Delete a cohort
-   */
-  public removeCohort(payload) {
-    return this.http.post(this.baseUrl + "cvicohorts/delete/", payload);
-  }
-
-  /**
-   * GET: Get caseloads by a user's username
-   */
-  public getCviCaseloadsByUsername(username: string) {
-    return this.http.get(this.baseUrl + "cvicaseload/getByusername?username=" + username);
-  }
-
-  /**
-   * POST: Compare two cohorts
-   */
-  public getCohortComparison(payload) {
-    return this.http.post(this.baseUrl + "populations/getComparison/", payload);
   }
 
   /**
