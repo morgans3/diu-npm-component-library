@@ -68,7 +68,7 @@ export class WardmapComponent implements OnInit, OnChanges {
                 this.loading = false;
             }
         });
-        this.apiService.genericGetAPICall(this.url + "orgboundaries/getTopoJSON").subscribe((res: any[]) => {
+        this.apiService.genericGetAPICall(this.url + "orgboundaries/topo-json").subscribe((res: any[]) => {
             if (res.length > 0) {
                 this.ICSboundaries = res[0];
                 if (this.g) this.addBoundaries();
