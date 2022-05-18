@@ -117,19 +117,15 @@ export class APIService extends BaseService {
         });
     }
 
-    public getAllAccessLogs(
-        filters: { date?: string, type?: string, pageKey?: string }
-    ) {
+    public getAllAccessLogs(filters: { date?: string; type?: string; pageKey?: string }) {
         return this.http.get(this.baseUrl + "access-logs", {
-            params: filters
+            params: filters,
         });
     }
 
-    public getAllAccessLogsByUser(
-        filters: { user: string, date?: string, pageKey?: string }
-    ) {
+    public getAllAccessLogsByUser(filters: { user: string; date?: string; pageKey?: string }) {
         return this.http.get(`${this.baseUrl}${encodeURIComponent(filters.user)}/access-logs`, {
-            params: filters
+            params: filters,
         });
     }
 
@@ -137,8 +133,8 @@ export class APIService extends BaseService {
         return this.http.get(this.baseUrl + "access-logs/statistics", {
             params: {
                 date_from,
-                date_to
-            }
+                date_to,
+            },
         });
     }
 
@@ -375,7 +371,7 @@ export class APIService extends BaseService {
      *
      * @returns HTTP GET Promise
      */
-    public getCapabilityById(id: string|number) {
+    public getCapabilityById(id: string | number) {
         return this.http.get(`${this.baseUrl}/capabilities/${id}`);
     }
 
@@ -394,7 +390,7 @@ export class APIService extends BaseService {
      * @returns HTTP POST Promise
      */
     public updateCapability(payload) {
-        return this.http.post(this.baseUrl + "capabilities/update", payload);
+        return this.http.put(this.baseUrl + "capabilities/update", payload);
     }
 
     /**
@@ -439,7 +435,7 @@ export class APIService extends BaseService {
      * @returns HTTP POST Promise
      */
     public updateRole(payload) {
-        return this.http.post(this.baseUrl + "roles/update", payload);
+        return this.http.put(this.baseUrl + "roles/update", payload);
     }
 
     /**
@@ -508,7 +504,7 @@ export class APIService extends BaseService {
     }
 
     public updatePassword(username: any, authmethod: any, newPassword: any, code: any = null) {
-        return this.http.post(this.baseUrl + "password/update", {
+        return this.http.put(this.baseUrl + "password/update", {
             username,
             authmethod,
             newpassword: newPassword,
@@ -567,7 +563,7 @@ export class APIService extends BaseService {
      */
     public getCitizens(limit = null) {
         return this.http.get(this.baseUrl + "shielding", {
-            params: { limit }
+            params: { limit },
         });
     }
 
@@ -690,10 +686,6 @@ export class APIService extends BaseService {
         return this.http.get(this.baseUrl + "warddetails");
     }
 
-    public archiveTask(payload: any) {
-        return this.http.put(this.baseUrl + "tasks/delete", payload);
-    }
-
     // System Alerts
     public getSystemAlerts() {
         return this.http.get(this.baseUrl + "systemalerts/");
@@ -702,7 +694,7 @@ export class APIService extends BaseService {
         return this.http.get(this.baseUrl + "systemalerts/getActive/");
     }
     public updateSystemAlert(payload: any) {
-        return this.http.post(this.baseUrl + "systemalerts/update", payload);
+        return this.http.put(this.baseUrl + "systemalerts/update", payload);
     }
     public addSystemAlert(payload: any) {
         return this.http.post(this.baseUrl + "systemalerts/create/", payload);
@@ -728,11 +720,11 @@ export class APIService extends BaseService {
         return this.http.post(this.baseUrl + "newsfeeds/create/", payload);
     }
     public updateNewsFeed(payload: iNewsFeed) {
-        return this.http.post(this.baseUrl + "newsfeeds/update", payload);
+        return this.http.put(this.baseUrl + "newsfeeds/update", payload);
     }
     public archiveNewsFeed(payload: iNewsFeed) {
         return this.http.delete(this.baseUrl + "newsfeeds/delete", {
-            body: payload
+            body: payload,
         });
     }
 
@@ -745,7 +737,7 @@ export class APIService extends BaseService {
     }
 
     public updateOrganisation(payload: iOrganisation) {
-        return this.http.post(this.baseUrl + "organisations/update", payload);
+        return this.http.put(this.baseUrl + "organisations/update", payload);
     }
 
     public removeOrganisation(payload: iOrganisation) {
@@ -1000,7 +992,7 @@ export class APIService extends BaseService {
      * POST: Method to update a Lighter Touch Pathway patient
      */
     public updateLTPPatient(payload: any) {
-        return this.http.post(this.baseUrl + "virtualward/update", payload);
+        return this.http.put(this.baseUrl + "virtualward/update", payload);
     }
 
     /**
@@ -1162,13 +1154,13 @@ export class APIService extends BaseService {
      */
     public updateVWStatus(id, status, reason?) {
         if (reason && reason !== null) {
-            return this.http.post(this.baseUrl + "virtualward_decision/status/update", {
+            return this.http.put(this.baseUrl + "virtualward_decision/status/update", {
                 id,
                 status,
                 nonreferral_reason: reason,
             });
         } else {
-            return this.http.post(this.baseUrl + "virtualward_decision/status/update", { id, status });
+            return this.http.put(this.baseUrl + "virtualward_decision/status/update", { id, status });
         }
     }
 
@@ -1176,7 +1168,7 @@ export class APIService extends BaseService {
      * POST: Method to update virtual ward contact
      */
     public updateVWContact(id, contact) {
-        return this.http.post(this.baseUrl + "virtualward_decision/contact/update", { id, contact });
+        return this.http.put(this.baseUrl + "virtualward_decision/contact/update", { id, contact });
     }
 
     /**
@@ -1197,7 +1189,7 @@ export class APIService extends BaseService {
      * POST: Method to update virtual ward notes
      */
     public updateVWNotes(id, notes) {
-        return this.http.post(this.baseUrl + "virtualward_decision/notes/update", { id, notes });
+        return this.http.put(this.baseUrl + "virtualward_decision/notes/update", { id, notes });
     }
 
     // SPI Incident
@@ -1229,5 +1221,4 @@ export class APIService extends BaseService {
     public deleteSpiIncident(payload) {
         return this.http.delete(this.baseUrl + "spi_incidentmethods/delete", { body: payload });
     }
-
 }
