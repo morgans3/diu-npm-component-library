@@ -59,6 +59,7 @@ export * from "./lib/_components/dynamic-component/dynamic-component.directive";
 /**
  * Interfaces List
  */
+export * from "./lib/_models/cohort.interface";
 export * from "./lib/_models/field.interface";
 export * from "./lib/_models/header.interface";
 export * from "./lib/_models/hospitalstats.interface";
@@ -71,6 +72,15 @@ export * from "./lib/_models/organisation.interface";
 export * from "./lib/_models/roles.interface";
 export * from "./lib/_models/teams.interface";
 export * from "./lib/_models/user.interface";
+export * from "./lib/_models/features.interface";
+export * from "./lib/_models/mosaiccode.interface";
+export * from "./lib/_models/niceresponse.interface";
+export * from "./lib/_models/regional.interface";
+export * from "./lib/_models/gp-inpatients.interface";
+export * from "./lib/_models/patient.interface";
+export * from "./lib/_models/postcodesio.interface";
+export * from "./lib/_models/population.interface";
+export * from "./lib/_models/chart.interface";
 export * from "./lib/_components/dashboard-population/lookups";
 
 /**
@@ -81,6 +91,8 @@ export * from "./lib/_services/population.service";
 export * from "./lib/_services/populationmanagement.service";
 export * from "./lib/_services/resize.service";
 export * from "./lib/_services/api.service";
+export * from "./lib/_services/api.service";
+export * from "./lib/_services/_baseclass.service";
 
 /**
  * Modules List

@@ -24,6 +24,10 @@ export class APIService extends BaseService {
         this.baseUrl = this.combineURL(origin, "api");
     }
 
+    // public combineURL(origin: string, subdomain: string) {
+    //     return "http://localhost:8079/";
+    // }
+
     login(credentials: iCredentials) {
         return this.http.post(this.baseUrl + "users/authenticate", credentials).pipe(map((response: any) => response));
     }
@@ -36,11 +40,11 @@ export class APIService extends BaseService {
      * Method to get Payloads by ID
      */
     public getPayloadById(payloadID: string) {
-        return this.http.get(this.baseUrl + "payloads/" + payloadID);
+        return this.http.get(this.baseUrl + "atomic/payloads/" + payloadID);
     }
 
     public getAllPayloads() {
-        return this.http.get(this.baseUrl + "payloads/getAll");
+        return this.http.get(this.baseUrl + "atomic/payloads");
     }
 
     /**
@@ -113,26 +117,25 @@ export class APIService extends BaseService {
         });
     }
 
-    public getAllAccessLogs(date?: string, type?: string, pageKey?: string) {
-        let urlparams = "";
-        if (date) urlparams += "?date=" + date;
-        if (type) urlparams.length ? (urlparams += "&type=" + type) : (urlparams += "?type=" + type);
-        if (pageKey) urlparams.length ? (urlparams += "&pageKey=" + pageKey) : (urlparams += "?pageKey=" + pageKey);
-        return this.http.get(this.baseUrl + "access-logs" + urlparams);
+    public getAllAccessLogs(filters: { date?: string; type?: string; pageKey?: string }) {
+        return this.http.get(this.baseUrl + "access-logs", {
+            params: filters,
+        });
     }
 
-    public getAllAccessLogsByUser(user: string, date?: string, pageKey?: string) {
-        let urlparams = "";
-        if (date) urlparams += "?date=" + date;
-        if (pageKey) urlparams.length ? (urlparams += "&pageKey=" + pageKey) : (urlparams += "?pageKey=" + pageKey);
-        return this.http.get(this.baseUrl + user + "/access-logs" + urlparams);
+    public getAllAccessLogsByUser(filters: { user: string; date?: string; pageKey?: string }) {
+        return this.http.get(`${this.baseUrl}${encodeURIComponent(filters.user)}/access-logs`, {
+            params: filters,
+        });
     }
 
     public getAllAccessLogsStatistics(date_from?: string, date_to?: string) {
-        let urlparams = "";
-        if (date_from) urlparams += "?date_from=" + date_from;
-        if (date_to) urlparams.length ? (urlparams += "&date_to=" + date_to) : (urlparams += "?date_to=" + date_to);
-        return this.http.get(this.baseUrl + "access-logs/statistics" + urlparams);
+        return this.http.get(this.baseUrl + "access-logs/statistics", {
+            params: {
+                date_from,
+                date_to,
+            },
+        });
     }
 
     public createAccessLog(payload: any) {
@@ -148,7 +151,7 @@ export class APIService extends BaseService {
     }
 
     public getAllDocoboAcknowledgements() {
-        return this.http.get(this.baseUrl + "docobo/acknowledgements/getAll/");
+        return this.http.get(this.baseUrl + "docobo/acknowledgements/");
     }
 
     public reportDocoboAcknowledgements(payload: any) {
@@ -179,23 +182,23 @@ export class APIService extends BaseService {
     }
 
     public getOrgBoundaries() {
-        return this.http.get(this.baseUrl + "orgboundaries/getTopoJSON");
+        return this.http.get(this.baseUrl + "orgboundaries/topo-json");
     }
 
     public getTopoJSON() {
-        return this.http.get(this.baseUrl + "pcninformation/getTopoJSON");
+        return this.http.get(this.baseUrl + "pcninformation/topo-json");
     }
 
     public getPCNInformation() {
-        return this.http.get(this.baseUrl + "pcninformation/getData");
+        return this.http.get(this.baseUrl + "pcninformation");
     }
 
     public getHexGeojson() {
-        return this.http.get(this.baseUrl + "pcninformation/getHexGeojson");
+        return this.http.get(this.baseUrl + "pcninformation/hexgeo-json");
     }
 
     public getAllPostcodes() {
-        return this.http.get(this.baseUrl + "postcodes/getAll/");
+        return this.http.get(this.baseUrl + "postcodes/");
     }
 
     public checkServiceAccounts(org: string, key: string) {
@@ -205,28 +208,12 @@ export class APIService extends BaseService {
         });
     }
 
-    public getTeams() {
-        return this.http.get(this.baseUrl + "teams/");
-    }
-
-    public registerTeam(payload: iTeam) {
-        return this.http.post(this.baseUrl + "teams/create", payload);
-    }
-
-    public updateTeam(payload: iTeam) {
-        return this.http.put(this.baseUrl + "teams/update", payload);
-    }
-
-    public deleteTeam(payload: iTeam) {
-        return this.http.delete(this.baseUrl + "teams/" + payload["_id"] + "/delete/", { body: payload });
-    }
-
     public getAllClinicalTrials() {
-        return this.http.get(this.baseUrl + "trials/getAll");
+        return this.http.get(this.baseUrl + "trials");
     }
 
     public searchClinicalTrials(search: string, phases: string, min_date: string) {
-        return this.http.post(this.baseUrl + "trials/getSearchTop1000", { search, phases, min_date });
+        return this.http.post(this.baseUrl + "trials/search-top-100", { search, phases, min_date });
     }
 
     /**
@@ -384,10 +371,8 @@ export class APIService extends BaseService {
      *
      * @returns HTTP GET Promise
      */
-    public getCapabilityById(id) {
-        return this.http.get(this.baseUrl + "capabilities/getByID", {
-            params: { id },
-        });
+    public getCapabilityById(id: string | number) {
+        return this.http.get(`${this.baseUrl}/capabilities/${id}`);
     }
 
     /**
@@ -396,7 +381,7 @@ export class APIService extends BaseService {
      * @returns HTTP POST Promise
      */
     public createCapability(payload) {
-        return this.http.post(this.baseUrl + "capabilities/register", payload);
+        return this.http.post(this.baseUrl + "capabilities/create", payload);
     }
 
     /**
@@ -405,7 +390,7 @@ export class APIService extends BaseService {
      * @returns HTTP POST Promise
      */
     public updateCapability(payload) {
-        return this.http.post(this.baseUrl + "capabilities/update", payload);
+        return this.http.put(this.baseUrl + "capabilities/update", payload);
     }
 
     /**
@@ -414,7 +399,7 @@ export class APIService extends BaseService {
      * @returns HTTP POST Promise
      */
     public deleteCapability(id) {
-        return this.http.delete(this.baseUrl + "capabilities/removeByID", { body: { id } });
+        return this.http.delete(this.baseUrl + "capabilities/delete", { body: { id } });
     }
 
     /**
@@ -450,7 +435,7 @@ export class APIService extends BaseService {
      * @returns HTTP POST Promise
      */
     public updateRole(payload) {
-        return this.http.post(this.baseUrl + "roles/update", payload);
+        return this.http.put(this.baseUrl + "roles/update", payload);
     }
 
     /**
@@ -459,7 +444,7 @@ export class APIService extends BaseService {
      * @returns HTTP DELETE Promise
      */
     public deleteRole(id: string) {
-        return this.http.delete(this.baseUrl + "roles/" + id + "/delete");
+        return this.http.delete(this.baseUrl + "roles/delete", { body: { id } });
     }
 
     /**
@@ -519,7 +504,7 @@ export class APIService extends BaseService {
     }
 
     public updatePassword(username: any, authmethod: any, newPassword: any, code: any = null) {
-        return this.http.post(this.baseUrl + "password/update", {
+        return this.http.put(this.baseUrl + "password/update", {
             username,
             authmethod,
             newpassword: newPassword,
@@ -549,42 +534,44 @@ export class APIService extends BaseService {
      * GET: Method to retrieve all Wards
      */
     public getWards() {
-        return this.http.get(this.baseUrl + "wards/getAll");
+        return this.http.get(this.baseUrl + "wards");
     }
 
     /**
      * GET: Method to retrieve all GP Practices
      */
     public getGPPractices() {
-        return this.http.get(this.baseUrl + "gppractices/getAll");
+        return this.http.get(this.baseUrl + "gppractices");
     }
 
     /**
      * GET: Method to retrieve all Grand Index data for Mosaic
      */
     public getGrandIndex() {
-        return this.http.get(this.baseUrl + "grandindex/getAll");
+        return this.http.get(this.baseUrl + "grandindex");
     }
 
     /**
      * POST: Method to retrieve all households within a given isochrone
      */
     public getHouseholdIsochrone(isochrone_bounds: string) {
-        return this.http.post(this.baseUrl + "isochrone/getHousesWithinIsochrone", isochrone_bounds);
+        return this.http.post(this.baseUrl + "isochrone/houses-within-isochrone", isochrone_bounds);
     }
 
     /**
      * GET: Method to retrieve all shielding citizens
      */
-    public getCitizens() {
-        return this.http.get(this.baseUrl + "shielding/getCitizens");
+    public getCitizens(limit = null) {
+        return this.http.get(this.baseUrl + "shielding", {
+            params: { limit },
+        });
     }
 
     /**
      * POST: Method to retrieve LPRES validation key
      */
     public getLPRESViewerValidationKey(nhsnumber: string) {
-        return this.http.post(this.baseUrl + "lpresviewer/getValidationKey", nhsnumber);
+        return this.http.post(this.baseUrl + "lpresviewer/generate-validation-key", nhsnumber);
     }
 
     /**
@@ -612,7 +599,7 @@ export class APIService extends BaseService {
      * GET: Method to retrieve all patients
      */
     public getPatients(limit: string) {
-        return this.http.get(this.baseUrl + "patientlists/getPatients?Limit=" + limit);
+        return this.http.get(this.baseUrl + "patientlists/?Limit=" + limit);
     }
 
     /**
@@ -633,14 +620,14 @@ export class APIService extends BaseService {
      * GET: Method to get all team requests
      */
     public getTeamRequests() {
-        return this.http.get(this.baseUrl + "teamrequests/getAll/");
+        return this.http.get(this.baseUrl + "teamrequests/");
     }
 
     /**
      * GET: Method to get team requests by id
      */
     public getTeamRequestByID(id: string) {
-        return this.http.get(this.baseUrl + "teamrequests/getByID?request_id=" + id);
+        return this.http.get(this.baseUrl + "teamrequests/" + id);
     }
 
     /**
@@ -668,7 +655,7 @@ export class APIService extends BaseService {
      * POST: Method to add a team request to the database
      */
     public addTeamRequest(payload: iTeamRequest) {
-        return this.http.post(this.baseUrl + "teamrequests/register/", payload);
+        return this.http.post(this.baseUrl + "teamrequests/create/", payload);
     }
 
     /**
@@ -689,86 +676,84 @@ export class APIService extends BaseService {
      * GET: Method to retrieve news feeds
      */
     public getNewsFeeds() {
-        return this.http.get(this.baseUrl + "newsfeeds/getAll/");
+        return this.http.get(this.baseUrl + "newsfeeds/");
     }
 
     /**
      * GET: Method to retrieve ward details
      */
     public getWardDetails() {
-        return this.http.get(this.baseUrl + "warddetails/getAll");
-    }
-
-    public archiveTask(payload: any) {
-        return this.http.put(this.baseUrl + "tasks/delete", payload);
+        return this.http.get(this.baseUrl + "warddetails");
     }
 
     // System Alerts
     public getSystemAlerts() {
-        return this.http.get(this.baseUrl + "systemalerts/getAll/");
+        return this.http.get(this.baseUrl + "systemalerts/");
     }
     public getActiveSystemAlerts() {
         return this.http.get(this.baseUrl + "systemalerts/getActive/");
     }
     public updateSystemAlert(payload: any) {
-        return this.http.post(this.baseUrl + "systemalerts/update", payload);
+        return this.http.put(this.baseUrl + "systemalerts/update", payload);
     }
     public addSystemAlert(payload: any) {
-        return this.http.post(this.baseUrl + "systemalerts/register/", payload);
+        return this.http.post(this.baseUrl + "systemalerts/create/", payload);
     }
 
     public getApps() {
-        return this.http.get(this.baseUrl + "apps/getAll/");
+        return this.http.get(this.baseUrl + "apps/");
     }
 
     public addApp(payload: iApplication) {
-        return this.http.post(this.baseUrl + "apps/register/", payload);
+        return this.http.post(this.baseUrl + "apps/create/", payload);
     }
 
     public updateApp(payload: iApplication) {
-        return this.http.post(this.baseUrl + "apps/update", payload);
+        return this.http.put(this.baseUrl + "apps/update", payload);
     }
 
     public archiveApp(payload: iApplication) {
-        return this.http.post(this.baseUrl + "apps/delete", payload);
+        return this.http.delete(this.baseUrl + "apps/delete", { body: payload });
     }
 
     public addNewsFeed(payload: iNewsFeed) {
-        return this.http.post(this.baseUrl + "newsfeeds/register/", payload);
+        return this.http.post(this.baseUrl + "newsfeeds/create/", payload);
     }
     public updateNewsFeed(payload: iNewsFeed) {
-        return this.http.post(this.baseUrl + "newsfeeds/update", payload);
+        return this.http.put(this.baseUrl + "newsfeeds/update", payload);
     }
     public archiveNewsFeed(payload: iNewsFeed) {
-        return this.http.post(this.baseUrl + "newsfeeds/delete", payload);
+        return this.http.delete(this.baseUrl + "newsfeeds/delete", {
+            body: payload,
+        });
     }
 
     public getOrganisations() {
-        return this.http.get(this.baseUrl + "organisations/getAll");
+        return this.http.get(this.baseUrl + "organisations");
     }
 
     public addOrganisation(payload: iOrganisation) {
-        return this.http.post(this.baseUrl + "organisations/register/", payload);
+        return this.http.post(this.baseUrl + "organisations/create/", payload);
     }
 
     public updateOrganisation(payload: iOrganisation) {
-        return this.http.post(this.baseUrl + "organisations/update", payload);
+        return this.http.put(this.baseUrl + "organisations/update", payload);
     }
 
     public removeOrganisation(payload: iOrganisation) {
-        return this.http.delete(this.baseUrl + "organisations/remove", { body: payload });
+        return this.http.delete(this.baseUrl + "organisations/delete", { body: payload });
     }
 
     public getPointsOfInterest() {
-        return this.http.get(this.baseUrl + "pointsofinterest/getAll");
+        return this.http.get(this.baseUrl + "pointsofinterest");
     }
 
     public getMosiacs() {
-        return this.http.get(this.baseUrl + "mosaic/getAll");
+        return this.http.get(this.baseUrl + "mosaic");
     }
 
     public getCodefromPostCode(code: string) {
-        return this.http.get(this.baseUrl + "mosaic/getCodefromPostCode?postcode=" + code);
+        return this.http.get(this.baseUrl + "mosaic?postcode=" + code);
     }
 
     // SearchTeams
@@ -777,7 +762,7 @@ export class APIService extends BaseService {
      * GET: Method to carry out search for teams where the name contains the string;
      */
     public searchTeamsByName(searchterm: string) {
-        return this.http.get(this.baseUrl + "searchs/searchTeams?searchterm=" + searchterm);
+        return this.http.get(this.baseUrl + "searchs/teams?searchterm=" + searchterm);
     }
 
     // SearchUsers
@@ -786,14 +771,14 @@ export class APIService extends BaseService {
      * GET: Method to carry out search for Staff profiles searching multiple fields with the search term
      */
     public searchUserProfiles(searchterm: string) {
-        return this.http.get(this.baseUrl + "searchusers/searchUserProfiles?searchterm=" + searchterm);
+        return this.http.get(this.baseUrl + "searchusers/profiles?searchterm=" + searchterm);
     }
 
     /**
      * GET: Method to carry out search for Staff profiles searching multiple fields with the search term from a specific organisation
      */
     public searchOrgUserProfiles(searchterm: string, organisation: string) {
-        return this.http.get(this.baseUrl + "searchusers/searchOrgUserProfiles?searchterm=" + searchterm + "&organisation=" + organisation);
+        return this.http.get(this.baseUrl + "searchusers/org-profiles?searchterm=" + searchterm + "&organisation=" + organisation);
     }
 
     // TeamMembers
@@ -802,7 +787,7 @@ export class APIService extends BaseService {
      * GET: Method to get all teams from the database
      */
     public getTeamMembers() {
-        return this.http.get(this.baseUrl + "teammembers/getAll");
+        return this.http.get(this.baseUrl + "teammembers");
     }
 
     /**
@@ -823,7 +808,7 @@ export class APIService extends BaseService {
      * POST: Method to add a team member to the database
      */
     public addTeamMember(payload: iTeamMembers) {
-        return this.http.post(this.baseUrl + "teammembers/register/", payload);
+        return this.http.post(this.baseUrl + "teammembers/create/", payload);
     }
 
     /**
@@ -833,34 +818,34 @@ export class APIService extends BaseService {
         return this.http.put(this.baseUrl + "teammembers/archive?member_id=" + payload["_id"], payload);
     }
 
-    // TeamProfiles
+    // Teams
 
     /**
-     * GET: Method to get all teams from the database
+     * GET: Method to return all teams
      */
-    public getTeamProfiles() {
-        return this.http.get(this.baseUrl + "teamprofiles/getAll");
+    public getTeams() {
+        return this.http.get(this.baseUrl + "teams/");
     }
 
     /**
-     * POST: Method to add a team to the database
+     * POST: Method to create a new team
      */
-    public addTeam(payload: iTeam) {
-        return this.http.post(this.baseUrl + "teamprofiles/register/", payload);
+    public createTeam(payload: iTeam) {
+        return this.http.post(this.baseUrl + "teams/create", payload);
     }
 
     /**
-     * PUT: Method to update a team in the database
+     * POST: Method to update an existing team
      */
-    public updateTeamProfile(payload: iTeam) {
-        return this.http.put(this.baseUrl + "teamprofiles/update?profile_id=" + payload["_id"], payload);
+    public updateTeam(payload: iTeam) {
+        return this.http.put(this.baseUrl + "teams/update", payload);
     }
 
     /**
-     * PUT: Method to remove a team from the database
+     * DELETE: Method to delete a team
      */
-    public removeTeam(payload: iTeam) {
-        return this.http.put(this.baseUrl + "teamprofiles/archive?profile_id=" + payload["_id"], payload);
+    public deleteTeam(payload: iTeam) {
+        return this.http.delete(this.baseUrl + "teams/delete", { body: payload });
     }
 
     // UserProfiles
@@ -869,21 +854,21 @@ export class APIService extends BaseService {
      * GET: Method to return all user profiles
      */
     public getUserProfiles() {
-        return this.http.get(this.baseUrl + "userprofiles/getAll");
+        return this.http.get(this.baseUrl + "userprofiles");
     }
 
     /**
      * GET: Method to get profile by username
      */
     public getUserProfileByUsername(username: string) {
-        return this.http.get(this.baseUrl + "userprofiles/getUserProfileByUsername?username=" + username);
+        return this.http.get(this.baseUrl + "userprofiles/" + encodeURIComponent(username));
     }
 
     /**
      * POST: Method to add a new user profile
      */
     public addUserProfile(payload: any) {
-        return this.http.post(this.baseUrl + "userprofiles/register/", payload);
+        return this.http.post(this.baseUrl + "userprofiles/create/", payload);
     }
 
     /**
@@ -993,7 +978,7 @@ export class APIService extends BaseService {
      * GET: Method to get a list of all Lighter Touch Pathway patients
      */
     public getAllLTPPatients(limit: string) {
-        return this.http.get(this.baseUrl + "virtualward/getAll?Limit=" + limit);
+        return this.http.get(this.baseUrl + "virtualward/?Limit=" + limit);
     }
 
     /**
@@ -1007,7 +992,7 @@ export class APIService extends BaseService {
      * POST: Method to update a Lighter Touch Pathway patient
      */
     public updateLTPPatient(payload: any) {
-        return this.http.post(this.baseUrl + "virtualward/update", payload);
+        return this.http.put(this.baseUrl + "virtualward/update", payload);
     }
 
     /**
@@ -1112,7 +1097,7 @@ export class APIService extends BaseService {
      * GET: Method to retrieve all Postcode map lookups
      */
     public getPostcodeLookup() {
-        return this.http.get(this.baseUrl + "tpindex/getPostcodeLookup/");
+        return this.http.get(this.baseUrl + "postcodes/postcode-lookup");
     }
 
     /**
@@ -1147,7 +1132,7 @@ export class APIService extends BaseService {
      * GET: Method to retrieve virtual ward decisions
      */
     public getVWDecisionPatients(limit: string) {
-        return this.http.get(this.baseUrl + "virtualward_decision/getAll?Limit=" + limit);
+        return this.http.get(this.baseUrl + "virtualward_decision/?Limit=" + limit);
     }
 
     /**
@@ -1169,13 +1154,13 @@ export class APIService extends BaseService {
      */
     public updateVWStatus(id, status, reason?) {
         if (reason && reason !== null) {
-            return this.http.post(this.baseUrl + "virtualward_decision/updateStatus", {
+            return this.http.put(this.baseUrl + "virtualward_decision/status/update", {
                 id,
                 status,
                 nonreferral_reason: reason,
             });
         } else {
-            return this.http.post(this.baseUrl + "virtualward_decision/updateStatus", { id, status });
+            return this.http.put(this.baseUrl + "virtualward_decision/status/update", { id, status });
         }
     }
 
@@ -1183,27 +1168,57 @@ export class APIService extends BaseService {
      * POST: Method to update virtual ward contact
      */
     public updateVWContact(id, contact) {
-        return this.http.post(this.baseUrl + "virtualward_decision/updateContact", { id, contact });
+        return this.http.put(this.baseUrl + "virtualward_decision/contact/update", { id, contact });
     }
 
     /**
      * POST: Method to clear virtual ward contact
      */
     public clearVWContact(id) {
-        return this.http.post(this.baseUrl + "virtualward_decision/clearContact", { id });
+        return this.http.post(this.baseUrl + "virtualward_decision/contact/clear", { id });
     }
 
     /**
      * POST: Method to clear virtual ward notes
      */
     public clearVWNotes(id) {
-        return this.http.post(this.baseUrl + "virtualward_decision/clearNotes", { id });
+        return this.http.post(this.baseUrl + "virtualward_decision/notes/clear", { id });
     }
 
     /**
      * POST: Method to update virtual ward notes
      */
     public updateVWNotes(id, notes) {
-        return this.http.post(this.baseUrl + "virtualward_decision/updateNotes", { id, notes });
+        return this.http.put(this.baseUrl + "virtualward_decision/notes/update", { id, notes });
+    }
+
+    // SPI Incident
+
+    /**
+     * GET: Method to return all incidents
+     */
+    public getSpiIncidents() {
+        return this.http.get(this.baseUrl + "spi_incidentmethods/");
+    }
+
+    /**
+     * POST: Method to create a new incident
+     */
+    public createSpiIncident(payload) {
+        return this.http.post(this.baseUrl + "spi_incidentmethods/create", payload);
+    }
+
+    /**
+     * POST: Method to update an existing incident
+     */
+    public updateSpiIncident(payload) {
+        return this.http.put(this.baseUrl + "spi_incidentmethods/update", payload);
+    }
+
+    /**
+     * DELETE: Method to delete an incident
+     */
+    public deleteSpiIncident(payload) {
+        return this.http.delete(this.baseUrl + "spi_incidentmethods/delete", { body: payload });
     }
 }
