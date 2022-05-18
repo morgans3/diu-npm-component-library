@@ -5,15 +5,15 @@ export interface InpatientsGpsummary {
     category: string;
     los: number;
     name: string;
-  }
-  
-  export interface AeGpSummaryLive {
+}
+
+export interface AeGpSummaryLive {
     gpPrcd: string;
     ccgCode: string;
     totals: number;
-  }
-  
-  export class InpatientCounts {
+}
+
+export class InpatientCounts {
     id: number;
     dcCategory: string;
     dcCount: number;
@@ -32,9 +32,9 @@ export interface InpatientsGpsummary {
     disch: string;
     dischToday: number;
     dNow: string;
-  }
-  
-  export class OutpatientCounts {
+}
+
+export class OutpatientCounts {
     id: number;
     new: string;
     newCount: number;
@@ -45,9 +45,9 @@ export interface InpatientsGpsummary {
     total: number;
     cancelled: number;
     dNow: string;
-  }
-  
-  export class AECounts {
+}
+
+export class AECounts {
     id: number;
     ambCat: string;
     ambTot: number;
@@ -65,21 +65,18 @@ export interface InpatientsGpsummary {
     admittedTot: number;
     dnow: number;
     dateAdded: Date;
-  }
-  
-  export class EPCCounts {
+}
+
+export class EPCCounts {
     countNeighbourhoodActiveEPC: number;
     activeNonEPC: number;
-  }
-  
-  export class ECSCounts {
+}
+
+export class ECSCounts {
     row: string;
     awaitStatus: string;
     awaitTotals: number;
     curStatus: string;
     curTotals: number;
     allTotals: number;
-  }
-  
-  export interface GPSummary {}
-  
+}

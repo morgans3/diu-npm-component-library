@@ -4,35 +4,35 @@ export interface Caseload {
     caseloadName: string;
     caseloadList: string[];
     teamcode?: string;
-  }
-  
-  export class CVICohort {
+}
+
+export class CVICohort {
     username: string = null;
     cohortName: string = null;
-    cohorturl: string = "{}";
+    cohorturl = "{}";
     teamcode?: string;
     createdDT: Date;
-  
+
     public constructor(init?: Partial<Cohort>) {
-      Object.assign(this, init);
+        Object.assign(this, init);
     }
-  }
-  
-  export class Cohort {
+}
+
+export class Cohort {
     _id: string = null;
     user: string = null;
     cohortName: string = null;
-    cohorturl: string = "{}";
+    cohorturl = "{}";
     teamcode?: string;
     // filterObject: CohortFilters = new CohortFilters();
     isDeleted: boolean = null;
-  
+
     public constructor(init?: Partial<Cohort>) {
-      Object.assign(this, init);
+        Object.assign(this, init);
     }
-  }
-  
-  export class CohortFilters {
+}
+
+export class CohortFilters {
     _id: string = null;
     agechart: Range = null;
     sexchart: string[] = [];
@@ -52,19 +52,19 @@ export interface Caseload {
     custBaseline: string[] = [];
     totalSelected: number = null;
     percentSelected: number = null;
-  
+
     public constructor(init?: Partial<CohortFilters>) {
-      Object.assign(this, init);
+        Object.assign(this, init);
     }
-  }
-  
-  export class Range {
+}
+
+export class Range {
     id?: number;
     x: number;
     y: number;
-  }
-  
-  export const DeprivationColors = [
+}
+
+export const DeprivationColors = [
     "#000000",
     "#40004b",
     "#762a83",
@@ -76,5 +76,4 @@ export interface Caseload {
     "#5aae61",
     "#1b7837",
     "#00441b",
-  ];
-  
+];

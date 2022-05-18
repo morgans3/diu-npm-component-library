@@ -4,26 +4,25 @@ export interface BedData {
     overall: string;
     critical: string;
     respiratory: string;
-  }
-  
-  export interface TestData {
+}
+
+export interface TestData {
     name: string;
     positive: string;
     negative: string;
     awaiting: string;
-  }
-  
-  export interface MortalityData {
+}
+
+export interface MortalityData {
     name: string;
     confirmed: string;
     suspected: string;
     rate: string;
-  }
-  
-  export interface EquipmentData {
+}
+
+export interface EquipmentData {
     name: string;
     inuse?: string;
     instock?: string;
     total: string;
-  }
-  
+}

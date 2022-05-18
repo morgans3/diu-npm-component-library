@@ -16,8 +16,8 @@ export class PopulationPerson {
     ld: number;
     lcnt: string;
     ltcs: string[];
-  
+
     public constructor(init?: Partial<PopulationPerson>) {
-      Object.assign(this, init);
+        Object.assign(this, init);
     }
 }

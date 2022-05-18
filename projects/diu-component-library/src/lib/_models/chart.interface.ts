@@ -9,11 +9,11 @@ export class Chart {
     renderLabel?: boolean;
     containerHeight?: string;
     tooltip?: string;
-  }
-  
-  export class PieChart extends Chart {}
-  
-  export class BarChart extends Chart {
+}
+
+export class PieChart extends Chart {}
+
+export class BarChart extends Chart {
     xUnits?: string;
     elasticY?: boolean;
     elasticX?: boolean;
@@ -30,9 +30,9 @@ export class Chart {
     ordinalColors?: string[];
     colorDomain?: string[];
     colorAccessor?: any;
-  }
-  
-  export class RowChart extends Chart {
+}
+
+export class RowChart extends Chart {
     xUnits?: string;
     elasticY?: boolean;
     elasticX?: boolean;
@@ -50,9 +50,9 @@ export class Chart {
     colorDomain?: string[];
     colorAccessor?: boolean;
     cap?: number;
-  }
-  
-  export class LeafletChoroplethChart extends Chart {
+}
+
+export class LeafletChoroplethChart extends Chart {
     mapOptions?: any;
     center?: number[];
     zoom?: number;
@@ -66,14 +66,14 @@ export class Chart {
     renderPopup?: boolean;
     brushOn?: boolean;
     legend?: any;
-  }
-  
-  export class LeafletMarkerChart extends LeafletChoroplethChart {
+}
+
+export class LeafletMarkerChart extends LeafletChoroplethChart {
     circleScale?: any;
     locationAccessor?: any;
-  }
-  
-  export class HeatMap extends Chart {
+}
+
+export class HeatMap extends Chart {
     keyAccessor?: any;
     valueAccessor?: any;
     calculateColorDomain?: boolean;
@@ -83,5 +83,4 @@ export class Chart {
     rowsLabel?: any;
     colsLabel?: any;
     titlefunction?: any;
-  }
-  
+}

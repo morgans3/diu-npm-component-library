@@ -9,28 +9,11 @@ export interface MosaicCode {
     Feat4: string;
     Feat5: string;
     Feat6: string;
-  }
-  
-  export const MosaicDomain = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "U",
-  ];
-  
-  export const MosaicColours = [
+}
+
+export const MosaicDomain = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "U"];
+
+export const MosaicColours = [
     "#056746",
     "#4D4885",
     "#8C78B8",
@@ -47,5 +30,4 @@ export interface MosaicCode {
     "#775A45",
     "#883236",
     "#000000",
-  ];
-  
+];

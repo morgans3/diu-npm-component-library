@@ -3,21 +3,21 @@ export interface FeatureCollection {
     name?: string;
     crs: Crs;
     features: Feature[];
-  }
-  
-  export interface Feature {
+}
+
+export interface Feature {
     type: string;
     id?: number;
     properties: Properties;
     geometry: Geometry;
-  }
-  
-  export interface Geometry {
+}
+
+export interface Geometry {
     type: string;
     coordinates: any;
-  }
-  
-  export interface Properties {
+}
+
+export interface Properties {
     Code?: string;
     Name?: string;
     Lat?: number;
@@ -36,14 +36,13 @@ export interface FeatureCollection {
     MosType?: string;
     Pop?: number;
     rmapshaperid?: number;
-  }
-  
-  export interface Crs {
+}
+
+export interface Crs {
     type: string;
     properties: CRSProperties;
-  }
-  
-  export interface CRSProperties {
+}
+
+export interface CRSProperties {
     name: string;
-  }
-  
+}

@@ -76,7 +76,7 @@ export * from "./lib/_models/features.interface";
 export * from "./lib/_models/mosaiccode.interface";
 export * from "./lib/_models/niceresponse.interface";
 export * from "./lib/_models/regional.interface";
-export * from "./lib/_models/gp-impatients.interface";
+export * from "./lib/_models/gp-inpatients.interface";
 export * from "./lib/_models/patient.interface";
 export * from "./lib/_models/postcodesio.interface";
 export * from "./lib/_models/population.interface";

@@ -78,9 +78,9 @@ export interface Patient {
     transplant: boolean;
     deceased_flag: boolean;
     etl_run_date: Date;
-  }
-  
-  export interface PatientLinked {
+}
+
+export interface PatientLinked {
     gpp_code: string;
     practice: string;
     ccg_code: string;
@@ -198,9 +198,9 @@ export interface Patient {
     d_district: string;
     d_etl_run_date: Date;
     d_nhs_number: string;
-  }
-  
-  export interface VirtualWardPatient {
+}
+
+export interface VirtualWardPatient {
     id: string;
     forename?: string;
     surname?: string;
@@ -254,13 +254,12 @@ export interface Patient {
     newcontact?: string;
     notes?: string;
     nonreferral_reason?: string;
-  }
-  
-  export interface Pdscache {
+}
+
+export interface Pdscache {
     nhsnumber: string;
     firstname: string;
     familyname: string;
     date_of_birth: string;
     organisation: string;
-  }
-  
+}

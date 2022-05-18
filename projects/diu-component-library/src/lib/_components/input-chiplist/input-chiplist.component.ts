@@ -81,7 +81,7 @@ export class InputChipListComponent implements ControlValueAccessor, MatFormFiel
         return this.formControl.invalid && this.touched;
     }
 
-    @Output('selected') selected = new EventEmitter();
+    @Output() selected = new EventEmitter();
 
     constructor(
         private aFocusMonitor: FocusMonitor,
