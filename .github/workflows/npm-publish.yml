@@ -19,7 +19,6 @@ jobs:
                   registry-url: https://registry.npmjs.org/
             - run: npm install
             - run: npm run build -- --configuration production
-            - run: cd dist/diu-component-library
-            - run: npm publish --ignore-scripts
+            - run: npm run publish-npm
               env:
                   NODE_AUTH_TOKEN: ${{secrets.npm_token}}
