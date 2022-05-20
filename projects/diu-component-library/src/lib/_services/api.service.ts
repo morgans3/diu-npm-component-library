@@ -1209,7 +1209,7 @@ export class APIService extends BaseService {
     }
 
     /**
-     * POST: Method to update an existing incident
+     * PUT: Method to update an existing incident
      */
     public updateSpiIncident(payload) {
         return this.http.put(this.baseUrl + "spi_incidentmethods/update", payload);
@@ -1220,5 +1220,89 @@ export class APIService extends BaseService {
      */
     public deleteSpiIncident(payload) {
         return this.http.delete(this.baseUrl + "spi_incidentmethods/delete", { body: payload });
+    }
+
+    /**
+     * GET: Method to return all PHMv1 cohorts
+     */
+    public getCohorts() {
+        return this.http.get(this.baseUrl + "cohorts/");
+    }
+
+    /**
+     * GET: Method to return all PHMv1 cohorts assigned to a user
+     */
+    public getCohortsByUsername(username: string) {
+        return this.http.get(this.baseUrl + "cohorts/?username=" + username);
+    }
+
+    /**
+     * GET: Method to return all PHMv1 cohorts assigned to a team
+     */
+    public getCohortsByTeamcode(teamcode: string) {
+        return this.http.get(this.baseUrl + "cohorts/?teamcode=" + teamcode);
+    }
+
+    /**
+     * POST: Method to create a new PHMv1 cohort
+     */
+    public createCohort(payload) {
+        return this.http.post(this.baseUrl + "cohorts/create", payload);
+    }
+
+    /**
+     * PUT: Method to update an existing PHMv1 cohort
+     */
+    public updateCohort(payload) {
+        return this.http.put(this.baseUrl + "cohorts/update", payload);
+    }
+
+    /**
+     * DELETE: Method to delete an PHMv1 cohort
+     */
+    public deleteCohort(payload) {
+        return this.http.delete(this.baseUrl + "cohorts/delete", { body: payload });
+    }
+
+    /**
+     * GET: Method to return all PHMv2 cohorts
+     */
+    public getCVICohorts() {
+        return this.http.get(this.baseUrl + "cvicohorts/");
+    }
+
+    /**
+     * GET: Method to return all PHMv2 cohorts assigned to a user
+     */
+    public getCVICohortsByUsername(username: string) {
+        return this.http.get(this.baseUrl + "cvicohorts/?username=" + username);
+    }
+
+    /**
+     * GET: Method to return all PHMv2 cohorts assigned to a team
+     */
+    public getCVICohortsByTeamcode(teamcode: string) {
+        return this.http.get(this.baseUrl + "cvicohorts/?teamcode=" + teamcode);
+    }
+
+    /**
+     * POST: Method to create a new PHMv2 cohort
+     */
+    public createCVICohort(payload) {
+        return this.http.post(this.baseUrl + "cvicohorts/create", payload);
+    }
+
+    /**
+     * PUT: Method to update an existing PHMv2 cohort
+     */
+    public updateCVICohort(payload) {
+        return this.http.put(this.baseUrl + "cvicohorts/update", payload);
+    }
+
+    /**
+     * DELETE: Method to delete an PHMv2 cohort
+     */
+    public deleteCVICohort(payload) {
+        return this.http.delete(this.baseUrl + "cvicohorts/delete", { body: payload });
     }
 }
