@@ -89,7 +89,7 @@ export class APIService extends BaseService {
      * @returns HTTP GET Promise
      */
     public getCapabilityById(id: string | number) {
-        return this.http.get(`${this.baseUrl}/capabilities/${id}`);
+        return this.http.get(`${this.baseUrl}capabilities/${id}`);
     }
 
     /**

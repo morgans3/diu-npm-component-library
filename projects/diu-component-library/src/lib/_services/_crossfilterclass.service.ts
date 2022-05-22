@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject } from "@angular/core";
-import { BaseService } from "diu-component-library/lib/_services/_baseclass.service";
+import { BaseService } from "./_baseclass.service";
 
 export class CrossFilterService extends BaseService {
     constructor(protected http: HttpClient, @Inject("environment") environment) {
