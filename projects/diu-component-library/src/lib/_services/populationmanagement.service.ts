@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BaseService } from "./_baseclass.service";
+import { Inject, Injectable } from "@angular/core";
+import { CrossFilterService } from "./_crossfilterclass.service";
 /**
  * Reference to Browser Window
  */
@@ -12,34 +12,10 @@ declare const window: any;
 @Injectable({
     providedIn: "root",
 })
-export class PopulationManagementService extends BaseService {
-    /**
-     * Lab Test Service Constructor
-     */
-    constructor(protected http: HttpClient) {
-        super(http);
+export class PopulationManagementService extends CrossFilterService {
+    constructor(protected http: HttpClient, @Inject("environment") environment) {
+        super(http, environment);
         const origin: string = window.location.href;
         this.baseUrl = this.combineURL(origin, "crossfilter");
-    }
-
-    /**
-     * GET: Method to retrieve all population data
-     */
-    public get() {
-        return this.http.get(this.baseUrl + "dataset/getAll/");
-    }
-
-    /**
-     * GET: Method to retrieve all cross filter data
-     */
-    public getCFServer() {
-        return this.http.get(this.baseUrl + "dataset/getCrossfilter/");
-    }
-
-    /**
-     * GET: Method to retrieve comparison data
-     */
-    public getComparison(payload) {
-        return this.http.post(this.baseUrl + "dataset/getComparison/", payload);
     }
 }

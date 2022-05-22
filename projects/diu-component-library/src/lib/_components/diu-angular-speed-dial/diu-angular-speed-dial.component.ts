@@ -76,6 +76,9 @@ export class DiuAngularSpeedDialComponent implements OnInit {
     }
 
     obtainMFA() {
+        if (!this.tokenDecoded) {
+            return "User has not logged in.";
+        }
         if (this.tokenDecoded.mfa) {
             this.newMFAToken.emit(this.token);
         } else {

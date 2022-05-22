@@ -89,9 +89,10 @@ export * from "./lib/_components/dashboard-population/lookups";
 export * from "./lib/_services/broker.service";
 export * from "./lib/_services/population.service";
 export * from "./lib/_services/populationmanagement.service";
+export * from "./lib/_services/rts.service";
 export * from "./lib/_services/resize.service";
 export * from "./lib/_services/api.service";
-export * from "./lib/_services/api.service";
+export * from "./lib/_services/_crossfilterclass.service";
 export * from "./lib/_services/_baseclass.service";
 
 /**
