@@ -734,6 +734,10 @@ export class APIService extends BaseService {
         return this.http.post(this.baseUrl + "requests/account", payload);
     }
 
+    public sendHelpRequest(payload) {
+        return this.http.post(this.baseUrl + "requests/help", payload);
+    }
+
     public sendAccessRequestComplete(payload) {
         return this.http.post(this.baseUrl + "requests/account/complete", payload);
     }
