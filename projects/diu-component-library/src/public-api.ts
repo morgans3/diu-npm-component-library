@@ -94,6 +94,7 @@ export * from "./lib/_services/resize.service";
 export * from "./lib/_services/api.service";
 export * from "./lib/_services/_crossfilterclass.service";
 export * from "./lib/_services/_baseclass.service";
+export * from "./lib/_services/outbreak.service";
 
 /**
  * Modules List
