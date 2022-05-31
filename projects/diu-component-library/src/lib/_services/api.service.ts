@@ -1,13 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
-import { iCredentials, iFullUser, iUserProfile } from "../_models/user.interface";
+import { iCredentials, iFullUser } from "../_models/user.interface";
 import { BaseService } from "./_baseclass.service";
 import { map } from "rxjs/operators";
-import { Observable, from } from "rxjs";
 import { iTeam, iTeamMembers, iTeamRequest } from "../_models/teams.interface";
 import { iOrganisation } from "../_models/organisation.interface";
 import { iApplication, iNewsFeed } from "../_models/installations.interface";
-import jwt_decode from "jwt-decode";
 
 /**
  * API Service Class
@@ -167,8 +165,10 @@ export class APIService extends BaseService {
 
     public createCapabiltiesLink(capability_id: number, link_id: string, link_type: string, valuejson: any = null) {
         return this.http.post(this.baseUrl + "capabilities/links/create", {
-            capability_id, link_id, link_type,
-            ...(valuejson !== null && { valuejson })
+            capability_id,
+            link_id,
+            link_type,
+            ...(valuejson !== null && { valuejson }),
         });
     }
 

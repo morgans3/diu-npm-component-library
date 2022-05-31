@@ -12,16 +12,12 @@ import { getUser } from "../../_functions/helper_functions";
     styleUrls: ["./application.component.scss"],
 })
 export class ApplicationTileComponent implements OnInit {
-
     user: iUserProfile;
     @Input() app: iApplication;
     @Input() status: string;
     @Output() changed = new EventEmitter<any>();
 
-    constructor(
-        public dialog: MatDialog,
-        private apiService: APIService,
-    ) {}
+    constructor(public dialog: MatDialog, private apiService: APIService) {}
 
     ngOnInit() {
         // Set user
@@ -49,16 +45,17 @@ export class ApplicationTileComponent implements OnInit {
         dialogApp.afterClosed().subscribe((decision: any) => {
             if (decision && decision.choice === "install") {
                 // Install app
-                this.apiService.createCapabiltiesLink(
-                    this.app.capability,
-                    `${this.user.username}#${this.user.organisation}`,
-                    "user", "allow"
-                ).subscribe((data) => {
-                    this.status = "installed";
-                    this.changed.emit({ action: "installed", app: this.app });
-                }, () => {
-                    window["notify"]({ message: "Could not install app", status: "error" });
-                });
+                this.apiService
+                    .createCapabiltiesLink(this.app.capability, `${this.user.username}#${this.user.organisation}`, "user", "allow")
+                    .subscribe(
+                        () => {
+                            this.status = "installed";
+                            this.changed.emit({ action: "installed", app: this.app });
+                        },
+                        () => {
+                            window["notify"]({ message: "Could not install app", status: "error" });
+                        }
+                    );
             }
         });
     }
@@ -68,18 +65,17 @@ export class ApplicationTileComponent implements OnInit {
     }
 
     uninstall() {
-        this.apiService.deleteCapabilitiesLink(
-            this.app.capability,
-            `${this.user.username}#${this.user.organisation}`,
-            "user"
-        ).subscribe((data) => {
-            this.status = "uninstalled";
-            this.changed.emit({ action: "uninstalled", app: this.app });
-        }, () => {
-            window["notify"]({
-                message: "Could not uninstall app, this is likely because it's authorised by one of your teams/roles",
-                status: "error"
-            });
-        });
+        this.apiService.deleteCapabilitiesLink(this.app.capability, `${this.user.username}#${this.user.organisation}`, "user").subscribe(
+            () => {
+                this.status = "uninstalled";
+                this.changed.emit({ action: "uninstalled", app: this.app });
+            },
+            () => {
+                window["notify"]({
+                    message: "Could not uninstall app, this is likely because it's authorised by one of your teams/roles",
+                    status: "error",
+                });
+            }
+        );
     }
 }
