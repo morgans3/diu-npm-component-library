@@ -18,7 +18,6 @@ import { AcuteHospitalStatsComponent } from "../dashboard-hospital-stats/dashboa
 import { NewsStandComponent } from "../newsstand/newsstand.component";
 import { ApplicationInfoDialogComponent } from "../application-tile/dialoginformation";
 import { ApplicationTileComponent } from "../application-tile/application.component";
-import { AppstoreComponent } from "../store/store.component";
 import { ResponsiblePersonComponent } from "../_form/responsible-person/responsible-person.component";
 
 /**
@@ -45,6 +44,5 @@ export const componentMapper = {
     newsstand: NewsStandComponent,
     applicationinformation: ApplicationInfoDialogComponent,
     applicationtile: ApplicationTileComponent,
-    store: AppstoreComponent,
     responsibleperson: ResponsiblePersonComponent,
 };
