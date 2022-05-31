@@ -43,7 +43,6 @@ export * from "./lib/_components/newsstand/newsstand.component";
 export * from "./lib/_components/screenshots/screenshots.component";
 export * from "./lib/_components/application-tile/dialoginformation";
 export * from "./lib/_components/application-tile/application.component";
-export * from "./lib/_components/store/store.component";
 export * from "./lib/_components/_form/responsible-person/responsible-person.component";
 export * from "./lib/_components/input-chiplist/input-chiplist.component";
 

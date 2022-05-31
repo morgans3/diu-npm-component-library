@@ -1,11 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
-import { iCredentials, iFullUser } from "../_models/user.interface";
+import { iCredentials, iFullUser, iUserProfile } from "../_models/user.interface";
 import { BaseService } from "./_baseclass.service";
 import { map } from "rxjs/operators";
+import { Observable, from } from "rxjs";
 import { iTeam, iTeamMembers, iTeamRequest } from "../_models/teams.interface";
 import { iOrganisation } from "../_models/organisation.interface";
 import { iApplication, iNewsFeed } from "../_models/installations.interface";
+import jwt_decode from "jwt-decode";
 
 /**
  * API Service Class
@@ -23,7 +25,20 @@ export class APIService extends BaseService {
         this.baseUrl = this.combineURL(origin, "api");
     }
 
-    logout(redirect: string) {
+    // Authentication
+    public register(payload: any) {
+        return this.http.post(this.baseUrl + "users/register/", payload);
+    }
+
+    public login(credentials: iCredentials) {
+        return this.http.post(this.baseUrl + "users/authenticate", credentials).pipe(map((response: any) => response));
+    }
+
+    public refreshAuthenticatedUser() {
+        return this.http.post(this.baseUrl + "users/authentication-refresh", null);
+    }
+
+    public logout(redirect: string) {
         document.location.href = redirect;
     }
 
@@ -150,16 +165,11 @@ export class APIService extends BaseService {
         return this.http.get(this.baseUrl + type + "/" + id + "/capabilities/");
     }
 
-    public syncCapabilitiesLink(link_id: string, link_type: string, capabilities?: number[]) {
-        return this.http.post(this.baseUrl + "capabilities/links/sync", {
-            link_id,
-            link_type,
-            capabilities,
+    public createCapabiltiesLink(capability_id: number, link_id: string, link_type: string, valuejson: any = null) {
+        return this.http.post(this.baseUrl + "capabilities/links/create", {
+            capability_id, link_id, link_type,
+            ...(valuejson !== null && { valuejson })
         });
-    }
-
-    public createCapabiltiesLink(capability: any) {
-        return this.http.post(this.baseUrl + "capabilities/link/create", capability);
     }
 
     public deleteCapabilitiesLink(capability_id: number, link_id: string, link_type: string) {
@@ -1101,14 +1111,6 @@ export class APIService extends BaseService {
     }
 
     // USERS
-
-    public register(payload: any) {
-        return this.http.post(this.baseUrl + "users/register/", payload);
-    }
-
-    login(credentials: iCredentials) {
-        return this.http.post(this.baseUrl + "users/authenticate", credentials).pipe(map((response: any) => response));
-    }
 
     /**
      * GET: Method to return all users

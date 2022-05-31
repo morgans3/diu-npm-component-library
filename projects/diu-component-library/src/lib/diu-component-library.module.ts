@@ -43,7 +43,6 @@ import { ScreenshotsComponent } from "./_components/screenshots/screenshots.comp
 import { GalleryModule } from "ng-gallery";
 import { ApplicationInfoDialogComponent } from "./_components/application-tile/dialoginformation";
 import { ApplicationTileComponent } from "./_components/application-tile/application.component";
-import { AppstoreComponent } from "./_components/store/store.component";
 import { BrokerService } from "./_services/broker.service";
 import { ResponsiblePersonComponent } from "./_components/_form/responsible-person/responsible-person.component";
 import { InputChipListComponent } from "./_components/input-chiplist/input-chiplist.component";
@@ -84,7 +83,6 @@ import { InputChipListComponent } from "./_components/input-chiplist/input-chipl
         ScreenshotsComponent,
         ApplicationInfoDialogComponent,
         ApplicationTileComponent,
-        AppstoreComponent,
         ResponsiblePersonComponent,
         InputChipListComponent,
     ],
@@ -133,7 +131,6 @@ import { InputChipListComponent } from "./_components/input-chiplist/input-chipl
         ScreenshotsComponent,
         ApplicationInfoDialogComponent,
         ApplicationTileComponent,
-        AppstoreComponent,
         ResponsiblePersonComponent,
         InputChipListComponent,
     ],

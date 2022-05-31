@@ -9,6 +9,7 @@ export interface iApplication {
     description: string;
     images?: string[];
     userguideURL?: string;
+    capability?: number;
 }
 
 /**
