@@ -2,27 +2,24 @@
     <mat-card-content>
         <div fxLayout="row-wrap" fxLayoutGap="15px">
             <div fxFlex.gt-md="calc(30% - 15px)" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="space-around center">
-                <img class="appImage" src="/assets/images/{{app.icon}}" (click)="open()" />
+                <img class="appImage" src="/assets/images/{{ app.icon }}" (click)="open()" />
             </div>
             <div fxFlex.gt-md="calc(70% - 15px)" fxFlex.gt-xs="100" fxFlex="100">
-                <h4 class="name">{{ app.name.replace("_", " ") }}</h4>
+                <h4 class="name">{{ app.name.split("_").join(" ") }}</h4>
 
                 <button mat-icon-button (click)="open()" color="primary" matTooltip="Launch">
                     <i class="far fa-play-circle font-2x"></i>
                 </button>
 
-                <button mat-icon-button *ngIf="app.description" 
-                        [matTooltip]="app.description" color="accent" style="cursor: help">
+                <button mat-icon-button *ngIf="app.description" [matTooltip]="app.description" color="accent" style="cursor: help">
                     <i class="fas fa-info-circle font-2x"></i>
                 </button>
-            
-                <button mat-icon-button (click)="openUserGuide()" color="accent" 
-                        [matTooltip]="'User Guide'" [disabled]="!app.userguideURL">
+
+                <button mat-icon-button (click)="openUserGuide()" color="accent" [matTooltip]="'User Guide'" [disabled]="!app.userguideURL">
                     <i class="fas fa-book font-2x"></i>
                 </button>
-            
-                <button mat-icon-button (click)="uninstall()" color="warn"
-                        [matTooltip]="'Uninstall'" [disabled]="status !== 'installed'" >
+
+                <button mat-icon-button (click)="uninstall()" color="warn" [matTooltip]="'Uninstall'" [disabled]="status !== 'installed'">
                     <i class="far fa-trash-alt font-2x"></i>
                 </button>
             </div>
