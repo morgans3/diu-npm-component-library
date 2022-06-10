@@ -28,7 +28,7 @@ export class DiuAngularNavigationComponent implements OnInit, OnChanges {
     }
 
     navHome() {
-        window.open("https://www." + this.url + "/dashboard", "_self");
+        window.open("https://www." + this.url + "/landing", "_self");
     }
 
     nonsubChildren(children) {
