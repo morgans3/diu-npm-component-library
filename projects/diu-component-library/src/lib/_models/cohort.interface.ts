@@ -19,7 +19,7 @@ export class CVICohort {
 }
 
 export class Cohort {
-    _id: string = null;
+    id: string = null;
     user: string = null;
     cohortName: string = null;
     cohorturl = "{}";
@@ -33,7 +33,7 @@ export class Cohort {
 }
 
 export class CohortFilters {
-    _id: string = null;
+    id: string = null;
     agechart: Range = null;
     sexchart: string[] = [];
     riskchart: Range = null;
