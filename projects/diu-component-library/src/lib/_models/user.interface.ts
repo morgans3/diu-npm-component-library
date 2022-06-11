@@ -11,7 +11,7 @@ export interface iCredentials {
 }
 
 export interface iUserProfile {
-    _id: string;
+    id: string;
     name: string;
     username: string;
     email: string;
@@ -19,7 +19,7 @@ export interface iUserProfile {
 }
 
 export interface iUserDetails {
-    _id: string;
+    id: string;
     username: string;
     photobase64?: string;
     contactnumber?: string;
@@ -37,7 +37,7 @@ export interface iFullUser {
     /**
      * User's Organisation ID
      */
-    _id?: string;
+    id?: string;
     /**
      * User's Display Name
      */

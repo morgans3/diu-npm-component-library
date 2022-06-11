@@ -5,7 +5,7 @@ export interface iNotifications {
     /**
      * Unique ID
      */
-    _id: string;
+    id: string;
     /**
      * Username
      */
@@ -63,7 +63,7 @@ export interface iTasks {
     /**
      * Unique ID
      */
-    _id: string;
+    id: string;
     /**
      * Username
      */
@@ -133,7 +133,7 @@ export interface iSystemAlerts {
     /**
      * Unique ID
      */
-    _id: string;
+    id: string;
     /**
      * Name of Alert
      */

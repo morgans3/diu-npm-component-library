@@ -23,7 +23,7 @@ export interface iOrganisation {
 }
 
 export interface iOrganisationMembers {
-    _id: string;
+    id: string;
     organisationcode: string;
     username: string;
     rolecode?: string;
@@ -33,7 +33,7 @@ export interface iOrganisationMembers {
 }
 
 export interface iRoles {
-    _id: string;
+    id: string;
     code: string;
     name: string;
     description: string;
@@ -52,7 +52,7 @@ export interface iNetwork {
 }
 
 export interface iNetworkMembers {
-    _id: string;
+    id: string;
     networkcode: string;
     teamcode: string;
     joindate: Date;

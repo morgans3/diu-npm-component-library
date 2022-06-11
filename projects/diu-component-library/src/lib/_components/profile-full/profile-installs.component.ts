@@ -74,7 +74,7 @@ export class ProfileInstallsComponent implements OnInit {
         const newId = generateID();
         const newInstall: iInstallation = {
             app_name: app.name,
-            _id: newId,
+            id: newId,
             requestdate: new Date(),
             requestor: this.tokenDecoded.username,
             requestapprover: this.tokenDecoded.username,

@@ -19,7 +19,7 @@ export interface iInstallation {
     /**
      * Unique ID
      */
-    _id: string;
+    id: string;
     /**
      * Username of person installation is assigned to
      */
