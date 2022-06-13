@@ -103,7 +103,10 @@ export class UserSearchComponent implements OnInit {
                 this.searching = true;
                 this.apiService.searchOrgUserProfiles(searchValue, this.organisation.authmethod).subscribe((response: iSearchResults[]) => {
                     this.searching = false;
-                    this.teamresults = response[0].results;
+                    this.teamresults = response[0].results.map((user) => {
+                        user.organisation = this.organisation.name;
+                        return user;
+                    })
                 });
             } else {
                 this.teamresults = [];
