@@ -1301,6 +1301,15 @@ export class APIService extends BaseService {
         return this.http.delete(this.baseUrl + "atomic/payloads/delete", { body: payload });
     }
 
+    // Realtime Surveillance
+
+    /**
+     * Method to get Payloads by ID
+     */
+    public getAllIncidents() {
+        return this.http.get(this.baseUrl + "real_time_surveillance");
+    }
+
     // GENERIC HTTP REST METHODS
 
     /**
