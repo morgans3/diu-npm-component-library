@@ -122,4 +122,9 @@ export interface iSection {
      * User's Username
      */
     username: string;
+
+    /**
+     * User's Organisation
+     */
+    organisation?: string;
 }
