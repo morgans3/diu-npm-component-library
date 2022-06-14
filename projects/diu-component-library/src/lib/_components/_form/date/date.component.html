@@ -1,7 +1,7 @@
 <div>
     <mat-form-field class="demo-full-width margin-top" [formGroup]="group">
         <input matInput [matDatetimepicker]="datetimePicker" [formControlName]="field.name" [placeholder]="field.label" readonly="true" />
-        <mat-datepicker-toggle matSuffix [for]="datetimePicker"></mat-datepicker-toggle>
+        <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
         <mat-datetimepicker
             type="{{ field.inputType }}"
             openOnFocus="true"

@@ -39,6 +39,7 @@ export class DivRowComponent implements OnInit {
             fetchChildren(this.Handler.config.children, this.apiService).then((result: any) => {
                 this.Handler.children = result;
                 this.changeDetection.detectChanges();
+                console.log(result,this.Handler.children);
             });
         }
     }

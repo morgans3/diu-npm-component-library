@@ -1323,4 +1323,18 @@ export class APIService extends BaseService {
     public genericPostAPICall(url: string, payload) {
         return this.http.post(url, payload);
     }
+
+    /**
+     * DELETE: Generic Method to make any DELETE request
+     */
+    public genericPutAPICall(url: string, payload) {
+        return this.http.put(url, payload);
+    }
+
+    /**
+     * DELETE: Generic Method to make any DELETE request
+     */
+    public genericDeleteAPICall(url: string, payload) {
+        return this.http.delete(url, { body: payload });
+    }
 }

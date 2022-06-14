@@ -26,9 +26,9 @@ import { APIService } from "../../_services/api.service";
 })
 export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     /**
-     * Event passed to parent when form is submissionted
+     * Event passed to parent when form is submitted
      */
-    @Output() submission: EventEmitter<any> = new EventEmitter<any>();
+    @Output() submitted: EventEmitter<any> = new EventEmitter<any>();
     /**
      * Input for the data for the Form, including the configuration
      */
@@ -72,15 +72,12 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
         // if there's no preloaded data and a form ID provided
         if (!this.formData && this.formDataID) {
             //  use the form ID to get form config from db
-            this.apiService.getPayloadById(this.formDataID).subscribe((data) => {
+            this.apiService.getPayloadById(this.formDataID).subscribe((data: any) => {
                 //  if the data has been returned
                 if (data) {
-                    //  get by ID returns 1 row of data
-                    if (data[0]) {
-                        //  form data is stored under the key config
-                        this.formData = JSON.parse(data[0].config);
-                        this.setFormData();
-                    }
+                    //  form data is stored under the key config
+                    this.formData = JSON.parse(data.config);
+                    this.setFormData();
                 }
             });
             return;
@@ -141,14 +138,15 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     /**
-     * Function to emit data to the parent component when submissionted
+     * Function to emit data to the parent component when submitted
      */
     onSubmit(event: Event) {
+        console.log(this.form.valid);
         event.preventDefault();
         event.stopPropagation();
         //  if the form is valid pass the data to the parent else mark each field as touched to trigger validation
         if (this.form.valid) {
-            this.submission.emit(this.form.value);
+            this.submitted.emit(this.form.value);
         } else {
             this.validateAllFormFields(this.form);
         }

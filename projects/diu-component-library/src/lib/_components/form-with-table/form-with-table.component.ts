@@ -89,11 +89,11 @@ export class FormWithTableComponent implements OnInit {
             //  use the form ID to get form config from db
             this.apiService.getPayloadById(this.Handler.formDataID).subscribe((data: any) => {
                 //  if the data has been returned
-                if (data && data.length > 0) {
+                if (data) {
                     //  form data is stored under the key config
-                    this.Handler.formData = JSON.parse(data[0].config);
+                    this.Handler.formData = JSON.parse(data.config);
                     this.apiService.getPayloadById(this.Handler.tableDataID).subscribe((response: any) => {
-                        this.tableData = JSON.parse(response[0].config);
+                        this.tableData = JSON.parse(response.config);
                         // console.log(this.tableData);
                         this.configureTable();
                     });
@@ -109,7 +109,7 @@ export class FormWithTableComponent implements OnInit {
      * This function is used to get the data for the handler from the API
      */
     configureTable() {
-        this.tableUrl = (this.Handler.formData.apiEndpoint as string) + "getAll/";
+        this.tableUrl = (this.Handler.formData.apiEndpoint as string) + "/";
         this.apiService.genericGetAPICall(this.tableUrl).subscribe((data) => {
             this.tableDataHandler = new FormTableDataHandler(data, this.Handler.formData, this.tableData);
         });
@@ -133,16 +133,13 @@ export class FormWithTableComponent implements OnInit {
      * @param formSubmissionData
      */
     formSubmission(formSubmissionData) {
-        // console.log(formSubmissionData);
-        let strRegisterEndpoint = (this.Handler.formData.apiEndpoint as string) + "register/";
-        if (this.submissionData) {
-            strRegisterEndpoint = (this.Handler.formData.apiEndpoint as string) + "update/";
-        }
-
+        // Get payload and format
         const payload = formSubmissionData;
         Object.keys(payload).forEach((key) => {
             payload[key] = this.returnDefaultValue(payload[key]);
         });
+
+        // Add default values
         if (this.tableDataHandler.defaultValues) {
             this.tableDataHandler.defaultValues.forEach((defaultValue) => {
                 // console.log(defaultValue);
@@ -152,8 +149,21 @@ export class FormWithTableComponent implements OnInit {
                 }
             });
         }
-        // console.log(payload);
-        this.apiService.genericPostAPICall(strRegisterEndpoint, payload).subscribe((data) => {
+
+        // Create or update?
+        let handler;
+        if(this.submissionData) {
+            handler = this.apiService.genericPutAPICall(
+                (this.Handler.formData.apiEndpoint as string) + "update/", payload
+            );
+        } else {
+            handler = this.apiService.genericPostAPICall(
+                (this.Handler.formData.apiEndpoint as string) + "create/", payload
+            );
+        }
+
+        // Handle submission
+        handler.subscribe((data) => {
             // console.log(data);
             // TODO: add success/ fail message
             if (data["success"]) {
@@ -213,8 +223,7 @@ export class FormWithTableComponent implements OnInit {
      */
     deleteFormData(formData) {
         const strDeleteEndpoint = (this.Handler.formData.apiEndpoint as string) + "delete/";
-        this.apiService.genericPostAPICall(strDeleteEndpoint, formData).subscribe((data) => {
-            //   console.log(data);
+        this.apiService.genericDeleteAPICall(strDeleteEndpoint, formData).subscribe((data) => {
             if (data["success"]) {
                 this.feedbackStatus = "success";
                 this.feedbackMessage = "You have deleted the submission";
@@ -224,7 +233,6 @@ export class FormWithTableComponent implements OnInit {
                 this.feedbackMessage = "You have failed to delete the submission";
             }
         });
-        // console.log(formData);
     }
 
     /**

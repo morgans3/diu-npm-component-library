@@ -11,9 +11,8 @@ import { iDisplayList } from "./installations.interface";
 export const fetchChildren = async (newchildren: any[], injectedService) => {
     const childDetails = [];
     await newchildren.forEach(async (child: any) => {
-        await injectedService.getPayloadById(child.id).subscribe((data: any) => {
-            if (data && data.length > 0) {
-                const thisChild = data[0];
+        await injectedService.getPayloadById(child.id).subscribe((thisChild: any) => {
+            if (thisChild) {
                 if (thisChild.config) thisChild.config = modifyConfig(thisChild.config);
                 thisChild.order = child.order;
                 childDetails.push(thisChild);
