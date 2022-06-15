@@ -28,7 +28,6 @@ export class ProfileInstallsComponent implements OnInit {
     ngOnInit() {
         if (this.config) {
             this.Handler = new cDisplayListsHandler(this.config);
-            console.log(this.Handler);
             this.Handler.displayLists.forEach((list: iDisplayListConfig) => {
                 this.getList(list);
             });

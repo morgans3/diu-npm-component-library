@@ -141,7 +141,6 @@ export class DynamicFormComponent implements OnInit, OnChanges, AfterViewInit {
      * Function to emit data to the parent component when submitted
      */
     onSubmit(event: Event) {
-        console.log(this.form.valid);
         event.preventDefault();
         event.stopPropagation();
         //  if the form is valid pass the data to the parent else mark each field as touched to trigger validation
