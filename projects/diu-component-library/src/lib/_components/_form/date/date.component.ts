@@ -7,8 +7,7 @@ import { iFieldConfig, iValidator } from "../../../_models/field.interface";
  */
 @Component({
     selector: "app-date",
-    templateUrl: "date.component.html",
-    styles: [],
+    templateUrl: "date.component.html"
 })
 export class DateComponent implements OnInit {
     /**

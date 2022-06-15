@@ -4,7 +4,7 @@
             [formDataID]="formDataID"
             [displayValidation]="true"
             [formAnswers]="submissionData"
-            (submit)="formSubmission($event)"
+            (submitted)="formSubmission($event)"
             (strEndPoint)="updateEndpoint($event)"
             (arrDefaultValues)="updateDefaultValues($event)"
             (apiFormData)="updateFormData($event)"

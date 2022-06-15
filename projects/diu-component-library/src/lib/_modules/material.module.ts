@@ -31,7 +31,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatDatetimepickerModule } from "@mat-datetimepicker/core";
 import { MatDatepickerModule } from "@angular/material/datepicker/";
-import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { MatMomentDatetimeModule } from "@mat-datetimepicker/moment";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
@@ -69,7 +69,7 @@ import { NgModule } from "@angular/core";
         MatToolbarModule,
         MatTooltipModule,
         MatNativeDateModule,
-        MatMomentDateModule,
+        MatMomentDatetimeModule,
         MatAutocompleteModule,
         MatDatepickerModule,
         MatDatetimepickerModule,
@@ -107,10 +107,10 @@ import { NgModule } from "@angular/core";
         MatToolbarModule,
         MatTooltipModule,
         MatNativeDateModule,
-        MatMomentDateModule,
+        MatMomentDatetimeModule,
         MatAutocompleteModule,
         MatDatepickerModule,
-        MatDatetimepickerModule,
-    ],
+        MatDatetimepickerModule
+    ]
 })
 export class MaterialModule {}
