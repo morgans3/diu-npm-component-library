@@ -190,9 +190,9 @@ export class AcuteHospitalStatsComponent implements OnInit {
                 }
             }
         });
-        setTimeout(() => {
-            this.loadNewsStand();
-        }, 60 * 5 * 1000);
+        // setTimeout(() => {
+        //     this.loadNewsStand();
+        // }, 60 * 5 * 1000);
     }
 
     populateStand(token: string) {
