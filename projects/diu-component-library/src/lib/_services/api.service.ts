@@ -1304,10 +1304,31 @@ export class APIService extends BaseService {
     // Realtime Surveillance
 
     /**
-     * Method to get Payloads by ID
+     * Method to get all realtime surveillance incidents
      */
     public getAllIncidents() {
         return this.http.get(this.baseUrl + "real_time_surveillance");
+    }
+
+    /**
+     * Method to create a realtime surveillance incident
+     */
+    public createIncident(payload: any) {
+        return this.http.post(this.baseUrl + "real_time_surveillance/create", payload);
+    }
+
+    /**
+     * Method to update a realitime surveillance incident
+     */
+    public updateIncident(payload: any) {
+        return this.http.put(this.baseUrl + "real_time_surveillance/update", payload);
+    }
+
+    /**
+     * Method to delete a realtime surveillance incident
+     */
+    public removeIncident(payload: any) {
+        return this.http.delete(this.baseUrl + "real_time_surveillance/delete", { body: payload });
     }
 
     // GENERIC HTTP REST METHODS
