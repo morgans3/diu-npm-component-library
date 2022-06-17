@@ -729,6 +729,23 @@ export class APIService extends BaseService {
         return this.http.get(this.baseUrl + "postcodes/postcode-lookup");
     }
 
+    // REAL TIME SURVEILLANCE
+    public getSPIIncidents() {
+        return this.http.get(this.baseUrl + "real_time_surveillance/");
+    }
+
+    public createSPIIncident(payload: any) {
+        return this.http.post(this.baseUrl + "real_time_surveillance/create", payload);
+    }
+
+    public updateSPIIncident(payload: any) {
+        return this.http.put(this.baseUrl + "real_time_surveillance/update", payload);
+    }
+
+    public deleteSPIIncident(payload: any) {
+        return this.http.delete(this.baseUrl + "real_time_surveillance/delete", { body: payload });
+    }
+
     // REQUESTS
     public getRequests(params) {
         return this.http.get(this.baseUrl + "requests", {
