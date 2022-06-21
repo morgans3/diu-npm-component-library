@@ -25,7 +25,7 @@
             </div>
             <div id="wardMapMain" fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" (mouseenter)="mouseLeave()">
                 <div style="display: block; width: 100%; padding-top: 30px">
-                    <mat-spinner *ngIf="!allWardDetails || allWardDetails.length === 0"></mat-spinner>
+                    <mat-spinner *ngIf="allWardDetails.length === 0"></mat-spinner>
                     <app-wardmap
                         *ngIf="allWardDetails.length > 0"
                         [crossfilterData]="filteredData"
