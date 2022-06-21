@@ -369,8 +369,13 @@ export class DashboardPopulationComponent implements OnInit {
     createCharts() {
         setTimeout(() => {
             this.createDeprivationScale(this.DDimension, this.DDimGroup);
-            const endF = this.AgeDimGroupF.top() * 5; // each age is banded into 5
-            const endM = this.AgeDimGroupM.top() * 5; // each age is banded into 5
+            let endF = this.AgeDimGroupF.top() * 5; // each age is banded into 5
+            let endM = this.AgeDimGroupM.top() * 5; // each age is banded into 5
+            const totalCitizens = this.all.value();
+            if (totalCitizens && totalCitizens < 1000000) {
+                endF = totalCitizens / 20;
+                endM = totalCitizens / 20;
+            }
             this.drawAgeChart(false, this.AgeDimGroupF.all(), "ageChartFemale", endF);
             this.drawAgeChart(true, this.AgeDimGroupM.all(), "ageChartMale", endM);
         }, 300);
@@ -467,7 +472,7 @@ export class DashboardPopulationComponent implements OnInit {
     }
 
     deprivationColourFromData(d) {
-        return DeprivationColorCodes.find((x) => x.key === d.key.toString()).color;
+        return d && d.key ? DeprivationColorCodes.find((x) => x.key === d.key.toString()).color : "#FFFFFF";
     }
 
     applyAxisScale(chart, scale, axis) {
@@ -612,7 +617,7 @@ export class DashboardPopulationComponent implements OnInit {
                 this.refresh(this.queryFilter);
             });
         if (!male) {
-            const xAxis = d3.axisBottom(x);
+            const xAxis = d3.axisBottom(x).ticks(5);
             this.compCharts[chartName]
                 .append("g")
                 .attr("transform", "translate(0, " + height.toString() + ")")
@@ -622,7 +627,7 @@ export class DashboardPopulationComponent implements OnInit {
                 .scaleLinear()
                 .domain([top, 0])
                 .range([0, width - 10]);
-            const xAxis = d3.axisBottom(x2);
+            const xAxis = d3.axisBottom(x2).ticks(5);
             this.compCharts[chartName]
                 .append("g")
                 .attr("transform", "translate(-" + (shift - margin.right).toString() + ", " + height.toString() + ")")
