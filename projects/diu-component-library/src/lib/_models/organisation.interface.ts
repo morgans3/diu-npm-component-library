@@ -29,7 +29,6 @@ export interface iOrganisationMembers {
     rolecode?: string;
     joindate: Date;
     enddate?: Date;
-    isArchived?: boolean;
 }
 
 export interface iRoles {
@@ -57,5 +56,4 @@ export interface iNetworkMembers {
     teamcode: string;
     joindate: Date;
     enddate?: Date;
-    isArchived?: boolean;
 }

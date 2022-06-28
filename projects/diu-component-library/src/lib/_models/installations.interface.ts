@@ -80,5 +80,4 @@ export interface iNewsFeed {
     destination: string;
     type: string;
     priority: string;
-    isArchived?: boolean;
 }
