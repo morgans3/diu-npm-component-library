@@ -928,7 +928,7 @@ export class APIService extends BaseService {
         return this.http.post(this.baseUrl + "systemalerts/create/", payload);
     }
     public removeSystemAlert(payload: any) {
-        return this.http.delete(this.baseUrl + "systemalerts/delete", , { body: payload });
+        return this.http.delete(this.baseUrl + "systemalerts/delete", { body: payload });
     }
 
     // TEAMMEMBERS
