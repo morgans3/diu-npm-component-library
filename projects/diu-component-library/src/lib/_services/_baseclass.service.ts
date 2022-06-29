@@ -15,7 +15,7 @@ export class BaseService {
      * Method for adding Subdomain to current Browser Location
      */
     public combineURL(origin: string, subdomain: string) {
-        return `http${this.devURL.includes("localhost") ? "" : "s"}://${subdomain}.${this.devURL}/`;
+        return `http${this.devURL.includes("localhost") ? "://" : `s://${subdomain}.`}${this.devURL}/`;
     }
 
     /**

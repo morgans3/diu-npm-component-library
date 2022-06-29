@@ -159,10 +159,6 @@ export class APIService extends BaseService {
         });
     }
 
-    public getCapabilitiesByTypeAndId(type: string, id: string) {
-        return this.http.get(this.baseUrl + type + "/" + id + "/capabilities/");
-    }
-
     public createCapabiltiesLink(capability_id: number, link_id: string, link_type: string, valuejson: any = null) {
         return this.http.post(this.baseUrl + "capabilities/links/create", {
             capability_id,
@@ -753,23 +749,29 @@ export class APIService extends BaseService {
         });
     }
 
-    public getAccessRequest(id: string) {
-        return this.http.get(this.baseUrl + "requests/account/" + id);
+    public getRequest(id: string) {
+        return this.http.get(this.baseUrl + "requests/" + id);
     }
 
     public sendAccessRequest(payload) {
         return this.http.post(this.baseUrl + "requests/account", payload);
     }
 
-    public sendHelpRequest(payload) {
-        return this.http.post(this.baseUrl + "requests/help", payload);
-    }
-
     public sendAccessRequestComplete(payload) {
         return this.http.post(this.baseUrl + "requests/account/complete", payload);
     }
 
-    // ROLES
+    public sendPermissionsRequest(payload) {
+        return this.http.post(this.baseUrl + "requests/permissions", payload);
+    }
+
+    public sendPermissionsRequestComplete(payload) {
+        return this.http.post(this.baseUrl + "requests/permissions/complete", payload);
+    }
+
+    public sendHelpRequest(payload) {
+        return this.http.post(this.baseUrl + "requests/help", payload);
+    }
 
     /**
      * GET: Method to get all roles
@@ -835,6 +837,17 @@ export class APIService extends BaseService {
             roles: ids,
             link_type: linkType,
             link_id: linkId,
+        });
+    }
+
+    /**
+     * DELETE: Method to delete roles links
+     *
+     * @returns HTTP POST Promise
+     */
+    public deleteRolesLink(role_id: number, link_id: string, link_type: string) {
+        return this.http.delete(this.baseUrl + "roles/links/delete", {
+            body: { role_id, link_id, link_type },
         });
     }
 
