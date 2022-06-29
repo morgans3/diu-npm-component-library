@@ -1,4 +1,16 @@
-import { Component, OnInit, Input, OnChanges, ElementRef, ViewChild, Output, EventEmitter, Inject, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    OnInit,
+    Input,
+    OnChanges,
+    ElementRef,
+    ViewChild,
+    Output,
+    EventEmitter,
+    Inject,
+    ViewEncapsulation,
+    HostListener,
+} from "@angular/core";
 import * as d3 from "d3";
 import * as d3zoom from "d3-zoom";
 import { APIService } from "../../../_services/api.service";
@@ -48,7 +60,13 @@ export class WardmapComponent implements OnInit, OnChanges {
     loading = true;
 
     url = `https://api.nhs-bi-platform.co.uk/`;
-
+    @HostListener("window:resize", ["$event"])
+    onResize() {
+        setTimeout(() => {
+            this.width = document.getElementById("wardMapMain").getBoundingClientRect().width;
+            this.drawGraph();
+        }, 0);
+    }
     constructor(private apiService: APIService, @Inject("environment") environment) {
         if (environment) this.url = `https://api.${environment.websiteURL as string}/` || `https://api.nhs-bi-platform.co.uk/`;
     }
