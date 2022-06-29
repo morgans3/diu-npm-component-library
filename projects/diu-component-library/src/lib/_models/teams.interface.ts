@@ -34,5 +34,5 @@ export interface iTeamRequest {
     requestapprover?: string;
     approveddate?: Date;
     refusedate?: Date;
-    emailto: string;
+    emailto?: string;
 }
