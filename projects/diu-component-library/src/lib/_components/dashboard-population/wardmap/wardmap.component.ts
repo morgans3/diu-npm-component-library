@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ElementRef, ViewChild, Output, EventEmitter, Inject } from "@angular/core";
+import { Component, OnInit, Input, OnChanges, ElementRef, ViewChild, Output, EventEmitter, Inject, ViewEncapsulation } from "@angular/core";
 import * as d3 from "d3";
 import * as d3zoom from "d3-zoom";
 import { APIService } from "../../../_services/api.service";
@@ -8,6 +8,7 @@ import { iWardDetails } from "../lookups";
     selector: "app-wardmap",
     templateUrl: "./wardmap.component.html",
     styleUrls: ["./wardmap.component.scss"],
+    encapsulation: ViewEncapsulation.None,
 })
 export class WardmapComponent implements OnInit, OnChanges {
     @ViewChild("mapGraph", { static: false }) mapGraph: ElementRef;
@@ -116,6 +117,7 @@ export class WardmapComponent implements OnInit, OnChanges {
             .append("svg")
             .attr("width", this.width)
             .attr("height", this.height)
+            .attr("class", "electoralmap-svg")
             .on("click", this.stopped, true);
         this.svg
             .append("rect")

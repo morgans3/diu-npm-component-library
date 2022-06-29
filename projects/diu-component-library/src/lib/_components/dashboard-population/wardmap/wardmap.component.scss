@@ -6,7 +6,6 @@ rect {
 }
 
 .feature {
-    fill: #ccc;
     cursor: pointer;
 }
 
@@ -39,4 +38,8 @@ rect {
 
 #fab-dismiss {
     z-index: 99;
+}
+
+.electoralmap-svg {
+    fill: white;
 }

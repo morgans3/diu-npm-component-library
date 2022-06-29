@@ -101,12 +101,12 @@ export class UserSearchComponent implements OnInit {
         if (this.organisation.authmethod !== "Demo") {
             if (searchValue.length > 4) {
                 this.searching = true;
-                this.apiService.searchOrgUserProfiles(searchValue, this.organisation.authmethod).subscribe((response: iSearchResults[]) => {
+                this.apiService.searchOrgUserProfiles(searchValue, this.organisation.name).subscribe((response: iSearchResults[]) => {
                     this.searching = false;
                     this.teamresults = response[0].results.map((user) => {
                         user.organisation = this.organisation.name;
                         return user;
-                    })
+                    });
                 });
             } else {
                 this.teamresults = [];

@@ -22,7 +22,6 @@ export interface iTeamMembers {
     rolecode?: string;
     joindate: Date;
     enddate?: Date;
-    isArchived?: boolean;
 }
 
 export interface iTeamRequest {
@@ -30,11 +29,10 @@ export interface iTeamRequest {
     username: string;
     teamcode: string;
     organisation: string;
-    isArchived?: boolean;
     requestdate: Date;
     requestor?: string;
     requestapprover?: string;
     approveddate?: Date;
     refusedate?: Date;
-    __v?: number;
+    emailto: string;
 }
