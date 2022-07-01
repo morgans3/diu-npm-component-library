@@ -369,13 +369,8 @@ export class DashboardPopulationComponent implements OnInit {
     createCharts() {
         setTimeout(() => {
             this.createDeprivationScale(this.DDimension, this.DDimGroup);
-            let endF = this.AgeDimGroupF.top() * 5; // each age is banded into 5
-            let endM = this.AgeDimGroupM.top() * 5; // each age is banded into 5
-            const totalCitizens = this.all.value();
-            if (totalCitizens && totalCitizens < 1000000) {
-                endF = totalCitizens / 20;
-                endM = totalCitizens / 20;
-            }
+            const endF = this.AgeDimGroupF.top() * 5; // each age is banded into 5
+            const endM = this.AgeDimGroupM.top() * 5; // each age is banded into 5
             this.drawAgeChart(false, this.AgeDimGroupF.all(), "ageChartFemale", endF);
             this.drawAgeChart(true, this.AgeDimGroupM.all(), "ageChartMale", endM);
         }, 300);
@@ -456,7 +451,7 @@ export class DashboardPopulationComponent implements OnInit {
             .on("mouseover.something", (d, index, array) => this.mouseEnter(d, index, array, chartName))
             .on("mouseout.something", () => this.mouseLeave())
             .on("click.something", (datum) => {
-                this.queryFilter["DDimension"] = [datum["key"].toString()];
+                this.queryFilter["DDimension"] = [datum["key"]];
                 this.refresh(this.queryFilter);
             });
 
