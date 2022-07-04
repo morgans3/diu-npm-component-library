@@ -105,6 +105,7 @@ export class WardmapComponent implements OnInit, OnChanges {
             this.check = this.crossfilterData;
             if (this.crossfilterData) {
                 this.drawGraph();
+                this.loading = false;
             }
         }
     }

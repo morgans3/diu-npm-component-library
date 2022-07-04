@@ -369,8 +369,14 @@ export class DashboardPopulationComponent implements OnInit {
     createCharts() {
         setTimeout(() => {
             this.createDeprivationScale(this.DDimension, this.DDimGroup);
-            const endF = this.AgeDimGroupF.top() * 5; // each age is banded into 5
-            const endM = this.AgeDimGroupM.top() * 5; // each age is banded into 5
+            const arrMaleAges = this.AgeDimGroupM.all();
+            const endM = arrMaleAges.reduce((a, b) => {
+                return Math.max(a, b.value);
+            }, 0);
+            const arrFemaleAges = this.AgeDimGroupF.all();
+            const endF = arrFemaleAges.reduce((a, b) => {
+                return Math.max(a, b.value);
+            }, 0);
             this.drawAgeChart(false, this.AgeDimGroupF.all(), "ageChartFemale", endF);
             this.drawAgeChart(true, this.AgeDimGroupM.all(), "ageChartMale", endM);
         }, 300);
@@ -431,10 +437,12 @@ export class DashboardPopulationComponent implements OnInit {
             })
             .attr("class", (d) => {
                 if (this.queryFilter["DDimension"]) {
-                    if (this.queryFilter["DDimension"].includes(d.key.toString())) {
-                        return "bar selected pointed";
-                    } else {
-                        return "bar notselected pointed";
+                    if (d.key) {
+                        if (this.queryFilter["DDimension"].includes(d.key.toString())) {
+                            return "bar selected pointed";
+                        } else {
+                            return "bar notselected pointed";
+                        }
                     }
                 }
                 return "bar pointed";
