@@ -27,7 +27,7 @@
                 <div style="display: block; width: 100%; padding-top: 30px">
                     <mat-spinner *ngIf="allWardDetails.length === 0"></mat-spinner>
                     <app-wardmap
-                        *ngIf="allWardDetails.length > 0"
+                        *ngIf="allWardDetails.length > 0 && filteredData"
                         [crossfilterData]="filteredData"
                         [inputTrigger]="mapReset"
                         (selectedWard)="changedWard($event)"

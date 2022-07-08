@@ -15,6 +15,7 @@ import * as d3 from "d3";
 import * as d3zoom from "d3-zoom";
 import { APIService } from "../../../_services/api.service";
 import { iWardDetails } from "../lookups";
+import jwt_decode from "jwt-decode";
 
 @Component({
     selector: "app-wardmap",
@@ -39,6 +40,8 @@ export class WardmapComponent implements OnInit, OnChanges {
     height = 500;
     wards: any;
     selectedwrdcode: string = null;
+    selectedICPcode: string = null;
+    selectedICPData: any;
     zoomedOut = true;
     path: any;
     rolodex_stopped = true;
@@ -58,6 +61,10 @@ export class WardmapComponent implements OnInit, OnChanges {
     allwardDetails: iWardDetails[] = [];
     trigger: boolean;
     loading = true;
+    token: any;
+    tokenDecoded: any;
+    allICPs: object = {};
+    allICPData: object = {};
 
     url = `https://api.nhs-bi-platform.co.uk/`;
     @HostListener("window:resize", ["$event"])
@@ -69,12 +76,30 @@ export class WardmapComponent implements OnInit, OnChanges {
     }
     constructor(private apiService: APIService, @Inject("environment") environment) {
         if (environment) this.url = `https://api.${environment.websiteURL as string}/` || `https://api.nhs-bi-platform.co.uk/`;
+        const token = localStorage.getItem("@@STATE");
+        if (token) {
+            const jsonToken = JSON.parse(token);
+            this.token = jsonToken.stateauth.token;
+            this.tokenDecoded = jwt_decode(this.token);
+        }
     }
 
     ngOnInit() {
         this.check = this.crossfilterData;
         this.width = document.getElementById("wardMapMain").getBoundingClientRect().width;
         this.allwardDetails = this.wardDetails;
+        this.allwardDetails.forEach((ward) => {
+            if (ward.icp in this.allICPs) {
+                this.allICPs[ward.icp].push(ward.code);
+            } else {
+                this.allICPs[ward.icp] = [ward.code];
+            }
+            if (ward.icp in this.allICPData) {
+                this.allICPData[ward.icp].push(ward);
+            } else {
+                this.allICPData[ward.icp] = [ward];
+            }
+        });
         this.apiService.genericGetAPICall(this.url + "wards").subscribe((res: any[]) => {
             if (res.length > 0) {
                 this.wards = res[0];
@@ -180,6 +205,7 @@ export class WardmapComponent implements OnInit, OnChanges {
             .attr("class", "svgtooltip")
             .style("opacity", 0)
             .on("click", () => this.closesvgtooltip());
+        console.log(this);
     }
 
     calculateFill(wrdcode, value) {
@@ -206,35 +232,87 @@ export class WardmapComponent implements OnInit, OnChanges {
 
     clicked(d) {
         const wrdcode = d3.select(d)["_groups"][0][0].properties.wd15cd;
+        const ICPcode = d3.select(d)["_groups"][0][0].properties.lad15nm;
+        const ICPwards = this.allICPs[ICPcode];
         const selected = d3
             .selectAll("path")
             .filter(".feature")
             .filter((x: any) => {
                 return x.properties.wd15cd === wrdcode;
             });
+        const selectedICP = d3
+            .selectAll("path")
+            .filter(".feature")
+            .filter((x: any) => {
+                return x.properties.lad15nm === ICPcode;
+            });
         if (this.active) {
             this.active.attr("fill", (d) => {
                 const value = this.crossfilterData["WDimension"].values.filter((x) => x.key === wrdcode)[0].value;
                 return this.calculateFill(wrdcode, value);
             });
+        }
+        if (this.selectedICPData) {
+            this.selectedICPData.attr("fill", (d) => {
+                const value = this.crossfilterData["WDimension"].values.filter((x) => x.key === wrdcode)[0].value;
+                return this.calculateFill(wrdcode, value);
+            });
+        }
+        if (this.active || this.selectedICPData) {
             if (wrdcode === this.selectedwrdcode) {
+                return this.reset();
+            }
+            if (this.selectedICPcode === ICPcode) {
                 return this.reset();
             }
         }
         this.active = selected;
+        this.selectedICPcode = ICPcode;
+        this.selectedICPData = selectedICP;
         this.selectedwrdcode = wrdcode;
         this.active.attr("fill", "tomato");
         const bounds = this.path.bounds(d);
+        const arrBounds = selectedICP["_groups"][0].map((ward) => {
+            return this.path.bounds(ward["__data__"]);
+        });
+        let highestXbound = 0;
+        let lowestXbound = 100000000000;
+        let highestYbound = 0;
+        let lowestYbound = 100000000000;
+        arrBounds.forEach((bound) => {
+            if (highestXbound < bound[1][0]) {
+                highestXbound = bound[1][0];
+            }
+            if (lowestXbound > bound[0][0]) {
+                lowestXbound = bound[0][0];
+            }
+            if (highestYbound < bound[1][1]) {
+                highestYbound = bound[1][1];
+            }
+            if (lowestYbound > bound[0][1]) {
+                lowestYbound = bound[0][1];
+            }
+        });
+        selectedICP.attr("fill", "tomato");
+        const groupDx = highestXbound - lowestXbound;
+        const groupDy = highestYbound - lowestYbound;
         const dx = bounds[1][0] - bounds[0][0];
         const dy = bounds[1][1] - bounds[0][1];
+        const groupX = (highestXbound + lowestXbound) / 2;
+        const groupY = (highestYbound + lowestYbound) / 2;
         const x = ((bounds[0][0] as number) + (bounds[1][0] as number)) / 2;
         const y = ((bounds[0][1] as number) + (bounds[1][1] as number)) / 2;
+        const groupScale = Math.max(1, Math.min(8, 0.85 / Math.max(groupDx / this.width, groupDy / this.height)));
         const scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / this.width, dy / this.height)));
+        const groupTranslate = [this.width / 2 - groupScale * groupX, this.height / 2 - groupScale * groupY];
         const translate = [this.width / 2 - scale * x, this.height / 2 - scale * y];
-
-        this.svg.transition().duration(750).call(this.zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+        this.svg
+            .transition()
+            .duration(750)
+            .call(this.zoom.transform, d3.zoomIdentity.translate(groupTranslate[0], groupTranslate[1]).scale(groupScale));
+        // this.svg.transition().duration(750).call(this.zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale))
         this.emitted = true;
-        this.selectedWard.emit(wrdcode);
+        this.selectedWard.emit(ICPwards);
     }
 
     reset() {
@@ -307,7 +385,6 @@ export class WardmapComponent implements OnInit, OnChanges {
         }
         const geoms = this.ICSboundaries;
         const all = this.g.selectAll("path.boundary").data(geoms.features);
-
         all.enter()
             .append("path")
             .attr("d", this.path)

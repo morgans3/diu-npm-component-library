@@ -122,7 +122,11 @@ export class DashboardPopulationComponent implements OnInit {
                     icp: "Fylde Coast",
                 };
             }
-            this.WDimension.filter([filter]);
+            if (typeof filter === "string") {
+                this.WDimension.filter([filter]);
+            } else {
+                this.WDimension.filter(filter);
+            }
         }
         this.onCollapse();
     }
@@ -322,6 +326,7 @@ export class DashboardPopulationComponent implements OnInit {
             }).then((d) => {
                 if (this.filteredData !== d) {
                     this.filteredData = d;
+                    console.log(this.filteredData);
                     this.createCharts();
                 }
             });
