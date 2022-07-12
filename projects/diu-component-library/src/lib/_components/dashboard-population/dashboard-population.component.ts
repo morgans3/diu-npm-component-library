@@ -369,13 +369,14 @@ export class DashboardPopulationComponent implements OnInit {
     createCharts() {
         setTimeout(() => {
             this.createDeprivationScale(this.DDimension, this.DDimGroup);
-            let endF = this.AgeDimGroupF.top() * 5; // each age is banded into 5
-            let endM = this.AgeDimGroupM.top() * 5; // each age is banded into 5
-            const totalCitizens = this.all.value();
-            if (totalCitizens && totalCitizens < 1000000) {
-                endF = totalCitizens / 20;
-                endM = totalCitizens / 20;
-            }
+            const arrMaleAges = this.AgeDimGroupM.all();
+            const endM = arrMaleAges.reduce((a, b) => {
+                return Math.max(a, b.value);
+            }, 0);
+            const arrFemaleAges = this.AgeDimGroupF.all();
+            const endF = arrFemaleAges.reduce((a, b) => {
+                return Math.max(a, b.value);
+            }, 0);
             this.drawAgeChart(false, this.AgeDimGroupF.all(), "ageChartFemale", endF);
             this.drawAgeChart(true, this.AgeDimGroupM.all(), "ageChartMale", endM);
         }, 300);
@@ -436,10 +437,12 @@ export class DashboardPopulationComponent implements OnInit {
             })
             .attr("class", (d) => {
                 if (this.queryFilter["DDimension"]) {
-                    if (this.queryFilter["DDimension"].includes(d.key.toString())) {
-                        return "bar selected pointed";
-                    } else {
-                        return "bar notselected pointed";
+                    if (d.key) {
+                        if (this.queryFilter["DDimension"].includes(d.key.toString())) {
+                            return "bar selected pointed";
+                        } else {
+                            return "bar notselected pointed";
+                        }
                     }
                 }
                 return "bar pointed";
@@ -456,7 +459,7 @@ export class DashboardPopulationComponent implements OnInit {
             .on("mouseover.something", (d, index, array) => this.mouseEnter(d, index, array, chartName))
             .on("mouseout.something", () => this.mouseLeave())
             .on("click.something", (datum) => {
-                this.queryFilter["DDimension"] = [datum["key"].toString()];
+                this.queryFilter["DDimension"] = [datum["key"]];
                 this.refresh(this.queryFilter);
             });
 

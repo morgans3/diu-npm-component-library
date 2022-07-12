@@ -80,7 +80,7 @@
         <div style="width: 100%" [@expandCollapse]="openCloseWardAnim">
             <div class="row wrap" fxLayout="row" fxLayout.lt-md="column" *ngIf="visible && selectedWardDetails">
                 <div fxFlex.gt-sm="20" fxFlex.gt-xs="30" fxFlex="100" fxLayoutAlign="center center">
-                    <img *ngIf="selectedWardDetails" [src]="'/assets/images/' + selectedWardDetails.image" style="max-width: 300px" />
+                    <img *ngIf="selectedWardDetails.image" [src]="'/assets/images/' + selectedWardDetails.image" style="max-width: 100%" />
                 </div>
                 <div fxFlex.gt-sm="80" fxFlex.gt-xs="70" fxFlex="100" style="padding-left: 15px">
                     <h4 style="text-decoration: underline">
